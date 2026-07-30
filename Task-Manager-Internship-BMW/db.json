@@ -1,0 +1,127 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "title": "Work"
+    },
+    {
+      "id": 2,
+      "title": "Personal"
+    },
+    {
+      "id": 3,
+      "title": "Meeting"
+    },
+    {
+      "id": 4,
+      "title": "Urgent"
+    }
+  ],
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Prepare sprint review",
+      "description": "Summarize completed work, blockers, and next steps for the team.",
+      "category": {
+        "id": 1,
+        "title": "Work"
+      },
+      "priority": "High",
+      "dueDate": "2026-08-01",
+      "estimatedTime": 4,
+      "status": "In Progress",
+      "tags": ["planning", "meeting", "team"],
+      "assignee": "Alex",
+      "subtaks": [
+        {
+          "id": 101,
+          "title": "Collect sprint metrics",
+          "description": "Gather completed stories and remaining issues.",
+          "status": "Completed",
+          "completed": true
+        },
+        {
+          "id": 102,
+          "title": "Draft presentation",
+          "description": "Prepare the slide outline for the review.",
+          "status": "To Do",
+          "completed": false
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Buy groceries",
+      "description": "Pick up vegetables, milk, and bread for the week.",
+      "category": {
+        "id": 2,
+        "title": "Personal"
+      },
+      "priority": "Medium",
+      "dueDate": "2026-07-31",
+      "estimatedTime": 1,
+      "status": "To Do",
+      "tags": ["home", "shopping"],
+      "assignee": "Mihai"
+    },
+    {
+      "id": 3,
+      "title": "Client onboarding call",
+      "description": "Walk the new client through setup steps and answer questions.",
+      "category": {
+        "id": 3,
+        "title": "Meeting"
+      },
+      "priority": "High",
+      "dueDate": "2026-08-03",
+      "estimatedTime": 2,
+      "status": "To Do",
+      "tags": ["client", "call"],
+      "assignee": "Sarah"
+    },
+    {
+      "id": 4,
+      "title": "Fix login bug",
+      "description": "Investigate the password reset issue reported by QA.",
+      "category": {
+        "id": 4,
+        "title": "Urgent"
+      },
+      "priority": "High",
+      "dueDate": "2026-07-30",
+      "estimatedTime": 3,
+      "status": "In Progress",
+      "tags": ["bug", "frontend", "urgent"],
+      "assignee": "Diana",
+      "subtaks": [
+        {
+          "id": 401,
+          "title": "Reproduce error",
+          "status": "Completed",
+          "completed": true
+        },
+        {
+          "id": 402,
+          "title": "Patch authentication flow",
+          "status": "In Progress",
+          "completed": false
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Plan weekend trip",
+      "description": "Research destinations and book accommodation.",
+      "category": {
+        "id": 2,
+        "title": "Personal"
+      },
+      "priority": "Low",
+      "dueDate": "2026-08-10",
+      "estimatedTime": 2,
+      "status": "Completed",
+      "tags": ["travel", "personal"],
+      "assignee": "Ioana"
+    }
+  ]
+}
