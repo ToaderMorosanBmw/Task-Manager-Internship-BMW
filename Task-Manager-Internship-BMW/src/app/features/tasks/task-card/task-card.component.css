@@ -1,0 +1,39 @@
+:host{
+    background-color: rgb(240, 240, 240 );
+    border: 1px solid rgba(0, 0, 0, 0.24);
+    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.09);
+    border-radius: 20px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.footer{
+    display: flex;
+    justify-content: space-between;
+    color: rgb(136, 136, 136);
+}
+
+h3, p{
+    margin: 0;
+}
+
+.category {
+    display: inline-block;
+    color: aliceblue;
+    width: fit-content;
+    padding: 0.3rem 0.7rem;
+    font-size: 0.85rem;
+    border-radius: 100px;
+}
+
+.description {
+    background-color: rgb(223, 223, 223);
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+}
+
+hr{
+    width: 100%;
+}

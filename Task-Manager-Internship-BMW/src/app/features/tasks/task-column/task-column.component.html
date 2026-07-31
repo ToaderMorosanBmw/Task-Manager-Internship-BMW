@@ -1,1 +1,7 @@
-<p>task-column works!</p>
+<h1>{{ title }}</h1>
+
+<div class="column">
+    @for (item of cardItems; track $index) {
+    <app-task-card [task]="item" [priorityColor]="item.priority || ''"></app-task-card>
+}
+</div>
