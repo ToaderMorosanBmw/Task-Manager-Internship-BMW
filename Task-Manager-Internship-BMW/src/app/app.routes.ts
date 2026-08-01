@@ -7,17 +7,8 @@ export const routes: Routes = [{
     path: '',
     component: TaskDashboardComponent
 },{
-    path: 'tasks',
-    component: TaskDashboardComponent
-},{
-    path: 'tasks/create',
-    component: TaskModalComponent
-},{
     path: 'tasks/:id',
     component: TaskPageComponent
-}, {
-    path: 'tasks/:id/edit',
-    component: TaskModalComponent
 },
 {
     path: '**',
