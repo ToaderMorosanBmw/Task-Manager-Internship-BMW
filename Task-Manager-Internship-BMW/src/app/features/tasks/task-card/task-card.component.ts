@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Task } from '../../../core/models/task.model';
+import { TaskWithCategory } from '../../../core/models/task-with-category.model';
 import { CategoryColor } from '../../../shared/directives/category-color';
 
 @Component({
@@ -11,5 +11,5 @@ import { CategoryColor } from '../../../shared/directives/category-color';
 })
 export class TaskCardComponent {
   @Input()
-  task!: Task;
+  task!: TaskWithCategory;
 }

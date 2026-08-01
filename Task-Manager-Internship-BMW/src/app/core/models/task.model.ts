@@ -1,17 +1,16 @@
 import { Subtask } from "./subtask.model";
-import { Category } from "./category.model";
 
 export interface Task {
-    id: number;
+    id: string;
     title: string;
     description?: string; 
-    category: Category;
+    categoryId: string;
     priority?: 'Low' | 'Medium' | 'High';
     dueDate?: Date;
     estimatedTime?: number;
     status: 'To Do' | 'In Progress' | 'Completed';
-    tags: string[];//sau enum(trebuie determinate tagurile) 
-    assignee?: string;//sau enum
+    tags: string[];
+    assignee?: string;
     subtaks?: Subtask[];
   
 }

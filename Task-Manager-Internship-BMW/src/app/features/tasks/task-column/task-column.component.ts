@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { TaskCardComponent } from '../task-card/task-card.component';
-import { Task } from '../../../core/models/task.model';
+import { TaskWithCategory } from '../../../core/models/task-with-category.model';
 import { PriorityColor } from '../../../shared/directives/priority-color.directive';
 
 @Component({
@@ -15,5 +15,5 @@ export class TaskColumnComponent {
   title!: string;
 
   @Input()
-  cardItems!: Task[]
+  cardItems!: TaskWithCategory[]
 }
