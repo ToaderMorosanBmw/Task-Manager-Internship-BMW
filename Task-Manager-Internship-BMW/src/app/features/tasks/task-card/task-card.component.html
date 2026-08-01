@@ -1,5 +1,5 @@
 <h3>{{task.title}}</h3>
-<p class="category" [categoryColor]="task.category.color">{{task.category.title}}</p>
+<p class="category" [categoryColor]="task.category?.color || ''">{{task.category?.title || 'Uncategorized'}}</p>
 <p class="description">{{task.description}}</p>
 <hr>
 <div class="footer">
