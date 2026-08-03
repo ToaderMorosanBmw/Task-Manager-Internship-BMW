@@ -27,7 +27,7 @@
       "title": "Prepare sprint review",
       "description": "Summarize completed work, blockers, and next steps for the team. Include a short recap of what shipped, what is still at risk, and what the team should focus on during the next iteration.",
       "priority": "High",
-      "dueDate": "2026-08-01",
+      "dueDate": "2026-08-01T00:00:00.000Z",
       "estimatedTime": 4,
       "status": "In Progress",
       "tags": [
@@ -59,7 +59,7 @@
       "title": "Buy groceries",
       "description": "Pick up vegetables, milk, bread, and a few pantry staples for the week. Make sure to check the fridge inventory before going so the list stays short and practical.",
       "priority": "Medium",
-      "dueDate": "2026-07-31",
+      "dueDate": "2026-07-31T00:00:00.000Z",
       "estimatedTime": 1,
       "status": "To Do",
       "tags": [
@@ -90,7 +90,7 @@
       "title": "Client onboarding call",
       "description": "Walk the new client through the initial setup steps and answer questions about onboarding, access, and rollout expectations. Keep notes about feature priorities and any blockers that need follow-up after the call.",
       "priority": "High",
-      "dueDate": "2026-08-03",
+      "dueDate": "2026-08-03T00:00:00.000Z",
       "estimatedTime": 2,
       "status": "To Do",
       "tags": [
@@ -153,7 +153,7 @@
       "title": "Plan weekend trip",
       "description": "Research destinations, compare accommodation options, and create a rough shortlist for the weekend trip. Include travel time, estimated cost, and a few backup options in case the first choice is unavailable.",
       "priority": "Low",
-      "dueDate": "2026-08-10",
+      "dueDate": "2026-08-10T00:00:00.000Z",
       "estimatedTime": 2,
       "status": "Completed",
       "tags": [

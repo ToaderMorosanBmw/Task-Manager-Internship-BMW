@@ -1,12 +1,18 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { Task } from '../../../core/models/task.model';
 import { RouterLink } from '@angular/router';
 import { TaskWithCategory } from '../../../core/models/task-with-category.model';
+import { TaskService } from '../../../core/services/task.service';
 import { CategoryColor } from '../../../shared/directives/category-color';
+import { TaskModalComponent } from '../task-modal/task-modal.component';
 
 @Component({
   selector: 'app-task-card',
   standalone: true,
-  imports: [CategoryColor, RouterLink],
+  imports: [CategoryColor, MatButtonModule, MatTooltipModule, MatDialogModule, RouterLink],
   templateUrl: './task-card.component.html',
   styleUrl: './task-card.component.css'
 })
@@ -15,16 +21,70 @@ export class TaskCardComponent {
   task!: TaskWithCategory;
 
   showFullTitle = false;
+  private dialog = inject(MatDialog);
+  private taskService = inject(TaskService);
 
-  onEditClick(): void {
-    console.log('Edit button clicked for task:', this.task?.title);
+  onEditClick(event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const dialogRef = this.dialog.open(TaskModalComponent, {
+      width: '500px',
+      data: { task: this.task }
+    });
+
+    dialogRef.afterClosed().subscribe((updatedTask: TaskWithCategory | undefined) => {
+      if (!updatedTask) {
+        return;
+      }
+
+      const taskToSave: Task = {
+        ...this.task,
+        ...updatedTask,
+        categoryId: updatedTask.categoryId ?? this.task.categoryId,
+        status: updatedTask.status ?? this.task.status,
+        priority: updatedTask.priority ?? this.task.priority,
+        dueDate: this.normalizeDueDate(updatedTask.dueDate ?? this.task.dueDate) as Date | undefined
+      };
+
+      this.taskService.updateTask(this.task.id as string, taskToSave).subscribe({
+        next: (savedTask) => {
+          const normalizedTask = {
+            ...savedTask,
+            dueDate: this.normalizeDueDate(savedTask.dueDate)
+          };
+
+          this.task = { ...this.task, ...normalizedTask } as TaskWithCategory;
+        },
+        error: (err) => console.error('Failed to update task', err)
+      });
+    });
   }
 
-  onTitleMouseEnter(): void {
-    this.showFullTitle = true;
+  toggleTitlePreview(show: boolean): void {
+    this.showFullTitle = show;
   }
 
-  onTitleMouseLeave(): void {
-    this.showFullTitle = false;
+  getDueDateLabel(value: Date | string | undefined): string {
+    const normalizedDate = this.normalizeDueDate(value);
+
+    if (!normalizedDate) {
+      return 'No due date';
+    }
+
+    return normalizedDate.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  }
+
+  private normalizeDueDate(value: Date | string | undefined): Date | undefined {
+    if (!value) {
+      return undefined;
+    }
+
+    const parsedDate = value instanceof Date ? value : new Date(value);
+    return Number.isNaN(parsedDate.getTime()) ? undefined : parsedDate;
   }
 }

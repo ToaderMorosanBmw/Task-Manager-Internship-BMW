@@ -89,8 +89,8 @@ p{
     min-width: 36px;
     border: none;
     border-radius: 50%;
-    background-color: #bec0ca;
-    color: rgb(13, 14, 15);
+    background-color: var(--task-btn-bg);
+    color: var(--task-btn-text);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -100,7 +100,7 @@ p{
 }
 
 .circle-btn:hover {
-    background-color: #3f51b5;
-    color: white;
+    background-color: var(--task-btn-hover-bg);
+    color: var(--task-btn-hover-text);
     transform: scale(1.05);
 }
