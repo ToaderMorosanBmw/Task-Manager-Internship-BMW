@@ -11,6 +11,6 @@ export interface Task {
     status: 'To Do' | 'In Progress' | 'Completed';
     tags: string[];
     assignee?: string;
-    subtaks?: Subtask[];
+    subtasks?: Subtask[];
   
 }
