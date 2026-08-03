@@ -1,8 +1,10 @@
-<h3>{{task.title}}</h3>
-<p class="category" [categoryColor]="task.category?.color || ''">{{task.category?.title || 'Uncategorized'}}</p>
-<p class="description">{{task.description}}</p>
-<hr>
-<div class="footer">
-    <p>{{task.assignee}}</p>
-    <p>{{task.dueDate}}</p>
-</div>
+<a [routerLink]="['/tasks', task.id]" class="card-link">
+    <h3>{{task.title}}</h3>
+    <p class="category" [categoryColor]="task.category?.color || ''">{{task.category?.title || 'Uncategorized'}}</p>
+    <p class="description">{{task.description}}</p>
+    <hr>
+    <div class="footer">
+        <p>{{task.assignee}}</p>
+        <p>{{task.dueDate}}</p>
+    </div>
+</a>
