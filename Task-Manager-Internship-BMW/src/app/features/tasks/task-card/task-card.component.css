@@ -1,8 +1,14 @@
-:host {
-    background-color: rgb(240, 240, 240);
-    border: 1px solid rgba(0, 0, 0, 0.24);
-    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.09);
-    border-radius: 20px;
+:host{
+    background-color: rgb(240, 240, 240 );
+    border: 1px solid rgba(0, 0, 0, 0.185);
+    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.14);
+    border-radius: 15px;
+    
+}
+
+a{
+    text-decoration: none;
+    color: black;
     padding: 15px;
     display: flex;
     flex-direction: column;
@@ -35,9 +41,24 @@ p {
     border-radius: 6px;
 }
 
-hr {
+.card-link hr  {
     width: 100%;
+    margin-bottom: 0;
+    border: 0;
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.2);
 }
+
+.footer{
+    display: flex;
+    justify-content: space-between;
+    color: rgb(136, 136, 136);
+}
+
+p{
+    padding: 0 0.4rem;
+}
+
 
 .card-title {
     display: flex;

@@ -2,22 +2,26 @@ h1, .column {
     display: flex;
     flex-direction: column;
     background-color: rgb(245, 245, 245);
-    border: 1px solid rgba(0, 0, 0, 0.24);
-    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.09);
-    border-radius: 20px;
-    padding: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.089);
+    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    padding: 1.3rem;
 }
 
 :host {
-    max-width: 30%;
+    width: 30%;
+
 }
 
 .column {
-    min-height: 0;
-    max-height: 65vh;
+    height: 65vh;
     overflow-y: auto;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE/Edge legacy */
+}
+
+p{
+    margin: auto;
 }
 
 .column::-webkit-scrollbar {
