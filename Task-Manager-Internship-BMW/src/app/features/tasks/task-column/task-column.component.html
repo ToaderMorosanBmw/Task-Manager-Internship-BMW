@@ -2,7 +2,7 @@
 
 <div class="column">
     @if (!cardItems || cardItems.length === 0) {
-        <p class="loading">Loading tasks...</p>
+        <p class="loading">No tasks</p>
     } @else {
         @for (item of cardItems; track $index) {
             <app-task-card [task]="item" [priorityColor]="item.priority || ''"></app-task-card>

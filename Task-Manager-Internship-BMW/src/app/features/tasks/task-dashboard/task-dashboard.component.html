@@ -1,3 +1,9 @@
-<app-task-column [cardItems]="todoTasks" title="To Do"></app-task-column>
+<div class="filters">
+    <app-task-filter-row filterName="Priority" [buttons]="priorities" [selectedValue]="selectedPriority" (selected)="onPrioritySelected($event)"></app-task-filter-row>
+    <app-task-filter-row filterName="Category" [buttons]="categories" [selectedValue]="selectedCategory" (selected)="onCategorySelected($event)"></app-task-filter-row>
+</div>
+<div class="columns">
+    <app-task-column [cardItems]="todoTasks" title="To Do"></app-task-column>
 <app-task-column [cardItems]="inProgressTasks" title="In Progress"></app-task-column>
 <app-task-column [cardItems]="completedTasks" title="Completed"></app-task-column>
+</div>

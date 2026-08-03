@@ -14,7 +14,7 @@ h1, .column {
 }
 
 .column {
-    height: 65vh;
+    height: 47vh;
     overflow-y: auto;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE/Edge legacy */

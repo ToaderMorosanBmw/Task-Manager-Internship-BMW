@@ -10,7 +10,7 @@ export class FilterService {
       return tasks;
     }
 
-    return tasks.filter(task => task.categoryId === categoryId);
+    return tasks.filter(task => task.category?.title === categoryId);
   }
 
   filterByPriority(tasks: TaskWithCategory[], priority?: string): TaskWithCategory[] {
