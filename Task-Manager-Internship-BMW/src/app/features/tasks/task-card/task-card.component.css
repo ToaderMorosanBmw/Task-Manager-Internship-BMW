@@ -1,5 +1,5 @@
-:host{
-    background-color: rgb(240, 240, 240 );
+:host {
+    background-color: rgb(240, 240, 240);
     border: 1px solid rgba(0, 0, 0, 0.24);
     box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.09);
     border-radius: 20px;
@@ -9,13 +9,14 @@
     gap: 1rem;
 }
 
-.footer{
+.footer {
     display: flex;
     justify-content: space-between;
     color: rgb(136, 136, 136);
 }
 
-h3, p{
+h3,
+p {
     margin: 0;
 }
 
@@ -34,6 +35,51 @@ h3, p{
     border-radius: 6px;
 }
 
-hr{
+hr {
     width: 100%;
+}
+
+.card-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.3rem 0.7rem;
+}
+
+.card-title h3 {
+    font-size: 1.5rem;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: white-space 0.2s ease;
+}
+
+.card-title h3.show-full-title {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+}
+
+.circle-btn {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    border: none;
+    border-radius: 50%;
+    background-color: #bec0ca;
+    color: rgb(13, 14, 15);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.circle-btn:hover {
+    background-color: #3f51b5;
+    color: white;
+    transform: scale(1.05);
 }

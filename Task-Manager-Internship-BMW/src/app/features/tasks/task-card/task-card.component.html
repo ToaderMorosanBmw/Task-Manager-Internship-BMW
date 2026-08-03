@@ -1,4 +1,11 @@
-<h3>{{task.title}}</h3>
+<div class="card-title">
+  <h3
+    [class.show-full-title]="showFullTitle"
+    (mouseenter)="onTitleMouseEnter()"
+    (mouseleave)="onTitleMouseLeave()"
+  >{{ task.title }}</h3>
+  <button class="circle-btn" aria-label="Edit task" (click)="onEditClick()">✎</button>
+</div>
 <p class="category" [categoryColor]="task.category?.color || ''">{{task.category?.title || 'Uncategorized'}}</p>
 <p class="description">{{task.description}}</p>
 <hr>
