@@ -15,7 +15,14 @@ a{
     gap: 1rem;
 }
 
-h3, p{
+.footer {
+    display: flex;
+    justify-content: space-between;
+    color: rgb(136, 136, 136);
+}
+
+h3,
+p {
     margin: 0;
 }
 
@@ -34,7 +41,7 @@ h3, p{
     border-radius: 6px;
 }
 
-.card-link hr {
+.card-link hr  {
     width: 100%;
     margin-bottom: 0;
     border: 0;
@@ -50,4 +57,50 @@ h3, p{
 
 p{
     padding: 0 0.4rem;
+}
+
+
+.card-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.3rem 0.7rem;
+}
+
+.card-title h3 {
+    font-size: 1.5rem;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: white-space 0.2s ease;
+}
+
+.card-title h3.show-full-title {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+}
+
+.circle-btn {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--task-btn-bg);
+    color: var(--task-btn-text);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.circle-btn:hover {
+    background-color: var(--task-btn-hover-bg);
+    color: var(--task-btn-hover-text);
+    transform: scale(1.05);
 }

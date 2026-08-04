@@ -1,0 +1,57 @@
+:host {
+  display: block;
+}
+
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 320px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.section-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.chip-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.inline-field {
+  flex: 1;
+}
+
+.chip-list, .subtask-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.chip, .subtask-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  background: #e0e0e0;
+  cursor: pointer;
+}
+
+.subtask-item {
+  border-radius: 6px;
+  cursor: default;
+}
+
+.subtask-item button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
