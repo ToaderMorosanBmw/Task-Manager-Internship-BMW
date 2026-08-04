@@ -1,11 +1,9 @@
 <h1>{{ title }}</h1>
 
 <div class="column">
-    @if (!cardItems || cardItems.length === 0) {
+    @for (item of cardItems; track $index) {
+        <app-task-card [task]="item" [priorityColor]="item.priority || ''"></app-task-card>
+    } @empty {
         <p class="loading">No tasks</p>
-    } @else {
-        @for (item of cardItems; track $index) {
-            <app-task-card [task]="item" [priorityColor]="item.priority || ''"></app-task-card>
-        }
     }
 </div>
