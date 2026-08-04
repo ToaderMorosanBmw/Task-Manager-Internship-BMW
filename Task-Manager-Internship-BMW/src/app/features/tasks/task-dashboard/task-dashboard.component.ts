@@ -8,13 +8,14 @@ import { TaskWithCategory } from '../../../core/models/task-with-category.model'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { switchMap, map, filter } from 'rxjs';
 import { FilterService } from '../../../core/services/filter.service';
-import { TaskFilterComponent } from "../task-filter/task-filter.component";
-import { TaskFilterRowComponent } from "../task-filter-row/task-filter-row.component";
+import { TaskFilterComponent } from '../task-filter/task-filter.component';
+import { TaskFilterRowComponent } from '../task-filter-row/task-filter-row.component';
+import { CdkDropListGroup } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-task-dashboard',
   standalone: true,
-  imports: [TaskColumnComponent, TaskFilterComponent, TaskFilterRowComponent],
+  imports: [TaskColumnComponent, TaskFilterComponent, TaskFilterRowComponent, CdkDropListGroup],
   templateUrl: './task-dashboard.component.html',
   styleUrl: './task-dashboard.component.css',
 })
@@ -23,28 +24,40 @@ export class TaskDashboardComponent implements OnInit {
   visibleTasks: TaskWithCategory[] = [];
   selectedCategory: string = '';
   selectedPriority: string = '';
-  priorities: { title: string, color: string }[] = [
-  { title: 'Low', color: '#2e7d32' },
-  { title: 'Medium', color: '#f57c00' },
-  { title: 'High', color: '#d32f2f' }
-];
-  categories: {title: string, color: string}[] = [];
+  priorities: { title: string; color: string }[] = [
+    { title: 'Low', color: '#2e7d32' },
+    { title: 'Medium', color: '#f57c00' },
+    { title: 'High', color: '#d32f2f' },
+  ];
+  categories: { title: string; color: string }[] = [];
 
   private taskService = inject(TaskService);
   private categoryService = inject(CategoryService);
   private destroyRef = inject(DestroyRef);
-  private filterService = inject(FilterService)
+  private filterService = inject(FilterService);
+  private priorityOrder: Record<string, number> = {
+    High: 1,
+    Medium: 2,
+    Low: 3,
+  };
+  private getFilteredTasks(status: string): TaskWithCategory[] {
+    return this.visibleTasks
+      .filter((task) => task.status === status)
+      .sort((a, b) => {
+        return this.priorityOrder[a.priority as string] - this.priorityOrder[b.priority as string];
+      });
+  }
 
   get todoTasks() {
-    return this.visibleTasks.filter((task) => task.status === 'To Do');
+    return this.getFilteredTasks('To Do');
   }
 
   get inProgressTasks() {
-    return this.visibleTasks.filter((task) => task.status === 'In Progress');
+    return this.getFilteredTasks('In Progress');
   }
 
   get completedTasks() {
-    return this.visibleTasks.filter((task) => task.status === 'Completed');
+    return this.getFilteredTasks('Completed');
   }
 
   ngOnInit(): void {
@@ -56,11 +69,13 @@ export class TaskDashboardComponent implements OnInit {
           return this.taskService.getAllTasks().pipe(
             map((tasks) =>
               tasks.map((task) => {
-                const matchedCategory = categories.find((category) => category.id === task.categoryId);
+                const matchedCategory = categories.find(
+                  (category) => category.id === task.categoryId
+                );
                 // id must be string for === to work, json-server convers all fields id to string
                 return {
                   ...task,
-                  category: matchedCategory
+                  category: matchedCategory,
                 };
               })
             )
@@ -71,11 +86,14 @@ export class TaskDashboardComponent implements OnInit {
         this.allTasks = tasksWithCategory;
         this.visibleTasks = tasksWithCategory;
 
-        const categoryColor: Record<string, {title: string, color: string}> = {}
+        const categoryColor: Record<string, { title: string; color: string }> = {};
 
-        tasksWithCategory.forEach(task => {
-          categoryColor[task.category!.title] = { title: task.category!.title, color: task.category!.color};
-        })
+        tasksWithCategory.forEach((task) => {
+          categoryColor[task.category!.title] = {
+            title: task.category!.title,
+            color: task.category!.color,
+          };
+        });
 
         this.categories = Object.values(categoryColor);
       });
@@ -84,10 +102,10 @@ export class TaskDashboardComponent implements OnInit {
   applyFiters(): void {
     let filtered = this.allTasks;
 
-    if(this.selectedCategory){
+    if (this.selectedCategory) {
       filtered = this.filterService.filterByCategory(filtered, this.selectedCategory);
     }
-    if(this.selectedPriority){
+    if (this.selectedPriority) {
       filtered = this.filterService.filterByPriority(filtered, this.selectedPriority);
     }
 
@@ -102,5 +120,30 @@ export class TaskDashboardComponent implements OnInit {
   onPrioritySelected(priority: string): void {
     this.selectedPriority = priority;
     this.applyFiters();
+  }
+
+  onTaskStatusChange(event: { task: TaskWithCategory; newStatus: string }) {
+    const newTask = {
+      ...event.task,
+      status: event.newStatus as 'To Do' | 'In Progress' | 'Completed',
+    };
+
+    const taskIndex = this.allTasks.findIndex((task) => task.id === newTask.id);
+    if (taskIndex !== -1) {
+      this.allTasks[taskIndex] = newTask;
+      this.applyFiters();
+    }
+
+    this.taskService
+      .updateTask(newTask.id, newTask)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          console.log(`ok: ${newTask.status}`);
+        },
+        error: (err) => {
+          console.log('error', err);
+        },
+      });
   }
 }

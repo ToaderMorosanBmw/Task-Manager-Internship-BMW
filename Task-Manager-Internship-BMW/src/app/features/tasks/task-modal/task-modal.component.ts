@@ -12,9 +12,17 @@ import { TaskWithCategory } from '../../../core/models/task-with-category.model'
 @Component({
   selector: 'app-task-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule,
+  ],
   templateUrl: './task-modal.component.html',
-  styleUrl: './task-modal.component.css'
+  styleUrl: './task-modal.component.css',
 })
 export class TaskModalComponent {
   task: TaskWithCategory;
@@ -59,7 +67,7 @@ export class TaskModalComponent {
       id: Date.now(),
       title,
       completed: false,
-      status: 'To Do'
+      status: 'To Do',
     };
 
     this.task.subtasks = this.task.subtasks ?? [];
@@ -68,7 +76,9 @@ export class TaskModalComponent {
   }
 
   removeSubtask(subtask: Subtask): void {
-    this.task.subtasks = (this.task.subtasks ?? []).filter((item: Subtask) => item.id !== subtask.id);
+    this.task.subtasks = (this.task.subtasks ?? []).filter(
+      (item: Subtask) => item.id !== subtask.id
+    );
   }
 
   save(): void {

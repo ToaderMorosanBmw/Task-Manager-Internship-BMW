@@ -3,14 +3,17 @@ import { TaskDashboardComponent } from './features/tasks/task-dashboard/task-das
 import { TaskPageComponent } from './features/tasks/task-page/task-page.component';
 import { TaskModalComponent } from './features/tasks/task-modal/task-modal.component';
 
-export const routes: Routes = [{
+export const routes: Routes = [
+  {
     path: '',
-    component: TaskDashboardComponent
-},{
+    component: TaskDashboardComponent,
+  },
+  {
     path: 'tasks/:id',
-    component: TaskPageComponent
-},
-{
+    component: TaskPageComponent,
+  },
+  {
     path: '**',
-    redirectTo: ''
-}];
+    redirectTo: '',
+  },
+];

@@ -29,12 +29,8 @@
       "priority": "High",
       "dueDate": "2026-08-01T00:00:00.000Z",
       "estimatedTime": 4,
-      "status": "In Progress",
-      "tags": [
-        "planning",
-        "meeting",
-        "team"
-      ],
+      "status": "To Do",
+      "tags": ["planning", "meeting", "team"],
       "assignee": "Alex",
       "categoryId": "1",
       "subtasks": [
@@ -52,7 +48,12 @@
           "status": "To Do",
           "completed": false
         }
-      ]
+      ],
+      "category": {
+        "id": "1",
+        "title": "Work",
+        "color": "#4f46e5"
+      }
     },
     {
       "id": "2",
@@ -61,11 +62,8 @@
       "priority": "Medium",
       "dueDate": "2026-07-31T00:00:00.000Z",
       "estimatedTime": 1,
-      "status": "To Do",
-      "tags": [
-        "home",
-        "shopping"
-      ],
+      "status": "In Progress",
+      "tags": ["home", "shopping"],
       "assignee": "Mihai",
       "categoryId": "2",
       "subtasks": [
@@ -83,7 +81,12 @@
           "status": "Completed",
           "completed": true
         }
-      ]
+      ],
+      "category": {
+        "id": "2",
+        "title": "Personal",
+        "color": "#ec4899"
+      }
     },
     {
       "id": "3",
@@ -92,11 +95,8 @@
       "priority": "High",
       "dueDate": "2026-08-03T00:00:00.000Z",
       "estimatedTime": 2,
-      "status": "To Do",
-      "tags": [
-        "client",
-        "call"
-      ],
+      "status": "In Progress",
+      "tags": ["client", "call"],
       "assignee": "Sarah",
       "categoryId": "3",
       "subtasks": [
@@ -114,7 +114,12 @@
           "status": "To Do",
           "completed": false
         }
-      ]
+      ],
+      "category": {
+        "id": "3",
+        "title": "Meeting",
+        "color": "#f59e0b"
+      }
     },
     {
       "id": "4",
@@ -124,11 +129,7 @@
       "dueDate": "2026-07-30",
       "estimatedTime": 3,
       "status": "In Progress",
-      "tags": [
-        "bug",
-        "frontend",
-        "urgent"
-      ],
+      "tags": ["bug", "frontend", "urgent"],
       "assignee": "Diana",
       "categoryId": "4",
       "subtasks": [
@@ -155,11 +156,8 @@
       "priority": "Low",
       "dueDate": "2026-08-10T00:00:00.000Z",
       "estimatedTime": 2,
-      "status": "Completed",
-      "tags": [
-        "travel",
-        "personal"
-      ],
+      "status": "To Do",
+      "tags": ["travel", "personal"],
       "assignee": "Ioana",
       "categoryId": "2",
       "subtasks": [
@@ -177,7 +175,12 @@
           "status": "To Do",
           "completed": false
         }
-      ]
+      ],
+      "category": {
+        "id": "2",
+        "title": "Personal",
+        "color": "#ec4899"
+      }
     },
     {
       "id": "6",
@@ -186,11 +189,8 @@
       "priority": "Medium",
       "dueDate": "2026-08-05",
       "estimatedTime": 5,
-      "status": "To Do",
-      "tags": [
-        "proposal",
-        "planning"
-      ],
+      "status": "Completed",
+      "tags": ["proposal", "planning"],
       "assignee": "Andrei",
       "categoryId": "1",
       "subtasks": [
@@ -223,10 +223,7 @@
       "dueDate": "2026-08-02",
       "estimatedTime": 2,
       "status": "In Progress",
-      "tags": [
-        "code",
-        "review"
-      ],
+      "tags": ["code", "review"],
       "assignee": "Mara",
       "categoryId": "1",
       "subtasks": [
@@ -254,10 +251,7 @@
       "dueDate": "2026-08-07",
       "estimatedTime": 1,
       "status": "Completed",
-      "tags": [
-        "home",
-        "cooking"
-      ],
+      "tags": ["home", "cooking"],
       "assignee": "Elena",
       "categoryId": "2",
       "subtasks": [
@@ -285,10 +279,7 @@
       "dueDate": "2026-08-04",
       "estimatedTime": 1,
       "status": "To Do",
-      "tags": [
-        "email",
-        "client"
-      ],
+      "tags": ["email", "client"],
       "assignee": "Radu",
       "categoryId": "3",
       "subtasks": [
@@ -316,10 +307,7 @@
       "dueDate": "2026-07-29",
       "estimatedTime": 3,
       "status": "Completed",
-      "tags": [
-        "deploy",
-        "urgent"
-      ],
+      "tags": ["deploy", "urgent"],
       "assignee": "Cristina",
       "categoryId": "4",
       "subtasks": [

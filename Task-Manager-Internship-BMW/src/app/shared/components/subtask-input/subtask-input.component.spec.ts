@@ -8,9 +8,8 @@ describe('SubtaskInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SubtaskInputComponent]
-    })
-    .compileComponents();
+      imports: [SubtaskInputComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SubtaskInputComponent);
     component = fixture.componentInstance;

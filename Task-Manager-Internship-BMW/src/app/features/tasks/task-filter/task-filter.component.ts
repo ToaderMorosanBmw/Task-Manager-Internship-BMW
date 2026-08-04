@@ -5,8 +5,6 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './task-filter.component.html',
-  styleUrl: './task-filter.component.css'
+  styleUrl: './task-filter.component.css',
 })
-export class TaskFilterComponent {
-
-}
+export class TaskFilterComponent {}
