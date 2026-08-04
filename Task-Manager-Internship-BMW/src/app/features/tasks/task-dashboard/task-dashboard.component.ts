@@ -10,11 +10,13 @@ import { switchMap, map, filter } from 'rxjs';
 import { FilterService } from '../../../core/services/filter.service';
 import { TaskFilterComponent } from "../task-filter/task-filter.component";
 import { TaskFilterRowComponent } from "../task-filter-row/task-filter-row.component";
+import {MatDialog, MatDialogModule} from "@angular/material/dialog";
+import { TaskModalComponent } from '../task-modal/task-modal.component';
 
 @Component({
   selector: 'app-task-dashboard',
   standalone: true,
-  imports: [TaskColumnComponent, TaskFilterComponent, TaskFilterRowComponent],
+  imports: [TaskColumnComponent, TaskFilterComponent, TaskFilterRowComponent, MatDialogModule, TaskModalComponent],
   templateUrl: './task-dashboard.component.html',
   styleUrl: './task-dashboard.component.css',
 })
@@ -34,6 +36,7 @@ export class TaskDashboardComponent implements OnInit {
   private categoryService = inject(CategoryService);
   private destroyRef = inject(DestroyRef);
   private filterService = inject(FilterService)
+  private dialog = inject(MatDialog);
 
   get todoTasks() {
     return this.visibleTasks.filter((task) => task.status === 'To Do');
@@ -103,4 +106,57 @@ export class TaskDashboardComponent implements OnInit {
     this.selectedPriority = priority;
     this.applyFiters();
   }
+
+  onCreateTaskClick(): void {
+    const defaultCategoryId = this.allTasks[0]?.category?.id ?? '';
+
+    const taskToEdit: TaskWithCategory = {
+      id: '',
+      title: '',
+      description: '',
+      categoryId: defaultCategoryId,
+      status: 'To Do',
+      priority: 'Low',
+      tags: [],
+      subtasks: []
+    };
+
+    const dialogRef = this.dialog.open(TaskModalComponent, {
+      width: '520px',
+      data: { task: taskToEdit }
+    });
+
+    dialogRef.afterClosed()
+      .pipe(
+        filter((result): result is TaskWithCategory => Boolean(result))
+      )
+      .subscribe((result) => {
+        const taskToSave: Task = {
+          ...result,
+          title: result.title.trim() || 'New task',
+          categoryId: result.categoryId || defaultCategoryId,
+          status: result.status || 'To Do',
+          priority: result.priority || 'Low',
+          tags: result.tags ?? [],
+          subtasks: result.subtasks ?? [],
+          id: ''
+        };
+
+        this.taskService.createTask(taskToSave)
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe({
+            next: (savedTask) => {
+              const savedWithCategory: TaskWithCategory = {
+                ...savedTask,
+                category: this.allTasks.find((task) => task.category?.id === savedTask.categoryId)?.category
+              };
+
+              this.allTasks = [...this.allTasks, savedWithCategory];
+              this.applyFiters();
+            },
+            error: (err) => console.error('Failed to create task', err)
+          });
+      });
+  }
 }
+

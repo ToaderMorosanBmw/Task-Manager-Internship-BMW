@@ -1,3 +1,14 @@
+<div class="top-bar">
+    <h1>Task dashboard:</h1>
+    <button
+    class="circle-btn"
+    aria-label="Create task"
+    (click)="onCreateTaskClick()"
+    matTooltip="Create a new task"
+    matTooltipPosition="above"
+  >Add Task</button>
+  </div>
+
 <div class="filters">
     <app-task-filter-row filterName="Priority" [buttons]="priorities" [selectedValue]="selectedPriority" (selected)="onPrioritySelected($event)"></app-task-filter-row>
     <app-task-filter-row filterName="Category" [buttons]="categories" [selectedValue]="selectedCategory" (selected)="onCategorySelected($event)"></app-task-filter-row>
