@@ -1,37 +1,37 @@
-h1, .column {
-    display: flex;
-    flex-direction: column;
-    background-color: rgb(245, 245, 245);
-    border: 1px solid rgba(0, 0, 0, 0.089);
-    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.2);
-    border-radius: 15px;
-    padding: 1.3rem;
+h1,
+.column {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(245, 245, 245);
+  border: 1px solid rgba(0, 0, 0, 0.089);
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  padding: 1.3rem;
 }
 
 :host {
-    width: 30%;
-
+  width: 30%;
 }
 
 .column {
-    height: 47vh;
-    overflow-y: auto;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE/Edge legacy */
+  height: 45vh;
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge legacy */
 }
 
-p{
-    margin: auto;
+p {
+  margin: auto;
 }
 
 .column::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera */
+  display: none; /* Chrome, Safari, Opera */
 }
 
 app-task-card {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 app-task-card:last-child {
-    margin: 0;
+  margin: 0;
 }

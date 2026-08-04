@@ -7,7 +7,7 @@ import { TaskDashboardComponent } from './features/tasks/task-dashboard/task-das
   standalone: true,
   imports: [RouterOutlet, TaskDashboardComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent {
   title = 'Task-Manager-Internship-BMW';

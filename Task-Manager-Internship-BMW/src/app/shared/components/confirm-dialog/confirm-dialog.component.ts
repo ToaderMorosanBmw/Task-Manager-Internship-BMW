@@ -5,8 +5,6 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './confirm-dialog.component.html',
-  styleUrl: './confirm-dialog.component.css'
+  styleUrl: './confirm-dialog.component.css',
 })
-export class ConfirmDialogComponent {
-
-}
+export class ConfirmDialogComponent {}

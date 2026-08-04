@@ -8,7 +8,7 @@ import { Task } from '../../../core/models/task.model';
 import { RouterLink } from '@angular/router';
 import { TaskWithCategory } from '../../../core/models/task-with-category.model';
 import { TaskService } from '../../../core/services/task.service';
-import { CategoryColor } from '../../../shared/directives/category-color';
+import { CategoryColor } from '../../../shared/directives/category-color.directive';
 import { TaskModalComponent } from '../task-modal/task-modal.component';
 
 @Component({
@@ -16,7 +16,7 @@ import { TaskModalComponent } from '../task-modal/task-modal.component';
   standalone: true,
   imports: [CategoryColor, MatButtonModule, MatTooltipModule, MatDialogModule, RouterLink],
   templateUrl: './task-card.component.html',
-  styleUrl: './task-card.component.css'
+  styleUrl: './task-card.component.css',
 })
 export class TaskCardComponent {
   @Input()
@@ -33,10 +33,11 @@ export class TaskCardComponent {
 
     const dialogRef = this.dialog.open(TaskModalComponent, {
       width: '500px',
-      data: { task: this.task }
+      data: { task: this.task },
     });
 
-    dialogRef.afterClosed()
+    dialogRef
+      .afterClosed()
       .pipe(
         filter((updatedTask): updatedTask is TaskWithCategory => Boolean(updatedTask)),
         map((updatedTask) => {
@@ -46,7 +47,8 @@ export class TaskCardComponent {
             categoryId: updatedTask.categoryId ?? this.task.categoryId,
             status: updatedTask.status ?? this.task.status,
             priority: updatedTask.priority ?? this.task.priority,
-            dueDate: this.normalizeDueDate(updatedTask.dueDate ?? this.task.dueDate) as Date | undefined
+            dueDate: this.normalizeDueDate(updatedTask.dueDate ?? this.task.dueDate) as
+              Date | undefined,
           };
 
           return taskToSave;
@@ -58,12 +60,12 @@ export class TaskCardComponent {
         next: (savedTask) => {
           const normalizedTask = {
             ...savedTask,
-            dueDate: this.normalizeDueDate(savedTask.dueDate)
+            dueDate: this.normalizeDueDate(savedTask.dueDate),
           };
 
           this.task = { ...this.task, ...normalizedTask } as TaskWithCategory;
         },
-        error: (err) => console.error('Failed to update task', err)
+        error: (err) => console.error('Failed to update task', err),
       });
   }
 
@@ -81,7 +83,7 @@ export class TaskCardComponent {
     return normalizedDate.toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',
-      day: 'numeric'
+      day: 'numeric',
     });
   }
 

@@ -1,26 +1,33 @@
 <a [routerLink]="['/tasks', task.id]" class="card-link">
-    <div class="card-title">
-  <h3
-    [class.show-full-title]="showFullTitle"
-    (mouseenter)="toggleTitlePreview(true)"
-    (mouseleave)="toggleTitlePreview(false)"
-    [matTooltip]="task.title"
-    matTooltipPosition="above"
-    [attr.aria-label]="task.title"
-  >{{ task.title }}</h3>
+  <div class="card-title">
+    <h3
+      [class.show-full-title]="showFullTitle"
+      (mouseenter)="toggleTitlePreview(true)"
+      (mouseleave)="toggleTitlePreview(false)"
+      [matTooltip]="task.title"
+      matTooltipPosition="above"
+      [attr.aria-label]="task.title"
+    >
+      {{ task.title }}
+    </h3>
 
-  <button
-    class="circle-btn"
-    aria-label="Edit task"
-    (click)="onEditClick($event)"
-    matTooltip="Edit this task"
-    matTooltipPosition="above"
-  >✎</button>
-</div>
-<p class="category" [categoryColor]="task.category?.color || ''">{{task.category?.title || 'Uncategorized'}}</p>
-    <p class="description">{{task.description}}</p>
-    <hr>
-    <div class="footer">
-        <p>{{task.assignee}}</p>
-        <p>{{ getDueDateLabel(task.dueDate) }}</p>
-    </div></a>
+    <button
+      class="circle-btn"
+      aria-label="Edit task"
+      (click)="onEditClick($event)"
+      matTooltip="Edit this task"
+      matTooltipPosition="above"
+    >
+      ✎
+    </button>
+  </div>
+  <p class="category" [categoryColor]="task.category?.color || ''">
+    {{ task.category?.title || 'Uncategorized' }}
+  </p>
+  <p class="description">{{ task.description }}</p>
+  <hr />
+  <div class="footer">
+    <p>{{ task.assignee }}</p>
+    <p>{{ getDueDateLabel(task.dueDate) }}</p>
+  </div></a
+>

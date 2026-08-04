@@ -18,7 +18,13 @@
 
   <mat-form-field appearance="outline">
     <mat-label>Due date</mat-label>
-    <input matInput type="date" [ngModel]="dueDateInput" (ngModelChange)="dueDateInput = $event" name="dueDate" />
+    <input
+      matInput
+      type="date"
+      [ngModel]="dueDateInput"
+      (ngModelChange)="dueDateInput = $event"
+      name="dueDate"
+    />
   </mat-form-field>
 
   <mat-form-field appearance="outline">
@@ -56,7 +62,12 @@
     <mat-label>Subtasks</mat-label>
     <div class="chip-row">
       <mat-form-field appearance="outline" class="inline-field">
-        <input matInput [(ngModel)]="newSubtaskTitle" name="newSubtaskTitle" placeholder="New subtask" />
+        <input
+          matInput
+          [(ngModel)]="newSubtaskTitle"
+          name="newSubtaskTitle"
+          placeholder="New subtask"
+        />
       </mat-form-field>
       <button mat-stroked-button type="button" (click)="addSubtask()">Add</button>
     </div>
