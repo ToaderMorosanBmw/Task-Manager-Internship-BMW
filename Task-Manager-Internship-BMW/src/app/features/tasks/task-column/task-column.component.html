@@ -2,7 +2,7 @@
 
 <div class="column">
     @for (item of cardItems; track $index) {
-        <app-task-card [task]="item" [priorityColor]="item.priority || ''"></app-task-card>
+        <app-task-card [task]="item" [priorityColor]="item.priority || ''" (deleted)="onTaskDeleted($event)"></app-task-card>
     } @empty {
         <p class="loading">No tasks</p>
     }

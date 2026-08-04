@@ -158,5 +158,10 @@ export class TaskDashboardComponent implements OnInit {
           });
       });
   }
+
+      onTaskDeleted(id: string): void {
+        this.allTasks = this.allTasks.filter((t) => t.id !== id);
+        this.applyFiters();
+      }
 }
 
