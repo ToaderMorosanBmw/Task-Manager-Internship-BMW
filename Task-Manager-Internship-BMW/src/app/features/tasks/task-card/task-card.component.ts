@@ -1,7 +1,9 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, DestroyRef, Input, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { filter, map, switchMap } from 'rxjs';
 import { Task } from '../../../core/models/task.model';
 import { RouterLink } from '@angular/router';
 import { TaskWithCategory } from '../../../core/models/task-with-category.model';
@@ -23,6 +25,7 @@ export class TaskCardComponent {
   showFullTitle = false;
   private dialog = inject(MatDialog);
   private taskService = inject(TaskService);
+  private destroyRef = inject(DestroyRef);
 
   onEditClick(event: Event): void {
     event.preventDefault();
@@ -33,21 +36,25 @@ export class TaskCardComponent {
       data: { task: this.task }
     });
 
-    dialogRef.afterClosed().subscribe((updatedTask: TaskWithCategory | undefined) => {
-      if (!updatedTask) {
-        return;
-      }
+    dialogRef.afterClosed()
+      .pipe(
+        filter((updatedTask): updatedTask is TaskWithCategory => Boolean(updatedTask)),
+        map((updatedTask) => {
+          const taskToSave: Task = {
+            ...this.task,
+            ...updatedTask,
+            categoryId: updatedTask.categoryId ?? this.task.categoryId,
+            status: updatedTask.status ?? this.task.status,
+            priority: updatedTask.priority ?? this.task.priority,
+            dueDate: this.normalizeDueDate(updatedTask.dueDate ?? this.task.dueDate) as Date | undefined
+          };
 
-      const taskToSave: Task = {
-        ...this.task,
-        ...updatedTask,
-        categoryId: updatedTask.categoryId ?? this.task.categoryId,
-        status: updatedTask.status ?? this.task.status,
-        priority: updatedTask.priority ?? this.task.priority,
-        dueDate: this.normalizeDueDate(updatedTask.dueDate ?? this.task.dueDate) as Date | undefined
-      };
-
-      this.taskService.updateTask(this.task.id as string, taskToSave).subscribe({
+          return taskToSave;
+        }),
+        switchMap((taskToSave) => this.taskService.updateTask(this.task.id as string, taskToSave)),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe({
         next: (savedTask) => {
           const normalizedTask = {
             ...savedTask,
@@ -58,7 +65,6 @@ export class TaskCardComponent {
         },
         error: (err) => console.error('Failed to update task', err)
       });
-    });
   }
 
   toggleTitlePreview(show: boolean): void {
