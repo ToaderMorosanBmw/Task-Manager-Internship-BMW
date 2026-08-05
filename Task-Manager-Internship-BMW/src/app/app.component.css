@@ -4,3 +4,25 @@
   align-items: center;
   height: 100%;
 }
+
+.theme-toggle-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+  padding: 10px 15px;
+  border-radius: 50px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-dashboard);
+  color: var(--text-main);
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 10px var(--shadow-color);
+  transition: all 0.3s ease;
+}
+
+.theme-toggle-btn:hover {
+  transform: scale(1.05);
+  background-color: var(--bg-card);
+}

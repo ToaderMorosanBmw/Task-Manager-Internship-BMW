@@ -25,7 +25,7 @@
     {
       "id": "1",
       "title": "Prepare sprint review",
-      "description": "Summarize completed work, blockers, and next steps for the team. Include a short recap of what shipped, what is still at risk, and what the team should focus on during the next iteration.",
+      "description": "Summarize completed work, blockers, and next steps for the team.",
       "priority": "High",
       "dueDate": "2026-08-01T00:00:00.000Z",
       "estimatedTime": 4,
@@ -34,31 +34,14 @@
       "assignee": "Alex",
       "categoryId": "1",
       "subtasks": [
-        {
-          "id": 101,
-          "title": "Collect sprint metrics",
-          "description": "Gather velocity, bug count, and completed story points.",
-          "status": "Completed",
-          "completed": true
-        },
-        {
-          "id": 102,
-          "title": "Prepare blockers list",
-          "description": "List dependency risks and unresolved issues from the sprint.",
-          "status": "To Do",
-          "completed": false
-        }
-      ],
-      "category": {
-        "id": "1",
-        "title": "Work",
-        "color": "#4f46e5"
-      }
+        { "id": 101, "title": "Collect sprint metrics", "status": "Completed", "completed": true },
+        { "id": 102, "title": "Prepare blockers list", "status": "To Do", "completed": false }
+      ]
     },
     {
       "id": "2",
       "title": "Buy groceries",
-      "description": "Pick up vegetables, milk, bread, and a few pantry staples for the week. Make sure to check the fridge inventory before going so the list stays short and practical.",
+      "description": "Pick up vegetables, milk, bread, and a few pantry staples.",
       "priority": "Medium",
       "dueDate": "2026-07-31T00:00:00.000Z",
       "estimatedTime": 1,
@@ -67,31 +50,14 @@
       "assignee": "Mihai",
       "categoryId": "2",
       "subtasks": [
-        {
-          "id": 201,
-          "title": "Check pantry",
-          "description": "Avoid buying duplicates by reviewing what is already available.",
-          "status": "To Do",
-          "completed": false
-        },
-        {
-          "id": 202,
-          "title": "Create shopping list",
-          "description": "Write the final list based on the pantry review and weekly needs.",
-          "status": "Completed",
-          "completed": true
-        }
-      ],
-      "category": {
-        "id": "2",
-        "title": "Personal",
-        "color": "#ec4899"
-      }
+        { "id": 201, "title": "Check pantry", "status": "To Do", "completed": false },
+        { "id": 202, "title": "Create shopping list", "status": "Completed", "completed": true }
+      ]
     },
     {
       "id": "3",
       "title": "Client onboarding call",
-      "description": "Walk the new client through the initial setup steps and answer questions about onboarding, access, and rollout expectations. Keep notes about feature priorities and any blockers that need follow-up after the call.",
+      "description": "Walk the new client through the initial setup steps.",
       "priority": "High",
       "dueDate": "2026-08-03T00:00:00.000Z",
       "estimatedTime": 2,
@@ -100,59 +66,30 @@
       "assignee": "Sarah",
       "categoryId": "3",
       "subtasks": [
-        {
-          "id": 301,
-          "title": "Prepare agenda",
-          "description": "Share a short agenda before the call so the client knows what to expect.",
-          "status": "Completed",
-          "completed": true
-        },
-        {
-          "id": 302,
-          "title": "Collect account details",
-          "description": "Verify team contacts, company info, and access requirements.",
-          "status": "To Do",
-          "completed": false
-        }
-      ],
-      "category": {
-        "id": "3",
-        "title": "Meeting",
-        "color": "#f59e0b"
-      }
+        { "id": 301, "title": "Prepare agenda", "status": "Completed", "completed": true },
+        { "id": 302, "title": "Collect account details", "status": "To Do", "completed": false }
+      ]
     },
     {
       "id": "4",
       "title": "Fix login bug",
-      "description": "Investigate the password reset issue reported by QA and reproduce it locally before implementing a fix. Review the recent authentication changes and confirm whether the regression is caused by the new flow or a missing validation rule.",
+      "description": "Investigate the password reset issue reported by QA.",
       "priority": "High",
-      "dueDate": "2026-07-30",
+      "dueDate": "2026-07-30T00:00:00.000Z",
       "estimatedTime": 3,
       "status": "In Progress",
       "tags": ["bug", "frontend", "urgent"],
       "assignee": "Diana",
       "categoryId": "4",
       "subtasks": [
-        {
-          "id": 401,
-          "title": "Reproduce issue",
-          "description": "Test the reset flow and confirm the exact broken case.",
-          "status": "Completed",
-          "completed": true
-        },
-        {
-          "id": 402,
-          "title": "Patch auth flow",
-          "description": "Implement the fix and validate the regression test.",
-          "status": "To Do",
-          "completed": false
-        }
+        { "id": 401, "title": "Reproduce issue", "status": "Completed", "completed": true },
+        { "id": 402, "title": "Patch auth flow", "status": "To Do", "completed": false }
       ]
     },
     {
       "id": "5",
       "title": "Plan weekend trip",
-      "description": "Research destinations, compare accommodation options, and create a rough shortlist for the weekend trip. Include travel time, estimated cost, and a few backup options in case the first choice is unavailable.",
+      "description": "Research destinations, compare accommodation options.",
       "priority": "Low",
       "dueDate": "2026-08-10T00:00:00.000Z",
       "estimatedTime": 2,
@@ -161,172 +98,89 @@
       "assignee": "Ioana",
       "categoryId": "2",
       "subtasks": [
-        {
-          "id": 501,
-          "title": "Compare destinations",
-          "description": "Review weather, price, and travel distance for the top options.",
-          "status": "Completed",
-          "completed": true
-        },
-        {
-          "id": 502,
-          "title": "Pick backup option",
-          "description": "Choose a fallback destination in case the first choice gets booked.",
-          "status": "To Do",
-          "completed": false
-        }
-      ],
-      "category": {
-        "id": "2",
-        "title": "Personal",
-        "color": "#ec4899"
-      }
+        { "id": 501, "title": "Compare destinations", "status": "Completed", "completed": true },
+        { "id": 502, "title": "Pick backup option", "status": "To Do", "completed": false }
+      ]
     },
     {
       "id": "6",
       "title": "Write project proposal",
-      "description": "Draft the main proposal sections, budget estimate, and delivery assumptions. Expand the narrative around outcomes, expected effort, and the timeline so the proposal reads as a complete package.",
+      "description": "Draft the main proposal sections, budget estimate.",
       "priority": "Medium",
-      "dueDate": "2026-08-05",
+      "dueDate": "2026-08-05T00:00:00.000Z",
       "estimatedTime": 5,
       "status": "Completed",
       "tags": ["proposal", "planning"],
       "assignee": "Andrei",
       "categoryId": "1",
       "subtasks": [
-        {
-          "id": 601,
-          "title": "Gather requirements",
-          "description": "Collect client expectations and key project constraints.",
-          "status": "Completed",
-          "completed": true
-        },
-        {
-          "id": 602,
-          "title": "Draft budget estimate",
-          "description": "Prepare a first-pass estimate for the proposal budget.",
-          "status": "To Do",
-          "completed": false
-        }
-      ],
-      "category": {
-        "id": "1",
-        "title": "Work",
-        "color": "#4f46e5"
-      }
+        { "id": 601, "title": "Gather requirements", "status": "Completed", "completed": true },
+        { "id": 602, "title": "Draft budget estimate", "status": "To Do", "completed": false }
+      ]
     },
     {
       "id": "7",
       "title": "Review PR comments",
-      "description": "Check feedback on the latest pull request and respond to each comment with a clear action plan. Make sure to verify whether any suggestions should be implemented now or deferred to a follow-up task.",
+      "description": "Check feedback on the latest pull request.",
       "priority": "High",
-      "dueDate": "2026-08-02",
+      "dueDate": "2026-08-02T00:00:00.000Z",
       "estimatedTime": 2,
       "status": "In Progress",
       "tags": ["code", "review"],
       "assignee": "Mara",
       "categoryId": "1",
       "subtasks": [
-        {
-          "id": 701,
-          "title": "Open PR discussion",
-          "description": "Review each reviewer comment before drafting replies.",
-          "status": "To Do",
-          "completed": false
-        },
-        {
-          "id": 702,
-          "title": "Reply to comments",
-          "description": "Draft replies and note which comments need implementation.",
-          "status": "Completed",
-          "completed": true
-        }
+        { "id": 701, "title": "Open PR discussion", "status": "To Do", "completed": false },
+        { "id": 702, "title": "Reply to comments", "status": "Completed", "completed": true }
       ]
     },
     {
       "id": "8",
       "title": "Prepare dinner for guests",
-      "description": "Cook a simple menu for the evening gathering and make sure the preparation timeline fits the arrival time. Keep the menu easy to execute while still feeling generous and pleasant for the guests.",
+      "description": "Cook a simple menu for the evening gathering.",
       "priority": "Low",
-      "dueDate": "2026-08-07",
+      "dueDate": "2026-08-07T00:00:00.000Z",
       "estimatedTime": 1,
       "status": "Completed",
       "tags": ["home", "cooking"],
       "assignee": "Elena",
       "categoryId": "2",
       "subtasks": [
-        {
-          "id": 801,
-          "title": "Buy ingredients",
-          "description": "Pick up the ingredients needed for the planned menu.",
-          "status": "Completed",
-          "completed": true
-        },
-        {
-          "id": 802,
-          "title": "Prep the kitchen",
-          "description": "Set up the cooking space and portion the ingredients before guests arrive.",
-          "status": "To Do",
-          "completed": false
-        }
+        { "id": 801, "title": "Buy ingredients", "status": "Completed", "completed": true },
+        { "id": 802, "title": "Prep the kitchen", "status": "To Do", "completed": false }
       ]
     },
     {
       "id": "9",
       "title": "Send follow-up email",
-      "description": "Send the client a recap and next-step summary after the latest call. Include a concise summary of the discussion, the next scheduled action, and any outstanding questions.",
+      "description": "Send the client a recap and next-step summary.",
       "priority": "Medium",
-      "dueDate": "2026-08-04",
+      "dueDate": "2026-08-04T00:00:00.000Z",
       "estimatedTime": 1,
-      "status": "To Do",
+      "status": "In Progress",
       "tags": ["email", "client"],
       "assignee": "Radu",
       "categoryId": "3",
       "subtasks": [
-        {
-          "id": 901,
-          "title": "Draft message",
-          "description": "Write a concise email with the follow-up details.",
-          "status": "To Do",
-          "completed": false
-        },
-        {
-          "id": 902,
-          "title": "Send email",
-          "description": "Send the final follow-up message to the client.",
-          "status": "Completed",
-          "completed": true
-        }
+        { "id": 901, "title": "Draft message", "status": "To Do", "completed": false },
+        { "id": 902, "title": "Send email", "status": "Completed", "completed": true }
       ]
     },
     {
       "id": "10",
       "title": "Deploy hotfix",
-      "description": "Release the urgent fix to production after validation and confirm that the deployment completed successfully. Document the release window, impacted services, and any rollback steps to keep the process safe.",
+      "description": "Release the urgent fix to production.",
       "priority": "High",
-      "dueDate": "2026-07-29",
+      "dueDate": "2026-07-29T00:00:00.000Z",
       "estimatedTime": 3,
       "status": "Completed",
       "tags": ["deploy", "urgent"],
       "assignee": "Cristina",
       "categoryId": "4",
       "subtasks": [
-        {
-          "id": 1001,
-          "title": "Validate deployment",
-          "description": "Confirm the release is healthy and no regressions appeared.",
-          "status": "Completed",
-          "completed": true
-        },
-        {
-          "id": 1002,
-          "title": "Share release notes",
-          "description": "Send deployment notes to the team and stakeholders.",
-          "status": "To Do",
-          "completed": false
-        }
+        { "id": 1001, "title": "Validate deployment", "status": "Completed", "completed": true },
+        { "id": 1002, "title": "Share release notes", "status": "To Do", "completed": false }
       ]
     }
-  ],
-  "$schema": "./node_modules/json-server/schema.json"
+  ]
 }
