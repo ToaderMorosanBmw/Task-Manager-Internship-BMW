@@ -15,11 +15,14 @@
     <p class="description">{{ task.description || '' }}</p>
     <mat-form-field subscriptSizing="dynamic" appearance="outline">
         <mat-label>Status</mat-label>
-        <mat-select [(ngModel)]="task.status" (selectionChange)="updateStatus()">
+        <mat-select formControlName="status" (selectionChange)="updateStatus()">
             @for (option of statusOptions; track option) {
                 <mat-option [value]="option">{{ option }}</mat-option>
             }
         </mat-select>
+        <mat-error *ngIf="taskForm.get('status')?.hasError('required') && taskForm.get('status')?.touched">
+          Status is required.
+        </mat-error>
     </mat-form-field>
 
     <div class="subtasks">

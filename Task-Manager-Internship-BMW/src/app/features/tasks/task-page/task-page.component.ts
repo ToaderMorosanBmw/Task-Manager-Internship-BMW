@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { TaskWithCategory } from '../../../core/models/task-with-category.model';
 import { CategoryService } from '../../../core/services/category.service';
@@ -9,19 +10,20 @@ import { CategoryColor } from "../../../shared/directives/category-color";
 import { PriorityColor } from "../../../shared/directives/priority-color.directive";
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-task-page',
   standalone: true,
-  imports: [CategoryColor, PriorityColor, MatFormFieldModule, MatSelectModule, FormsModule, MatCheckboxModule],
+  imports: [CommonModule, CategoryColor, PriorityColor, MatFormFieldModule, MatSelectModule, ReactiveFormsModule, MatCheckboxModule],
   templateUrl: './task-page.component.html',
   styleUrl: './task-page.component.css'
 })
 export class TaskPageComponent implements OnInit{
   statusOptions = ['To Do', 'In Progress', 'Completed'];
   isCompleted = false;
+  taskForm: FormGroup;
 
   task: TaskWithCategory = {
     id: '',
@@ -36,13 +38,26 @@ export class TaskPageComponent implements OnInit{
   private categoryService = inject(CategoryService)
   private route = inject(ActivatedRoute)
   private destroyRef = inject(DestroyRef)
+  private fb = inject(FormBuilder)
+
+  constructor() {
+    this.taskForm = this.fb.group({
+      status: ['To Do', Validators.required]
+    });
+  }
 
   updateStatus(): void {
-    if (!this.task.id) {
+    if (!this.task.id || this.taskForm.invalid) {
       return;
     }
 
-    this.task.status = this.isCompleted ? 'Completed' : 'To Do';
+    const newStatus = this.taskForm.get('status')?.value as TaskWithCategory['status'];
+    if (!newStatus) {
+      return;
+    }
+
+    this.task.status = newStatus;
+    this.isCompleted = newStatus === 'Completed';
 
     this.taskService.updateTask(this.task.id, this.task)
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -91,6 +106,7 @@ export class TaskPageComponent implements OnInit{
       .subscribe((taskWithCategory: TaskWithCategory) => {
         this.task = taskWithCategory;
         this.isCompleted = this.task.status === 'Completed';
+        this.taskForm.patchValue({ status: this.task.status });
       })
     }
 }
