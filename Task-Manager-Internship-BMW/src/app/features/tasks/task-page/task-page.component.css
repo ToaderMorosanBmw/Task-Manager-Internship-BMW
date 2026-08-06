@@ -1,3 +1,10 @@
+:host {
+  display: flex;
+  justify-content: center;
+  padding-top: 6vh;
+  width: 100%;
+}
+
 h3,
 p {
   margin: 0;
@@ -11,18 +18,22 @@ mat-form-field {
 hr {
   width: 100%;
   margin-bottom: 0.6rem;
+  border: none;
+  height: 1px;
+  background-color: var(--hr-color);
 }
 
 .card {
   display: flex;
   flex-direction: column;
-  background: rgb(245, 245, 245);
+  background-color: var(--bg-dashboard);
+  color: var(--text-main);
   padding: 1.5em;
   border-radius: 20px;
-  border: 1px solid rgba(0, 0, 0, 0.092);
+  border: 1px solid var(--border-color);
   width: 70dvw;
   height: 80dvh;
-  box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.061);
+  box-shadow: 0 0 10px 5px var(--shadow-color);
 }
 
 .header-top,
@@ -37,6 +48,7 @@ hr {
 
 .asignee {
   padding-top: 0;
+  color: var(--text-muted);
 }
 
 .category {
@@ -49,11 +61,11 @@ hr {
 }
 
 .content {
-  background-color: rgb(240, 240, 240);
-  border: 1px solid rgba(0, 0, 0, 0.14);
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
   border-radius: 10px;
   padding: 0.4rem 1rem;
-  box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.064);
+  box-shadow: 0 0 10px 5px var(--shadow-color);
   overflow-y: auto;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
@@ -78,7 +90,7 @@ mat-form-field {
 }
 
 .description {
-  background-color: rgb(223, 223, 223);
+  background-color: var(--bg-description);
   border-radius: 6px;
   padding: 0.8rem 1rem;
   line-height: 2rem;
@@ -91,10 +103,23 @@ mat-form-field {
 
 .tags {
   display: flex;
-  color: rgb(0, 0, 0, 0.6);
+  color: var(--text-muted);
 }
 
 .tags p {
   font-size: 1rem;
   font-weight: 100;
+}
+.spinner-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99;
+  background-color: var(--bg-page);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

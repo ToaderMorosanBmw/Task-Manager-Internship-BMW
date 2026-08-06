@@ -11,6 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-task-page',
@@ -22,6 +23,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatSelectModule,
     FormsModule,
     MatCheckboxModule,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './task-page.component.html',
   styleUrl: './task-page.component.css',
@@ -29,6 +31,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 export class TaskPageComponent implements OnInit {
   statusOptions = ['To Do', 'In Progress', 'Completed'];
   isCompleted = false;
+  isLoading = true;
 
   task: TaskWithCategory = {
     id: '',
@@ -96,9 +99,17 @@ export class TaskPageComponent implements OnInit {
           )
         )
       )
-      .subscribe((taskWithCategory: TaskWithCategory) => {
-        this.task = taskWithCategory;
-        this.isCompleted = this.task.status === 'Completed';
+      .subscribe({
+        next: (taskWithCategory: TaskWithCategory) => {
+          this.task = taskWithCategory;
+          this.isCompleted = this.task.status === 'Completed';
+
+          this.isLoading = false;
+        },
+        error: (err) => {
+          console.error('Error loading task', err);
+          this.isLoading = false;
+        },
       });
   }
 }

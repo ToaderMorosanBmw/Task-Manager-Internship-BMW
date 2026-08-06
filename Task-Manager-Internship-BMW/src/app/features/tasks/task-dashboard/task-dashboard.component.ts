@@ -8,18 +8,24 @@ import { TaskWithCategory } from '../../../core/models/task-with-category.model'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { switchMap, map, filter } from 'rxjs';
 import { FilterService } from '../../../core/services/filter.service';
-import { TaskFilterComponent } from '../task-filter/task-filter.component';
 import { TaskFilterRowComponent } from '../task-filter-row/task-filter-row.component';
 import { CdkDropListGroup } from '@angular/cdk/drag-drop';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-task-dashboard',
   standalone: true,
-  imports: [TaskColumnComponent, TaskFilterComponent, TaskFilterRowComponent, CdkDropListGroup],
+  imports: [
+    TaskColumnComponent,
+    TaskFilterRowComponent,
+    CdkDropListGroup,
+    MatProgressSpinnerModule,
+  ],
   templateUrl: './task-dashboard.component.html',
   styleUrl: './task-dashboard.component.css',
 })
 export class TaskDashboardComponent implements OnInit {
+  isLoading: boolean = true;
   allTasks: TaskWithCategory[] = [];
   visibleTasks: TaskWithCategory[] = [];
   selectedCategory: string = '';
@@ -72,7 +78,6 @@ export class TaskDashboardComponent implements OnInit {
                 const matchedCategory = categories.find(
                   (category) => category.id === task.categoryId
                 );
-                // id must be string for === to work, json-server convers all fields id to string
                 return {
                   ...task,
                   category: matchedCategory,
@@ -82,20 +87,29 @@ export class TaskDashboardComponent implements OnInit {
           );
         })
       )
-      .subscribe((tasksWithCategory: TaskWithCategory[]) => {
-        this.allTasks = tasksWithCategory;
-        this.visibleTasks = tasksWithCategory;
+      .subscribe({
+        next: (tasksWithCategory: TaskWithCategory[]) => {
+          this.allTasks = tasksWithCategory;
+          this.visibleTasks = tasksWithCategory;
 
-        const categoryColor: Record<string, { title: string; color: string }> = {};
+          const categoryColor: Record<string, { title: string; color: string }> = {};
 
-        tasksWithCategory.forEach((task) => {
-          categoryColor[task.category!.title] = {
-            title: task.category!.title,
-            color: task.category!.color,
-          };
-        });
+          tasksWithCategory.forEach((task) => {
+            categoryColor[task.category!.title] = {
+              title: task.category!.title,
+              color: task.category!.color,
+            };
+          });
 
-        this.categories = Object.values(categoryColor);
+          this.categories = Object.values(categoryColor);
+
+          this.isLoading = false;
+        },
+        error: (err) => {
+          console.error('Failed to load dashboard data:', err);
+
+          this.isLoading = false;
+        },
       });
   }
 
