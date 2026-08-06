@@ -6,7 +6,7 @@
   <div [priorityColor]="task.priority || ''" class="card">
     <div class="header-top">
       <h3>{{ task.title }}</h3>
-      <p class="due-date">{{ task.dueDate || '' }}</p>
+      <p class="due-date">{{ task.dueDate | date: 'MMM d, y' }}</p>
     </div>
     <hr />
     @if (task.id) {
