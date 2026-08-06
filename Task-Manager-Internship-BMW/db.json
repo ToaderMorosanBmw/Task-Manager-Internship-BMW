@@ -30,12 +30,26 @@
       "dueDate": "2026-08-01T00:00:00.000Z",
       "estimatedTime": 4,
       "status": "To Do",
-      "tags": ["planning", "meeting", "team"],
+      "tags": [
+        "planning",
+        "meeting",
+        "team"
+      ],
       "assignee": "Alex",
       "categoryId": "1",
       "subtasks": [
-        { "id": 101, "title": "Collect sprint metrics", "status": "Completed", "completed": true },
-        { "id": 102, "title": "Prepare blockers list", "status": "To Do", "completed": false }
+        {
+          "id": 101,
+          "title": "Collect sprint metrics",
+          "status": "Completed",
+          "completed": true
+        },
+        {
+          "id": 102,
+          "title": "Prepare blockers list",
+          "status": "To Do",
+          "completed": false
+        }
       ]
     },
     {
@@ -46,12 +60,25 @@
       "dueDate": "2026-07-31T00:00:00.000Z",
       "estimatedTime": 1,
       "status": "In Progress",
-      "tags": ["home", "shopping"],
+      "tags": [
+        "home",
+        "shopping"
+      ],
       "assignee": "Mihai",
       "categoryId": "2",
       "subtasks": [
-        { "id": 201, "title": "Check pantry", "status": "To Do", "completed": false },
-        { "id": 202, "title": "Create shopping list", "status": "Completed", "completed": true }
+        {
+          "id": 201,
+          "title": "Check pantry",
+          "status": "To Do",
+          "completed": false
+        },
+        {
+          "id": 202,
+          "title": "Create shopping list",
+          "status": "Completed",
+          "completed": true
+        }
       ]
     },
     {
@@ -62,13 +89,31 @@
       "dueDate": "2026-08-03T00:00:00.000Z",
       "estimatedTime": 2,
       "status": "In Progress",
-      "tags": ["client", "call"],
+      "tags": [
+        "client",
+        "call"
+      ],
       "assignee": "Sarah",
       "categoryId": "3",
       "subtasks": [
-        { "id": 301, "title": "Prepare agenda", "status": "Completed", "completed": true },
-        { "id": 302, "title": "Collect account details", "status": "To Do", "completed": false }
-      ]
+        {
+          "id": 301,
+          "title": "Prepare agenda",
+          "status": "Completed",
+          "completed": true
+        },
+        {
+          "id": 302,
+          "title": "Collect account details",
+          "status": "To Do",
+          "completed": false
+        }
+      ],
+      "category": {
+        "id": "3",
+        "title": "Meeting",
+        "color": "#f59e0b"
+      }
     },
     {
       "id": "4",
@@ -78,12 +123,26 @@
       "dueDate": "2026-07-30T00:00:00.000Z",
       "estimatedTime": 3,
       "status": "In Progress",
-      "tags": ["bug", "frontend", "urgent"],
+      "tags": [
+        "bug",
+        "frontend",
+        "urgent"
+      ],
       "assignee": "Diana",
       "categoryId": "4",
       "subtasks": [
-        { "id": 401, "title": "Reproduce issue", "status": "Completed", "completed": true },
-        { "id": 402, "title": "Patch auth flow", "status": "To Do", "completed": false }
+        {
+          "id": 401,
+          "title": "Reproduce issue",
+          "status": "Completed",
+          "completed": true
+        },
+        {
+          "id": 402,
+          "title": "Patch auth flow",
+          "status": "To Do",
+          "completed": false
+        }
       ]
     },
     {
@@ -94,12 +153,25 @@
       "dueDate": "2026-08-10T00:00:00.000Z",
       "estimatedTime": 2,
       "status": "To Do",
-      "tags": ["travel", "personal"],
+      "tags": [
+        "travel",
+        "personal"
+      ],
       "assignee": "Ioana",
       "categoryId": "2",
       "subtasks": [
-        { "id": 501, "title": "Compare destinations", "status": "Completed", "completed": true },
-        { "id": 502, "title": "Pick backup option", "status": "To Do", "completed": false }
+        {
+          "id": 501,
+          "title": "Compare destinations",
+          "status": "Completed",
+          "completed": true
+        },
+        {
+          "id": 502,
+          "title": "Pick backup option",
+          "status": "To Do",
+          "completed": false
+        }
       ]
     },
     {
@@ -110,12 +182,25 @@
       "dueDate": "2026-08-05T00:00:00.000Z",
       "estimatedTime": 5,
       "status": "Completed",
-      "tags": ["proposal", "planning"],
+      "tags": [
+        "proposal",
+        "planning"
+      ],
       "assignee": "Andrei",
       "categoryId": "1",
       "subtasks": [
-        { "id": 601, "title": "Gather requirements", "status": "Completed", "completed": true },
-        { "id": 602, "title": "Draft budget estimate", "status": "To Do", "completed": false }
+        {
+          "id": 601,
+          "title": "Gather requirements",
+          "status": "Completed",
+          "completed": true
+        },
+        {
+          "id": 602,
+          "title": "Draft budget estimate",
+          "status": "To Do",
+          "completed": false
+        }
       ]
     },
     {
@@ -126,12 +211,25 @@
       "dueDate": "2026-08-02T00:00:00.000Z",
       "estimatedTime": 2,
       "status": "In Progress",
-      "tags": ["code", "review"],
+      "tags": [
+        "code",
+        "review"
+      ],
       "assignee": "Mara",
       "categoryId": "1",
       "subtasks": [
-        { "id": 701, "title": "Open PR discussion", "status": "To Do", "completed": false },
-        { "id": 702, "title": "Reply to comments", "status": "Completed", "completed": true }
+        {
+          "id": 701,
+          "title": "Open PR discussion",
+          "status": "To Do",
+          "completed": false
+        },
+        {
+          "id": 702,
+          "title": "Reply to comments",
+          "status": "Completed",
+          "completed": true
+        }
       ]
     },
     {
@@ -142,12 +240,25 @@
       "dueDate": "2026-08-07T00:00:00.000Z",
       "estimatedTime": 1,
       "status": "Completed",
-      "tags": ["home", "cooking"],
+      "tags": [
+        "home",
+        "cooking"
+      ],
       "assignee": "Elena",
       "categoryId": "2",
       "subtasks": [
-        { "id": 801, "title": "Buy ingredients", "status": "Completed", "completed": true },
-        { "id": 802, "title": "Prep the kitchen", "status": "To Do", "completed": false }
+        {
+          "id": 801,
+          "title": "Buy ingredients",
+          "status": "Completed",
+          "completed": true
+        },
+        {
+          "id": 802,
+          "title": "Prep the kitchen",
+          "status": "To Do",
+          "completed": false
+        }
       ]
     },
     {
@@ -158,12 +269,25 @@
       "dueDate": "2026-08-04T00:00:00.000Z",
       "estimatedTime": 1,
       "status": "In Progress",
-      "tags": ["email", "client"],
+      "tags": [
+        "email",
+        "client"
+      ],
       "assignee": "Radu",
       "categoryId": "3",
       "subtasks": [
-        { "id": 901, "title": "Draft message", "status": "To Do", "completed": false },
-        { "id": 902, "title": "Send email", "status": "Completed", "completed": true }
+        {
+          "id": 901,
+          "title": "Draft message",
+          "status": "To Do",
+          "completed": false
+        },
+        {
+          "id": 902,
+          "title": "Send email",
+          "status": "Completed",
+          "completed": true
+        }
       ]
     },
     {
@@ -174,13 +298,27 @@
       "dueDate": "2026-07-29T00:00:00.000Z",
       "estimatedTime": 3,
       "status": "Completed",
-      "tags": ["deploy", "urgent"],
+      "tags": [
+        "deploy",
+        "urgent"
+      ],
       "assignee": "Cristina",
       "categoryId": "4",
       "subtasks": [
-        { "id": 1001, "title": "Validate deployment", "status": "Completed", "completed": true },
-        { "id": 1002, "title": "Share release notes", "status": "To Do", "completed": false }
+        {
+          "id": 1001,
+          "title": "Validate deployment",
+          "status": "Completed",
+          "completed": true
+        },
+        {
+          "id": 1002,
+          "title": "Share release notes",
+          "status": "To Do",
+          "completed": false
+        }
       ]
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

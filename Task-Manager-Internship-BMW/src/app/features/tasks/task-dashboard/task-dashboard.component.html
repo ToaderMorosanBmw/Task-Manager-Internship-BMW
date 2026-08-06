@@ -3,6 +3,19 @@
     <mat-spinner diameter="60"></mat-spinner>
   </div>
 } @else {
+  <div class="header">
+    <div class="brand-logo">
+      <div class="logo-icon">
+        <!-- SVG-ul pentru steluța curbată (sparkle) -->
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M11.999 1.5C11.999 1.5 11.455 10.024 3.5 11.999C11.455 13.975 11.999 22.5 11.999 22.5C11.999 22.5 12.544 13.975 20.5 11.999C12.544 10.024 11.999 1.5 11.999 1.5Z"
+          />
+        </svg>
+      </div>
+      <span class="logo-text">TaskFlow</span>
+    </div>
+  </div>
   <div class="filters">
     <app-task-filter-row
       filterName="Priority"
@@ -10,6 +23,7 @@
       [selectedValue]="selectedPriority"
       (selected)="onPrioritySelected($event)"
     ></app-task-filter-row>
+    <div class="vertical-line"></div>
     <app-task-filter-row
       filterName="Category"
       [buttons]="categories"

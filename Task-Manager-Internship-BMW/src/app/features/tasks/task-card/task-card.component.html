@@ -1,4 +1,7 @@
 <a [routerLink]="['/tasks', task.id]" class="card-link">
+  <p class="category" [categoryColor]="task.category?.color || ''">
+    {{ task.category?.title || 'Uncategorized' }}
+  </p>
   <div class="card-title">
     <h3
       [class.show-full-title]="showFullTitle"
@@ -21,9 +24,6 @@
       ✎
     </button>
   </div>
-  <p class="category" [categoryColor]="task.category?.color || ''">
-    {{ task.category?.title || 'Uncategorized' }}
-  </p>
   <p class="description">{{ task.description }}</p>
   @if (totalSubtasks > 0) {
     <div class="subtask-progress-wrapper">
