@@ -78,7 +78,6 @@ export class TaskDashboardComponent implements OnInit {
                 const matchedCategory = categories.find(
                   (category) => category.id === task.categoryId
                 );
-                // id must be string for === to work, json-server convers all fields id to string
                 return {
                   ...task,
                   category: matchedCategory,
@@ -88,21 +87,29 @@ export class TaskDashboardComponent implements OnInit {
           );
         })
       )
-      .subscribe((tasksWithCategory: TaskWithCategory[]) => {
-        this.allTasks = tasksWithCategory;
-        this.visibleTasks = tasksWithCategory;
+      .subscribe({
+        next: (tasksWithCategory: TaskWithCategory[]) => {
+          this.allTasks = tasksWithCategory;
+          this.visibleTasks = tasksWithCategory;
 
-        const categoryColor: Record<string, { title: string; color: string }> = {};
+          const categoryColor: Record<string, { title: string; color: string }> = {};
 
-        tasksWithCategory.forEach((task) => {
-          categoryColor[task.category!.title] = {
-            title: task.category!.title,
-            color: task.category!.color,
-          };
-        });
+          tasksWithCategory.forEach((task) => {
+            categoryColor[task.category!.title] = {
+              title: task.category!.title,
+              color: task.category!.color,
+            };
+          });
 
-        this.categories = Object.values(categoryColor);
-        this.isLoading = false;
+          this.categories = Object.values(categoryColor);
+
+          this.isLoading = false;
+        },
+        error: (err) => {
+          console.error('Failed to load dashboard data:', err);
+
+          this.isLoading = false;
+        },
       });
   }
 

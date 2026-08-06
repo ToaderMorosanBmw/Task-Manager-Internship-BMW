@@ -1,25 +1,24 @@
-import { Component, Inject, Renderer2, OnInit } from '@angular/core';
+import { Component, Inject, Renderer2, OnInit, inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { RouterOutlet } from '@angular/router'; // Asigură-te că RouterOutlet este importat
+import { RouterOutlet } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, MatIconModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   isDarkMode = false;
-  private readonly theme = '';
+  private readonly THEME_KEY = 'theme-preference';
 
-  constructor(
-    @Inject(DOCUMENT) private document: Document,
-    private renderer: Renderer2
-  ) {}
+  private document = inject(DOCUMENT);
+  private renderer = inject(Renderer2);
 
   ngOnInit(): void {
-    const savedTheme = localStorage.getItem(this.theme);
+    const savedTheme = localStorage.getItem(this.THEME_KEY);
 
     if (savedTheme === 'dark') {
       this.isDarkMode = true;
@@ -32,10 +31,10 @@ export class AppComponent {
 
     if (this.isDarkMode) {
       this.renderer.addClass(this.document.body, 'dark-theme');
-      localStorage.setItem(this.theme, 'dark');
+      localStorage.setItem(this.THEME_KEY, 'dark');
     } else {
       this.renderer.removeClass(this.document.body, 'dark-theme');
-      localStorage.setItem(this.theme, 'light');
+      localStorage.setItem(this.THEME_KEY, 'light');
     }
   }
 }

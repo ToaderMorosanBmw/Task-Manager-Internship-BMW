@@ -23,7 +23,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatSelectModule,
     FormsModule,
     MatCheckboxModule,
-    MatProgressSpinnerModule, // <-- Adăugat aici
+    MatProgressSpinnerModule,
   ],
   templateUrl: './task-page.component.html',
   styleUrl: './task-page.component.css',
@@ -107,7 +107,7 @@ export class TaskPageComponent implements OnInit {
           this.isLoading = false;
         },
         error: (err) => {
-          console.error('Eroare la încărcarea task-ului', err);
+          console.error('Error loading task', err);
           this.isLoading = false;
         },
       });
