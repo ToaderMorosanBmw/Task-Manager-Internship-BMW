@@ -1,8 +1,16 @@
-import { Directive, ElementRef, OnChanges, inject, Input, Renderer2, SimpleChanges } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  OnChanges,
+  inject,
+  Input,
+  Renderer2,
+  SimpleChanges,
+} from '@angular/core';
 
 @Directive({
   selector: '[priorityColor]',
-  standalone: true
+  standalone: true,
 })
 export class PriorityColor implements OnChanges {
   @Input('priorityColor') priority!: string;
@@ -14,7 +22,7 @@ export class PriorityColor implements OnChanges {
     const colors: Record<string, string> = {
       Low: 'green',
       Medium: 'orange',
-      High: 'red'
+      High: 'red',
     };
 
     const color = colors[this.priority] || 'gray';

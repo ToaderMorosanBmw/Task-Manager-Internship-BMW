@@ -1,10 +1,174 @@
-/* You can add global styles to this file, and also import other style files */
 :root {
-  --task-btn-bg: #bec0ca;
-  --task-btn-text: rgb(13, 14, 15);
-  --task-btn-hover-bg: #3f51b5;
-  --task-btn-hover-text: white;
+  --bg-page: #f0f0f0;
+  --bg-dashboard: rgb(250, 250, 250);
+  --bg-column: rgb(245, 245, 245);
+  --bg-card: rgb(240, 240, 240);
+  --bg-card-hover: rgba(139, 139, 7, 0.055);
+  --bg-description: rgb(223, 223, 223);
+  --bg-button: rgb(240, 240, 240);
+  --text-main: #000000;
+  --text-muted: rgb(136, 136, 136);
+  --border-color: rgba(0, 0, 0, 0.125);
+  --border-button: rgba(0, 0, 0, 0.24);
+  --shadow-color: rgba(0, 0, 0, 0.2);
+  --hr-color: rgba(0, 0, 0, 0.2);
+  --task-btn-bg: rgba(0, 0, 0, 0.08);
+  --task-btn-text: #000000;
+  --task-btn-hover-bg: rgba(0, 0, 0, 0.15);
+  --task-btn-hover-text: #000000;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body.dark-theme {
+  --bg-page: #121212;
+  --bg-dashboard: #1e1e1e;
+  --bg-column: #252525;
+  --bg-card: #2d2d2d;
+  --bg-card-hover: rgba(255, 255, 255, 0.05);
+  --bg-description: #383838;
+  --bg-button: #2d2d2d;
+  --text-main: #ffffff;
+  --text-muted: #a0a0a0;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --border-button: rgba(255, 255, 255, 0.2);
+  --shadow-color: rgba(0, 0, 0, 0.5);
+  --hr-color: rgba(255, 255, 255, 0.15);
+  --task-btn-bg: rgba(255, 255, 255, 0.1);
+  --task-btn-text: #ffffff;
+  --task-btn-hover-bg: rgba(255, 255, 255, 0.2);
+  --task-btn-hover-text: #ffffff;
+}
+
+html,
+body {
+  background-color: var(--bg-page) !important;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  color: var(--text-main) !important;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  width: 100%;
+}
+
+body.dark-theme .mat-mdc-select-value-text,
+body.dark-theme .mat-mdc-select-arrow,
+body.dark-theme .mdc-form-field,
+body.dark-theme .mat-mdc-input-element,
+body.dark-theme .mdc-text-field__input {
+  color: var(--text-main) !important;
+}
+
+body.dark-theme .mdc-label,
+body.dark-theme .mdc-floating-label,
+body.dark-theme .mat-mdc-form-field-label {
+  color: var(--text-muted) !important;
+}
+
+body.dark-theme .mat-mdc-form-field.mat-focused .mat-mdc-form-field-label {
+  color: var(--text-main) !important;
+}
+
+body.dark-theme .mdc-notched-outline__leading,
+body.dark-theme .mdc-notched-outline__notch,
+body.dark-theme .mdc-notched-outline__trailing {
+  border-color: var(--border-color) !important;
+}
+
+body.dark-theme .mdc-checkbox__unselected-icon {
+  fill: var(--text-muted) !important;
+}
+
+body.dark-theme .mat-mdc-select-panel {
+  background-color: var(--bg-dashboard) !important;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 10px var(--shadow-color) !important;
+}
+
+body.dark-theme .mat-mdc-option {
+  color: var(--text-main) !important;
+}
+
+body.dark-theme .mat-mdc-option:hover,
+body.dark-theme .mat-mdc-option:focus {
+  background-color: var(--bg-card-hover) !important;
+}
+
+body.dark-theme
+  .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled)
+  .mdc-list-item__primary-text {
+  color: #bb86fc !important;
+}
+
+body.dark-theme .mdc-dialog__surface,
+body.dark-theme .mat-mdc-dialog-surface,
+body.dark-theme .mat-mdc-dialog-container {
+  background-color: var(--bg-dashboard) !important;
+  color: var(--text-main) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 20px !important;
+  box-shadow:
+    0 11px 15px -7px rgba(0, 0, 0, 0.4),
+    0 24px 38px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+body.dark-theme .mat-mdc-dialog-title {
+  color: var(--text-main) !important;
+}
+
+body.dark-theme .mat-mdc-dialog-content {
+  color: var(--text-muted) !important;
+}
+
+body.dark-theme .mat-mdc-form-field .mat-mdc-button,
+body.dark-theme .mat-mdc-form-field .mdc-button,
+body.dark-theme .mat-mdc-dialog-actions .mat-mdc-button,
+body.dark-theme .mat-mdc-dialog-actions .mdc-button {
+  color: var(--text-main) !important;
+}
+
+body.dark-theme .mat-mdc-dialog-actions .mat-mdc-raised-button,
+body.dark-theme .mat-mdc-dialog-actions .mat-mdc-unelevated-button,
+body.dark-theme .mat-mdc-dialog-actions .mat-primary {
+  color: #000000 !important;
+}
+
+body.dark-theme mat-chip,
+body.dark-theme .mat-mdc-chip,
+body.dark-theme .mdc-evolution-chip,
+body.dark-theme mat-chip-row,
+body.dark-theme .mat-mdc-chip-row,
+body.dark-theme .mat-mdc-standard-chip {
+  background-color: var(--bg-description) !important;
+  color: var(--text-main) !important;
+}
+
+body.dark-theme mat-chip *,
+body.dark-theme .mat-mdc-chip *,
+body.dark-theme .mdc-evolution-chip *,
+body.dark-theme mat-chip-row *,
+body.dark-theme .mat-mdc-chip-row * {
+  color: var(--text-main) !important;
+}
+
+body.dark-theme .mat-mdc-chip-remove,
+body.dark-theme .mdc-evolution-chip__icon--trailing,
+body.dark-theme .mat-mdc-chip-remove .mat-icon {
+  color: var(--text-muted) !important;
+  opacity: 1 !important;
+}
+
+body.dark-theme .mat-mdc-chip-remove:hover {
+  color: #ff5252 !important;
+}
+
+body.dark-theme mat-spinner circle,
+body.dark-theme .mdc-circular-progress__indeterminate-circle-graphic {
+  stroke: var(--text-main) !important;
+}
+
+body.dark-theme textarea[formControlName='description'],
+body.dark-theme textarea.mat-mdc-input-element {
+  resize: none !important;
+}

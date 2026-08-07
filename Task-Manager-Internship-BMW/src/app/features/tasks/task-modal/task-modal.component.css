@@ -29,13 +29,15 @@ mat-form-field {
   flex: 1;
 }
 
-.chip-list, .subtask-list {
+.chip-list,
+.subtask-list {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
 }
 
-.chip, .subtask-item {
+.chip,
+.subtask-item {
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;

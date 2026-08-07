@@ -1,42 +1,50 @@
-<div [priorityColor]="task.priority || ''" class="card">
-    
-<div class="header-top">
-    <h3>{{ task.title || 'Loading...' }}</h3>
-    <p class="due-date">{{ task.dueDate || '' }}</p>
-</div>
-<hr>
-@if (task.id) {
-    <div class="header-bottom">
+@if (isLoading) {
+  <div class="spinner-container">
+    <mat-spinner diameter="60"></mat-spinner>
+  </div>
+} @else {
+  <div [priorityColor]="task.priority || ''" class="card">
+    <div class="header-top">
+      <h3>{{ task.title }}</h3>
+      <p class="due-date">{{ task.dueDate | date: 'MMM d, y' }}</p>
+    </div>
+    <hr />
+    @if (task.id) {
+      <div class="header-bottom">
         <p class="asignee">Asignee: {{ task.assignee || '' }}</p>
-        <p [categoryColor]="task.category?.color || ''" class="category">{{ task.category?.title || 'Uncategorized' }}</p>
-    </div>
-    <div class="content">
+        <p [categoryColor]="task.category?.color || ''" class="category">
+          {{ task.category?.title || 'Uncategorized' }}
+        </p>
+      </div>
+      <div class="content">
         <p class="estimated-time">Estimated time: {{ task.estimatedTime }}h</p>
-    <p class="description">{{ task.description || '' }}</p>
-    <mat-form-field subscriptSizing="dynamic" appearance="outline">
-        <mat-label>Status</mat-label>
-        <mat-select [(ngModel)]="task.status" (selectionChange)="updateStatus()">
+        <p class="description">{{ task.description || '' }}</p>
+        <mat-form-field subscriptSizing="dynamic" appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select [(ngModel)]="task.status" (selectionChange)="updateStatus()">
             @for (option of statusOptions; track option) {
-                <mat-option [value]="option">{{ option }}</mat-option>
+              <mat-option [value]="option">{{ option }}</mat-option>
             }
-        </mat-select>
-    </mat-form-field>
+          </mat-select>
+        </mat-form-field>
 
-    <div class="subtasks">
-        <p>Subtasks:</p>
-        @for (subtask of task.subtasks || []; track $index) {
+        <div class="subtasks">
+          <p>Subtasks:</p>
+          @for (subtask of task.subtasks || []; track $index) {
             <mat-checkbox
-                [checked]="subtask.completed"
-                (change)="updateSubtask(subtask, $event.checked)">
-                {{ subtask.title }}
+              [checked]="subtask.completed"
+              (change)="updateSubtask(subtask, $event.checked)"
+            >
+              {{ subtask.title }}
             </mat-checkbox>
-        }
-    </div>
-    <div class="tags">
-        @for (tag of task.tags || []; track $index) {
-        <p>#{{ tag }}</p>
+          }
+        </div>
+        <div class="tags">
+          @for (tag of task.tags || []; track $index) {
+            <p>#{{ tag }}</p>
+          }
+        </div>
+      </div>
     }
-    </div>
-    </div>
+  </div>
 }
-</div>

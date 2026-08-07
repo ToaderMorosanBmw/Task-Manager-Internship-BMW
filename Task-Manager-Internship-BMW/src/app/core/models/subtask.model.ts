@@ -1,8 +1,7 @@
 export interface Subtask {
-    id: number;
-    title: string;
-    description?: string; 
-    status: 'To Do' | 'Completed';
-    completed: boolean;
-
+  id: number;
+  title: string;
+  description?: string;
+  status: 'To Do' | 'Completed';
+  completed: boolean;
 }

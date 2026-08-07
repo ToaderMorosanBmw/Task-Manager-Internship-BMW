@@ -5,8 +5,6 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './subtask-input.component.html',
-  styleUrl: './subtask-input.component.css'
+  styleUrl: './subtask-input.component.css',
 })
-export class SubtaskInputComponent {
-
-}
+export class SubtaskInputComponent {}
