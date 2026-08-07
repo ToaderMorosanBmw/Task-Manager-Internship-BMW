@@ -15,10 +15,6 @@
 }
 
 .filters {
-<<<<<<< HEAD
-    display: flex;
-    flex-direction: column;
-=======
   box-sizing: border-box;
   width: calc(100% - 2rem);
   margin: 0 auto 1.5rem auto;
@@ -31,7 +27,6 @@
   box-shadow: 0 4px 12px var(--shadow-color);
   flex-shrink: 0;
 }
->>>>>>> main
 
 .columns {
   box-sizing: border-box;
@@ -63,7 +58,6 @@
 .spinner-container mat-spinner {
   margin-bottom: 1.5rem;
 }
-<<<<<<< HEAD
 
 .columns {
     display: flex;
@@ -88,5 +82,3 @@
   padding: 0.45rem 0.9rem;
   font-size: 0.6rem;
 }
-=======
->>>>>>> main

@@ -8,7 +8,6 @@ import { TaskWithCategory } from '../../../core/models/task-with-category.model'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { switchMap, map, filter } from 'rxjs';
 import { FilterService } from '../../../core/services/filter.service';
-import { TaskFilterComponent } from "../task-filter/task-filter.component";
 import { TaskFilterRowComponent } from "../task-filter-row/task-filter-row.component";
 import { MatDialog, MatDialogModule } from "@angular/material/dialog";
 import { TaskModalComponent } from '../task-modal/task-modal.component';
@@ -23,7 +22,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     TaskFilterRowComponent,
     CdkDropListGroup,
     MatProgressSpinnerModule,
-    TaskFilterComponent,
     MatDialogModule,
     TaskModalComponent
   ],
