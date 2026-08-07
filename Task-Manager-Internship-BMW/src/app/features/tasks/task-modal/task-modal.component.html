@@ -5,9 +5,11 @@
     <mat-form-field appearance="outline">
       <mat-label>Title</mat-label>
       <input matInput formControlName="title" required />
-      <mat-error *ngIf="taskForm.get('title')?.hasError('required') && taskForm.get('title')?.touched">
-        Title is required.
-      </mat-error>
+      @if (taskForm.get('title')?.hasError('required') && taskForm.get('title')?.touched) {
+        <mat-error>
+          Title is required.
+        </mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field appearance="outline">
@@ -23,12 +25,16 @@
     <mat-form-field appearance="outline">
       <mat-label>Due date</mat-label>
       <input matInput type="date" formControlName="dueDate" />
-      <mat-error *ngIf="taskForm.get('dueDate')?.hasError('pastDate') && taskForm.get('dueDate')?.touched">
-        Due date cannot be in the past.
-      </mat-error>
-      <mat-error *ngIf="taskForm.get('dueDate')?.hasError('invalidDate') && taskForm.get('dueDate')?.touched">
-        Invalid date.
-      </mat-error>
+      @if (taskForm.get('dueDate')?.hasError('pastDate') && taskForm.get('dueDate')?.touched) {
+        <mat-error>
+          Due date cannot be in the past.
+        </mat-error>
+      }
+      @if (taskForm.get('dueDate')?.hasError('invalidDate') && taskForm.get('dueDate')?.touched) {
+        <mat-error>
+          Invalid date.
+        </mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field appearance="outline">
@@ -38,9 +44,11 @@
         <mat-option value="Medium">Medium</mat-option>
         <mat-option value="High">High</mat-option>
       </mat-select>
-      <mat-error *ngIf="taskForm.get('priority')?.hasError('required') && taskForm.get('priority')?.touched">
-        Priority is required.
-      </mat-error>
+      @if (taskForm.get('priority')?.hasError('required') && taskForm.get('priority')?.touched) {
+        <mat-error>
+          Priority is required.
+        </mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field appearance="outline">
@@ -50,9 +58,11 @@
         <mat-option value="In Progress">In Progress</mat-option>
         <mat-option value="Completed">Completed</mat-option>
       </mat-select>
-      <mat-error *ngIf="taskForm.get('status')?.hasError('required') && taskForm.get('status')?.touched">
-        Status is required.
-      </mat-error>
+      @if (taskForm.get('status')?.hasError('required') && taskForm.get('status')?.touched) {
+        <mat-error>
+          Status is required.
+        </mat-error>
+      }
     </mat-form-field>
 
     <div class="section-block">
@@ -70,7 +80,9 @@
         <button mat-stroked-button type="button" (click)="addTag()">Add</button>
       </div>
       <div class="chip-list">
-        <span class="chip" *ngFor="let tag of task.tags" (click)="removeTag(tag)">#{{ tag }} ×</span>
+        @for (tag of task.tags; track tag) {
+          <span class="chip" (click)="removeTag(tag)">#{{ tag }} ×</span>
+        }
       </div>
     </div>
 
@@ -98,7 +110,9 @@
   </mat-dialog-content>
 
   <mat-dialog-actions align="end">
-    <button mat-button color="warn" *ngIf="task.id" (click)="delete()">Delete</button>
+    @if (task.id) {
+      <button mat-button color="warn" (click)="delete()">Delete</button>
+    }
     <button mat-button (click)="close()">Cancel</button>
     <button mat-raised-button color="primary" type="button" (click)="save()">Save</button>
   </mat-dialog-actions>
