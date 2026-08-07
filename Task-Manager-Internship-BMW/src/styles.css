@@ -172,3 +172,40 @@ body.dark-theme textarea[formControlName='description'],
 body.dark-theme textarea.mat-mdc-input-element {
   resize: none !important;
 }
+
+mat-form-field,
+mat-label,
+mat-select,
+mat-option,
+mat-checkbox,
+.mat-mdc-form-field,
+.mat-mdc-select,
+.mat-mdc-option,
+.mat-mdc-checkbox,
+.mat-mdc-select-value-text,
+.mdc-label,
+.mat-mdc-form-field-label {
+  font-family: 'DM Sans', sans-serif !important;
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #555555 transparent;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #555555;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #777777;
+}

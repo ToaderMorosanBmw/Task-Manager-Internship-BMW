@@ -8,6 +8,11 @@
 h3,
 p {
   margin: 0;
+  font-family: 'DM Sans', sans-serif;
+}
+
+h3 {
+  font-weight: 600;
 }
 
 p,
@@ -30,10 +35,10 @@ hr {
   color: var(--text-main);
   padding: 1.5em;
   border-radius: 20px;
-  border: 1px solid var(--border-color);
+  border: 3px solid var(--border-color);
   width: 70dvw;
   height: 80dvh;
-  box-shadow: 0 0 10px 5px var(--shadow-color);
+  gap: 1.5rem;
 }
 
 .header-top,
@@ -61,20 +66,16 @@ hr {
 }
 
 .content {
-  background-color: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  padding: 0.4rem 1rem;
-  box-shadow: 0 0 10px 5px var(--shadow-color);
   overflow-y: auto;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  height: 80%;
-  width: 95%;
-  margin: auto;
+  gap: 0.5rem;
+}
+
+.description {
+  line-height: 1.6rem;
 }
 
 .content::-webkit-scrollbar {
@@ -82,18 +83,11 @@ hr {
 }
 
 .content p {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 
 mat-form-field {
   width: 25%;
-}
-
-.description {
-  background-color: var(--bg-description);
-  border-radius: 6px;
-  padding: 0.8rem 1rem;
-  line-height: 2rem;
 }
 
 .subtasks {
@@ -104,12 +98,18 @@ mat-form-field {
 .tags {
   display: flex;
   color: var(--text-muted);
+  gap: 0.5rem;
 }
 
 .tags p {
   font-size: 1rem;
   font-weight: 100;
+  padding: 0.6 0.8rem;
+  background-color: var(--bg-button);
+  border-radius: 20px;
+  border: 2px solid var(--border-button);
 }
+
 .spinner-container {
   position: fixed;
   top: 0;
