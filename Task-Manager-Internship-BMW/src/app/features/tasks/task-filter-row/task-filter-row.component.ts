@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FilterColor } from '../../../shared/directives/filter-color.directive';
+import { UpperCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-task-filter-row',
   standalone: true,
-  imports: [FilterColor],
+  imports: [FilterColor, UpperCasePipe],
   templateUrl: './task-filter-row.component.html',
   styleUrl: './task-filter-row.component.css',
 })

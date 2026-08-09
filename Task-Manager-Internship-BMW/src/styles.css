@@ -1,10 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+
 :root {
   --bg-page: #f0f0f0;
-  --bg-dashboard: rgb(250, 250, 250);
+  --bg-dashboard: rgb(245, 245, 245);
   --bg-column: rgb(245, 245, 245);
-  --bg-card: rgb(240, 240, 240);
-  --bg-card-hover: rgba(139, 139, 7, 0.055);
-  --bg-description: rgb(223, 223, 223);
+  --bg-card: rgb(255, 255, 255);
+  --bg-card-hover: rgb(248, 248, 248);
   --bg-button: rgb(240, 240, 240);
   --text-main: #000000;
   --text-muted: rgb(136, 136, 136);
@@ -24,7 +25,6 @@ body.dark-theme {
   --bg-column: #252525;
   --bg-card: #2d2d2d;
   --bg-card-hover: rgba(255, 255, 255, 0.05);
-  --bg-description: #383838;
   --bg-button: #2d2d2d;
   --text-main: #ffffff;
   --text-muted: #a0a0a0;
@@ -41,7 +41,7 @@ body.dark-theme {
 html,
 body {
   background-color: var(--bg-page) !important;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  font-family: 'DM Sans', sans-serif !important;
   color: var(--text-main) !important;
   transition:
     background-color 0.3s ease,

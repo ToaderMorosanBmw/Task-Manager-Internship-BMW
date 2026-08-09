@@ -1,16 +1,15 @@
-<p>{{ filterName }}:</p>
-<div class="buttons">
-  @for (button of buttons; track $index) {
-    <button
-      type="button"
-      (click)="onButtonClick(button.title)"
-      [class.active]="selectedValue === button.title"
-      [filterColor]="button.color"
-      [active]="selectedValue === button.title"
-    >
-      {{ button.title }}
-    </button>
-  } @empty {
-    <p>Loading...</p>
-  }
-</div>
+<p>{{ filterName | uppercase }}</p>
+
+@for (button of buttons; track $index) {
+  <button
+    type="button"
+    (click)="onButtonClick(button.title)"
+    [class.active]="selectedValue === button.title"
+    [filterColor]="button.color"
+    [active]="selectedValue === button.title"
+  >
+    {{ button.title }}
+  </button>
+} @empty {
+  <p>Loading...</p>
+}
