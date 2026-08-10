@@ -41,3 +41,7 @@
 ::ng-deep .center-header .ag-header-cell-label {
   justify-content: center !important;
 }
+
+::ng-deep .ag-theme-quartz.custom-grid .ag-row {
+  cursor: pointer;
+}
