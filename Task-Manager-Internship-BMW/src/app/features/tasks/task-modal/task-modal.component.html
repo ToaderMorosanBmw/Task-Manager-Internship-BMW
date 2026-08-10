@@ -40,9 +40,7 @@
     <mat-form-field appearance="outline">
       <mat-label>Priority</mat-label>
       <mat-select formControlName="priority">
-        <mat-option value="Low">Low</mat-option>
-        <mat-option value="Medium">Medium</mat-option>
-        <mat-option value="High">High</mat-option>
+        <mat-option *ngFor="let p of priorities; trackBy: trackByValue" [value]="p">{{ p }}</mat-option>
       </mat-select>
       @if (taskForm.get('priority')?.hasError('required') && taskForm.get('priority')?.touched) {
         <mat-error>
@@ -54,9 +52,7 @@
     <mat-form-field appearance="outline">
       <mat-label>Status</mat-label>
       <mat-select formControlName="status">
-        <mat-option value="To Do">To Do</mat-option>
-        <mat-option value="In Progress">In Progress</mat-option>
-        <mat-option value="Completed">Completed</mat-option>
+        <mat-option *ngFor="let s of statuses; trackBy: trackByValue" [value]="s">{{ s }}</mat-option>
       </mat-select>
       @if (taskForm.get('status')?.hasError('required') && taskForm.get('status')?.touched) {
         <mat-error>
@@ -100,12 +96,16 @@
         </mat-form-field>
         <button mat-stroked-button type="button" (click)="addSubtask()">Add</button>
       </div>
-      <div class="subtask-list" *ngFor="let subtask of task.subtasks">
-        <div class="subtask-item">
-          <span>{{ subtask.title }}</span>
-          <button mat-icon-button type="button" (click)="removeSubtask(subtask)">×</button>
+      <ng-container #subtaskContainer></ng-container>
+
+      <ng-template #subtaskTpl let-subtask>
+        <div class="subtask-list">
+          <div class="subtask-item">
+            <span>{{ subtask.title }}</span>
+            <button mat-icon-button type="button" (click)="removeSubtask(subtask)">×</button>
+          </div>
         </div>
-      </div>
+      </ng-template>
     </div>
   </mat-dialog-content>
 
