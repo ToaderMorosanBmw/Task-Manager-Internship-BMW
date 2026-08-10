@@ -6,24 +6,28 @@
   min-height: 0;
 }
 
-h1,
-.column {
-  background-color: var(--bg-dashboard);
-  border: 1px solid var(--border-color);
-  border-radius: 15px;
-  box-shadow: 0 4px 12px var(--shadow-color);
+h1 {
+  font-size: 1.7rem;
+  padding: 0.8rem;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
 }
 
-h1 {
-  font-size: 3rem;
-  padding: 1.3rem;
-  margin: 0;
+.dot {
+  display: inline-block;
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  background-color: black;
 }
 
 .column {
   display: flex;
   flex-direction: column;
-  padding: 1.3rem;
   flex: 1;
   overflow-y: auto;
   scrollbar-width: none;
@@ -48,14 +52,24 @@ app-task-card:last-child {
 
 @media screen and (max-width: 1100px) {
   h1 {
-    font-size: 2rem;
-    padding: 1rem;
+    font-size: 1.4rem;
+    padding: 0.2rem;
+  }
+
+  .dot {
+    height: 0.5rem;
+    width: 0.5rem;
   }
 }
 
 @media screen and (max-width: 760px) {
   h1 {
-    font-size: 1.5rem;
-    padding: 0.7rem;
+    font-size: 1rem;
+    padding: 0;
+  }
+
+  .dot {
+    height: 0.3rem;
+    width: 0.3rem;
   }
 }

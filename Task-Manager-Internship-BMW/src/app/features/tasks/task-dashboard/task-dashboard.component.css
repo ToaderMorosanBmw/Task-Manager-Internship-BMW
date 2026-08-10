@@ -1,31 +1,67 @@
 :host {
   box-sizing: border-box;
-  width: 95vw;
-  max-width: 1400px;
-  margin: 3vh auto 5vh auto;
-  padding: 2rem 1rem;
   min-height: 90vh;
   height: auto;
   display: flex;
   flex-direction: column;
   background-color: var(--bg-dashboard);
-  border-radius: 20px;
-  border: 1px solid var(--border-color);
-  box-shadow: 0 0 5px 1px var(--shadow-color);
+}
+
+.header {
+  box-sizing: border-box;
+  width: 100%;
+  border-top: 2px solid var(--border-color);
+  padding: 1.5rem 2.5rem;
+  background-color: var(--bg-card);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.logo-icon {
+  width: 36px;
+  height: 36px;
+  background-color: #9d00ff;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+}
+
+.logo-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: -0.5px;
 }
 
 .filters {
   box-sizing: border-box;
-  width: calc(100% - 2rem);
-  margin: 0 auto 1.5rem auto;
+  width: 100%;
+  border-bottom: 2px solid var(--border-color);
+  border-top: 2px solid var(--border-color);
   padding: 0.5rem;
   display: flex;
-  flex-direction: column;
-  background-color: var(--bg-column);
-  border: 1px solid var(--border-color);
-  border-radius: 20px;
-  box-shadow: 0 4px 12px var(--shadow-color);
-  flex-shrink: 0;
+  gap: 2rem;
+  background-color: var(--bg-card);
+  align-items: center;
+}
+
+.vertical-line {
+  border-left: 1px solid var(--text-muted);
+  height: 3rem;
 }
 
 .columns {
@@ -33,9 +69,9 @@
   width: 100%;
   display: grid;
   grid-template-columns: repeat(3, minmax(220px, 1fr));
-  gap: 1.2rem;
+  gap: 2.5rem;
   overflow-x: auto;
-  padding: 1rem;
+  padding: 1rem 2.5rem;
   flex-grow: 1;
   min-height: 650px;
 }
