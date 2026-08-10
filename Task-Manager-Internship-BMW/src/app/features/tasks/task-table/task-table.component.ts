@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
-import { ColDef } from 'ag-grid-community';
+import { ColDef, RowClickedEvent } from 'ag-grid-community';
 import { TaskWithCategory } from '../../../core/models/task-with-category.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-task-table',
@@ -13,6 +14,8 @@ import { TaskWithCategory } from '../../../core/models/task-with-category.model'
 export class TaskTableComponent {
   @Input()
   allTasks: TaskWithCategory[] = [];
+
+  private router = inject(Router);
 
   defaultColDef: ColDef = {
     resizable: false,
@@ -123,4 +126,10 @@ export class TaskTableComponent {
       headerClass: 'center-header',
     },
   ];
+
+  onRowClicked(event: RowClickedEvent) {
+    if (event.data && event.data.id) {
+      this.router.navigate(['/tasks', event.data.id]);
+    }
+  }
 }
