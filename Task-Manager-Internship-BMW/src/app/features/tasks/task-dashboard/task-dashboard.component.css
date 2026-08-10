@@ -5,6 +5,7 @@
   display: flex;
   flex-direction: column;
   background-color: var(--bg-dashboard);
+  width: 100%;
 }
 
 .header {
@@ -15,6 +16,8 @@
   background-color: var(--bg-card);
   font-size: 1.5rem;
   font-weight: 700;
+  display: flex;
+  justify-content: space-between;
 }
 
 .brand-logo {
@@ -93,4 +96,38 @@
 
 .spinner-container mat-spinner {
   margin-bottom: 1.5rem;
+}
+
+:host-context(.dark-theme) ::ng-deep mat-button-toggle-group,
+::ng-deep .dark-theme mat-button-toggle-group {
+  border: 1px solid #374151;
+  background-color: #222222;
+}
+
+:host-context(.dark-theme) ::ng-deep .mat-button-toggle-button,
+::ng-deep .dark-theme .mat-button-toggle-button {
+  color: #9ca3af !important;
+}
+
+:host-context(.dark-theme) ::ng-deep .mat-button-toggle-checked,
+::ng-deep .dark-theme .mat-button-toggle-checked {
+  background-color: #374151 !important;
+}
+
+:host-context(.dark-theme) ::ng-deep .mat-button-toggle-checked .mat-button-toggle-button,
+::ng-deep .dark-theme .mat-button-toggle-checked .mat-button-toggle-button {
+  color: #ffffff !important;
+}
+
+:host-context(.dark-theme)
+  ::ng-deep
+  .mat-button-toggle-group-appearance-standard
+  .mat-button-toggle
+  + .mat-button-toggle,
+::ng-deep
+  .dark-theme
+  .mat-button-toggle-group-appearance-standard
+  .mat-button-toggle
+  + .mat-button-toggle {
+  border-left: 1px solid #374151;
 }
