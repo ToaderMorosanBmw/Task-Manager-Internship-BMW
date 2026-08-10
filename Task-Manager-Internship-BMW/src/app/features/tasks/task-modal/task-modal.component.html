@@ -81,6 +81,7 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
+  <button mat-button color="warn" *ngIf="task.id" (click)="delete()">Delete</button>
   <button mat-button (click)="close()">Cancel</button>
   <button mat-raised-button color="primary" (click)="save()">Save</button>
 </mat-dialog-actions>

@@ -15,7 +15,7 @@
       [cdkDragData]="item"
       [task]="item"
       [priorityColor]="item.priority || ''"
-    ></app-task-card>
+     (deleted)="onTaskDeleted($event)"></app-task-card>
   } @empty {
     <p class="loading">No tasks</p>
   }
