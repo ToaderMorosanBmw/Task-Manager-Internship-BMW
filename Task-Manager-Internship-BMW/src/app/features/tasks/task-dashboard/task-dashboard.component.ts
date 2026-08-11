@@ -8,11 +8,12 @@ import { TaskWithCategory } from '../../../core/models/task-with-category.model'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { switchMap, map, filter } from 'rxjs';
 import { FilterService } from '../../../core/services/filter.service';
-import { TaskFilterRowComponent } from "../task-filter-row/task-filter-row.component";
-import { MatDialog, MatDialogModule } from "@angular/material/dialog";
+import { TaskFilterRowComponent } from '../task-filter-row/task-filter-row.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TaskModalComponent } from '../task-modal/task-modal.component';
 import { CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-task-dashboard',
@@ -23,7 +24,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     CdkDropListGroup,
     MatProgressSpinnerModule,
     MatDialogModule,
-    TaskModalComponent
+    FormsModule,
+    TaskModalComponent,
   ],
   templateUrl: './task-dashboard.component.html',
   styleUrl: './task-dashboard.component.css',
@@ -34,6 +36,7 @@ export class TaskDashboardComponent implements OnInit {
   visibleTasks: TaskWithCategory[] = [];
   selectedCategory: string = '';
   selectedPriority: string = '';
+  searchText: string = '';
   priorities: { title: string; color: string }[] = [
     { title: 'Low', color: '#2e7d32' },
     { title: 'Medium', color: '#f57c00' },
@@ -127,6 +130,31 @@ export class TaskDashboardComponent implements OnInit {
     if (this.selectedPriority) {
       filtered = this.filterService.filterByPriority(filtered, this.selectedPriority);
     }
+    if (this.searchText.trim()) {
+      const words = this.searchText.toLowerCase().trim().split(/\s+/);
+
+      const searchTags = words
+        .filter((word) => word.startsWith('#'))
+        .map((word) => word.substring(1));
+
+      const searchWords = words.filter((token) => !token.startsWith('#'));
+
+      filtered = filtered.filter((task) => {
+        const title = task.title.toLowerCase();
+        const desc = (task.description || '').toLowerCase();
+        const taskTags = (task.tags || []).map((tag) => tag.toLowerCase());
+
+        const matchesWords = searchWords.every(
+          (word) => title.includes(word) || desc.includes(word)
+        );
+
+        const matchesTags = searchTags.every((searchTag) =>
+          taskTags.some((taskTag) => taskTag.includes(searchTag))
+        );
+
+        return matchesWords && matchesTags;
+      });
+    }
 
     this.visibleTasks = filtered;
   }
@@ -152,18 +180,17 @@ export class TaskDashboardComponent implements OnInit {
       status: 'To Do',
       priority: 'Low',
       tags: [],
-      subtasks: []
+      subtasks: [],
     };
 
     const dialogRef = this.dialog.open(TaskModalComponent, {
       width: '520px',
-      data: { task: taskToEdit }
+      data: { task: taskToEdit },
     });
 
-    dialogRef.afterClosed()
-      .pipe(
-        filter((result): result is TaskWithCategory => Boolean(result))
-      )
+    dialogRef
+      .afterClosed()
+      .pipe(filter((result): result is TaskWithCategory => Boolean(result)))
       .subscribe((result) => {
         const taskToSave: Task = {
           ...result,
@@ -173,22 +200,24 @@ export class TaskDashboardComponent implements OnInit {
           priority: result.priority || 'Low',
           tags: result.tags ?? [],
           subtasks: result.subtasks ?? [],
-          id: ''
+          id: '',
         };
 
-        this.taskService.createTask(taskToSave)
+        this.taskService
+          .createTask(taskToSave)
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe({
             next: (savedTask) => {
               const savedWithCategory: TaskWithCategory = {
                 ...savedTask,
-                category: this.allTasks.find((task) => task.category?.id === savedTask.categoryId)?.category
+                category: this.allTasks.find((task) => task.category?.id === savedTask.categoryId)
+                  ?.category,
               };
 
               this.allTasks = [...this.allTasks, savedWithCategory];
               this.applyFiters();
             },
-            error: (err) => console.error('Failed to create task', err)
+            error: (err) => console.error('Failed to create task', err),
           });
       });
   }
@@ -222,5 +251,8 @@ export class TaskDashboardComponent implements OnInit {
         },
       });
   }
-}
 
+  onSearchChange(): void {
+    this.applyFiters();
+  }
+}

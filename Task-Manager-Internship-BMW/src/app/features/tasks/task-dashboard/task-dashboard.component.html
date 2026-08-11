@@ -14,17 +14,24 @@
       </div>
       <span class="logo-text">TaskFlow</span>
     </div>
-
-    <div class="top-bar-actions">
-    
-      <button
-        class="circle-btn"
-        aria-label="Create task"
-        (click)="onCreateTaskClick()"
-        matTooltip="Create a new task"
-        matTooltipPosition="above"
-      >Add Task</button>
-    </div>
+  </div>
+  <div class="middle-bar">
+    <input
+      type="text"
+      [(ngModel)]="searchText"
+      (ngModelChange)="onSearchChange()"
+      placeholder="Search for tasks..."
+      class="search-input"
+    />
+    <button
+      class="add-task-btn"
+      aria-label="Create task"
+      (click)="onCreateTaskClick()"
+      matTooltip="Create a new task"
+      matTooltipPosition="above"
+    >
+      Add Task
+    </button>
   </div>
 
   <div class="filters">
@@ -64,4 +71,3 @@
     ></app-task-column>
   </div>
 }
-
