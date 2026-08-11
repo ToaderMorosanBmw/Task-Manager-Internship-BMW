@@ -25,16 +25,12 @@
     {
       "id": "1",
       "title": "Prepare sprint review",
-      "description": "Summarize completed work, blockers, and next steps for the team.",
+      "description": "Summarize completed work, blockers, and next steps for the team. Ensure that all team members have provided their updates before the meeting. The summary should be concise but comprehensive enough to present to the stakeholders during the afternoon session.",
       "priority": "High",
       "dueDate": "2026-08-01T00:00:00.000Z",
       "estimatedTime": 4,
       "status": "To Do",
-      "tags": [
-        "planning",
-        "meeting",
-        "team"
-      ],
+      "tags": ["planning", "meeting", "team"],
       "assignee": "Alex",
       "categoryId": "1",
       "subtasks": [
@@ -55,15 +51,12 @@
     {
       "id": "2",
       "title": "Buy groceries",
-      "description": "Pick up vegetables, milk, bread, and a few pantry staples.",
+      "description": "Pick up fresh seasonal vegetables, two cartons of milk, whole wheat bread, and a few pantry staples like pasta and tomato sauce. Don't forget to check the expiration dates and maybe grab some fresh fruits if they look good on the stands.",
       "priority": "Medium",
       "dueDate": "2026-07-31T00:00:00.000Z",
       "estimatedTime": 1,
       "status": "In Progress",
-      "tags": [
-        "home",
-        "shopping"
-      ],
+      "tags": ["home", "shopping"],
       "assignee": "Mihai",
       "categoryId": "2",
       "subtasks": [
@@ -84,15 +77,12 @@
     {
       "id": "3",
       "title": "Client onboarding call",
-      "description": "Walk the new client through the initial setup steps.",
+      "description": "Walk the new client through the initial setup steps, focusing on the dashboard navigation, account security settings, and how to contact the support team. Make sure to pause for questions and ensure they are comfortable with the interface before concluding the call.",
       "priority": "High",
       "dueDate": "2026-08-03T00:00:00.000Z",
       "estimatedTime": 2,
       "status": "In Progress",
-      "tags": [
-        "client",
-        "call"
-      ],
+      "tags": ["client", "call"],
       "assignee": "Sarah",
       "categoryId": "3",
       "subtasks": [
@@ -118,16 +108,12 @@
     {
       "id": "4",
       "title": "Fix login bug",
-      "description": "Investigate the password reset issue reported by QA.",
+      "description": "Investigate the password reset issue reported by QA. The issue seems to occur intermittently when users request a password reset link via mobile devices. Check the logs for any email delivery failures and verify the token expiration logic in the backend service.",
       "priority": "High",
       "dueDate": "2026-07-30T00:00:00.000Z",
       "estimatedTime": 3,
       "status": "In Progress",
-      "tags": [
-        "bug",
-        "frontend",
-        "urgent"
-      ],
+      "tags": ["bug", "frontend", "urgent"],
       "assignee": "Diana",
       "categoryId": "4",
       "subtasks": [
@@ -148,15 +134,12 @@
     {
       "id": "5",
       "title": "Plan weekend trip",
-      "description": "Research destinations, compare accommodation options.",
+      "description": "Research destinations within a 3-hour driving radius, compare accommodation options including hotels and Airbnb rentals, and look up highly-rated local restaurants. Create a shortlist of three possible itineraries to discuss with the group by Wednesday.",
       "priority": "Low",
       "dueDate": "2026-08-10T00:00:00.000Z",
       "estimatedTime": 2,
       "status": "To Do",
-      "tags": [
-        "travel",
-        "personal"
-      ],
+      "tags": ["travel", "personal"],
       "assignee": "Ioana",
       "categoryId": "2",
       "subtasks": [
@@ -177,15 +160,12 @@
     {
       "id": "6",
       "title": "Write project proposal",
-      "description": "Draft the main proposal sections, budget estimate.",
+      "description": "Draft the main proposal sections including the executive summary, project timeline, and resource allocation. Additionally, create a detailed budget estimate that accounts for potential unforeseen expenses and software licensing costs for the upcoming fiscal year.",
       "priority": "Medium",
       "dueDate": "2026-08-05T00:00:00.000Z",
       "estimatedTime": 5,
       "status": "Completed",
-      "tags": [
-        "proposal",
-        "planning"
-      ],
+      "tags": ["proposal", "planning"],
       "assignee": "Andrei",
       "categoryId": "1",
       "subtasks": [
@@ -206,15 +186,12 @@
     {
       "id": "7",
       "title": "Review PR comments",
-      "description": "Check feedback on the latest pull request.",
+      "description": "Check feedback on the latest pull request concerning the new authentication module. Address the comments left by the senior developers regarding code optimization and ensure that all unit tests are passing before requesting a final review and merging into the main branch.",
       "priority": "High",
       "dueDate": "2026-08-02T00:00:00.000Z",
       "estimatedTime": 2,
       "status": "In Progress",
-      "tags": [
-        "code",
-        "review"
-      ],
+      "tags": ["code", "review"],
       "assignee": "Mara",
       "categoryId": "1",
       "subtasks": [
@@ -235,15 +212,12 @@
     {
       "id": "8",
       "title": "Prepare dinner for guests",
-      "description": "Cook a simple menu for the evening gathering.",
+      "description": "Cook a simple yet elegant menu for the evening gathering, starting with a light appetizer, followed by a main course of roasted chicken with seasonal vegetables, and concluding with a homemade dessert. Make sure to account for any dietary restrictions previously mentioned by the guests.",
       "priority": "Low",
       "dueDate": "2026-08-07T00:00:00.000Z",
       "estimatedTime": 1,
       "status": "Completed",
-      "tags": [
-        "home",
-        "cooking"
-      ],
+      "tags": ["home", "cooking"],
       "assignee": "Elena",
       "categoryId": "2",
       "subtasks": [
@@ -264,15 +238,12 @@
     {
       "id": "9",
       "title": "Send follow-up email",
-      "description": "Send the client a recap and next-step summary.",
+      "description": "Send the client a detailed recap of our recent meeting and a clear next-step summary. Outline the deliverables expected by the end of the week, attach the revised project timeline, and kindly request their approval on the proposed design mockups so the team can proceed.",
       "priority": "Medium",
       "dueDate": "2026-08-04T00:00:00.000Z",
       "estimatedTime": 1,
       "status": "In Progress",
-      "tags": [
-        "email",
-        "client"
-      ],
+      "tags": ["email", "client"],
       "assignee": "Radu",
       "categoryId": "3",
       "subtasks": [
@@ -293,15 +264,12 @@
     {
       "id": "10",
       "title": "Deploy hotfix",
-      "description": "Release the urgent fix to production.",
+      "description": "Release the urgent fix to production to resolve the critical memory leak issue affecting the checkout process. Monitor the application performance closely for at least two hours post-deployment and ensure the rollback plan is ready to be executed immediately if any new anomalies are detected.",
       "priority": "High",
       "dueDate": "2026-07-29T00:00:00.000Z",
       "estimatedTime": 3,
       "status": "Completed",
-      "tags": [
-        "deploy",
-        "urgent"
-      ],
+      "tags": ["deploy", "urgent"],
       "assignee": "Cristina",
       "categoryId": "4",
       "subtasks": [
