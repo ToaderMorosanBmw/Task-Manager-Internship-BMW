@@ -5,7 +5,7 @@
     <mat-form-field appearance="outline">
       <mat-label>Title</mat-label>
       <input matInput formControlName="title" required />
-      @if (taskForm.get('title')?.hasError('required') && taskForm.get('title')?.touched) {
+      @if (taskForm.get('title')?.hasError('required')) {
         <mat-error>
           Title is required.
         </mat-error>
@@ -25,12 +25,12 @@
     <mat-form-field appearance="outline">
       <mat-label>Due date</mat-label>
       <input matInput type="date" formControlName="dueDate" />
-      @if (taskForm.get('dueDate')?.hasError('pastDate') && taskForm.get('dueDate')?.touched) {
+      @if (taskForm.get('dueDate')?.hasError('pastDate')) {
         <mat-error>
           Due date cannot be in the past.
         </mat-error>
       }
-      @if (taskForm.get('dueDate')?.hasError('invalidDate') && taskForm.get('dueDate')?.touched) {
+      @if (taskForm.get('dueDate')?.hasError('invalidDate')) {
         <mat-error>
           Invalid date.
         </mat-error>
@@ -42,7 +42,7 @@
       <mat-select formControlName="priority">
         <mat-option *ngFor="let p of priorities; trackBy: trackByValue" [value]="p">{{ p }}</mat-option>
       </mat-select>
-      @if (taskForm.get('priority')?.hasError('required') && taskForm.get('priority')?.touched) {
+      @if (taskForm.get('priority')?.hasError('required')) {
         <mat-error>
           Priority is required.
         </mat-error>
@@ -54,7 +54,7 @@
       <mat-select formControlName="status">
         <mat-option *ngFor="let s of statuses; trackBy: trackByValue" [value]="s">{{ s }}</mat-option>
       </mat-select>
-      @if (taskForm.get('status')?.hasError('required') && taskForm.get('status')?.touched) {
+      @if (taskForm.get('status')?.hasError('required')) {
         <mat-error>
           Status is required.
         </mat-error>

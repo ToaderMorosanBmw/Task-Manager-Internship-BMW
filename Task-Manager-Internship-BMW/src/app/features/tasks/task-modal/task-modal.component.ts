@@ -18,7 +18,7 @@ import { TaskWithCategory } from '../../../core/models/task-with-category.model'
 })
 export class TaskModalComponent implements OnInit, AfterViewInit {
   task: TaskWithCategory;
-  taskForm: FormGroup;
+  taskForm!: FormGroup;
   newTag = '';
   newSubtaskTitle = '';
   isCreateMode = false;

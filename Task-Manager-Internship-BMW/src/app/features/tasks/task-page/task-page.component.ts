@@ -23,7 +23,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 export class TaskPageComponent implements OnInit{
   statusOptions = ['To Do', 'In Progress', 'Completed'];
   isCompleted = false;
-  taskForm: FormGroup;
+  taskForm!: FormGroup;
 
   task: TaskWithCategory = {
     id: '',
@@ -40,11 +40,35 @@ export class TaskPageComponent implements OnInit{
   private destroyRef = inject(DestroyRef)
   private fb = inject(FormBuilder)
 
-  constructor() {
+  constructor() {}
+
+  ngOnInit(): void {
+
     this.taskForm = this.fb.group({
       status: ['To Do', Validators.required]
     });
-  }
+
+    this.route.paramMap
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        map(params => params.get('id')),
+        switchMap(id => this.taskService.getTaskById(id || '')),
+        switchMap(task =>
+          this.categoryService.getCategoryById(task.categoryId)
+            .pipe(
+              map(category => ({
+                ...task,
+                category
+              }))
+            )
+        )
+      )
+      .subscribe((taskWithCategory: TaskWithCategory) => {
+        this.task = taskWithCategory;
+        this.isCompleted = this.task.status === 'Completed';
+        this.taskForm.patchValue({ status: this.task.status });
+      })
+    }
 
   updateStatus(): void {
     if (!this.task.id || this.taskForm.invalid) {
@@ -86,27 +110,4 @@ export class TaskPageComponent implements OnInit{
         error: (err) => console.error('Failed to update subtask', err)
       });
   }
-
-  ngOnInit(): void {
-    this.route.paramMap
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        map(params => params.get('id')),
-        switchMap(id => this.taskService.getTaskById(id || '')),
-        switchMap(task =>
-          this.categoryService.getCategoryById(task.categoryId)
-            .pipe(
-              map(category => ({
-                ...task,
-                category
-              }))
-            )
-        )
-      )
-      .subscribe((taskWithCategory: TaskWithCategory) => {
-        this.task = taskWithCategory;
-        this.isCompleted = this.task.status === 'Completed';
-        this.taskForm.patchValue({ status: this.task.status });
-      })
-    }
 }
