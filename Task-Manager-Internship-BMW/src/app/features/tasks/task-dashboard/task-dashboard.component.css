@@ -62,6 +62,11 @@
   align-items: center;
 }
 
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+}
+
 .vertical-line {
   border-left: 1px solid var(--text-muted);
   height: 3rem;

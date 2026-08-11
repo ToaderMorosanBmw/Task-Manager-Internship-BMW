@@ -34,4 +34,10 @@ export class TaskColumnComponent {
       });
     }
   }
+
+  @Output() deleted = new EventEmitter<string>();
+
+  onTaskDeleted(id: string): void {
+    this.deleted.emit(id);
+  }
 }

@@ -286,6 +286,27 @@
           "completed": false
         }
       ]
+    },
+    {
+      "id": "uwLo44K0hYw",
+      "title": "First Task Created",
+      "description": "idk",
+      "categoryId": "1",
+      "status": "In Progress",
+      "priority": "Low",
+      "tags": [
+        "#rezist"
+      ],
+      "subtasks": [
+        {
+          "id": 1785836586091,
+          "title": "idk",
+          "completed": false,
+          "status": "To Do"
+        }
+      ],
+      "assignee": "Mirk",
+      "dueDate": "2026-12-05T00:00:00.000Z"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

@@ -29,6 +29,7 @@ export class TaskModalComponent {
   dueDateInput: string;
   newTag = '';
   newSubtaskTitle = '';
+  isCreateMode = false;
 
   constructor(
     public dialogRef: MatDialogRef<TaskModalComponent>,
@@ -38,6 +39,7 @@ export class TaskModalComponent {
     this.task.tags = this.task.tags ?? [];
     this.task.subtasks = this.task.subtasks ?? [];
     this.dueDateInput = this.formatDueDateForInput(this.task.dueDate);
+    this.isCreateMode = !Boolean(this.task.id);
   }
 
   addTag(): void {
@@ -112,5 +114,14 @@ export class TaskModalComponent {
 
   close(): void {
     this.dialogRef.close();
+  }
+
+  delete(): void {
+    if (!this.task.id) {
+      this.dialogRef.close();
+      return;
+    }
+
+    this.dialogRef.close({ deleted: true, id: this.task.id });
   }
 }
