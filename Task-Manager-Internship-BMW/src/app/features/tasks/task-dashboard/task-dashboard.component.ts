@@ -8,11 +8,14 @@ import { TaskWithCategory } from '../../../core/models/task-with-category.model'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { switchMap, map, filter } from 'rxjs';
 import { FilterService } from '../../../core/services/filter.service';
-import { TaskFilterRowComponent } from "../task-filter-row/task-filter-row.component";
-import { MatDialog, MatDialogModule } from "@angular/material/dialog";
+import { TaskFilterRowComponent } from '../task-filter-row/task-filter-row.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TaskModalComponent } from '../task-modal/task-modal.component';
 import { CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { FormsModule } from '@angular/forms';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { TaskTableComponent } from '../task-table/task-table.component';
 
 @Component({
   selector: 'app-task-dashboard',
@@ -22,8 +25,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     TaskFilterRowComponent,
     CdkDropListGroup,
     MatProgressSpinnerModule,
-    MatDialogModule,
-    TaskModalComponent
+    FormsModule,
+    MatButtonToggleModule,
+    TaskTableComponent,
   ],
   templateUrl: './task-dashboard.component.html',
   styleUrl: './task-dashboard.component.css',
@@ -40,6 +44,8 @@ export class TaskDashboardComponent implements OnInit {
     { title: 'High', color: '#d32f2f' },
   ];
   categories: { title: string; color: string }[] = [];
+  view: 'table' | 'board' = 'board';
+  private readonly VIEW_KEY = 'view-preference';
 
   private taskService = inject(TaskService);
   private categoryService = inject(CategoryService);
@@ -116,6 +122,11 @@ export class TaskDashboardComponent implements OnInit {
           this.isLoading = false;
         },
       });
+
+    const savedView = localStorage.getItem(this.VIEW_KEY);
+    if (savedView === 'table' || savedView === 'board') {
+      this.view = savedView;
+    }
   }
 
   applyFiters(): void {
@@ -152,18 +163,17 @@ export class TaskDashboardComponent implements OnInit {
       status: 'To Do',
       priority: 'Low',
       tags: [],
-      subtasks: []
+      subtasks: [],
     };
 
     const dialogRef = this.dialog.open(TaskModalComponent, {
       width: '520px',
-      data: { task: taskToEdit }
+      data: { task: taskToEdit },
     });
 
-    dialogRef.afterClosed()
-      .pipe(
-        filter((result): result is TaskWithCategory => Boolean(result))
-      )
+    dialogRef
+      .afterClosed()
+      .pipe(filter((result): result is TaskWithCategory => Boolean(result)))
       .subscribe((result) => {
         const taskToSave: Task = {
           ...result,
@@ -173,22 +183,24 @@ export class TaskDashboardComponent implements OnInit {
           priority: result.priority || 'Low',
           tags: result.tags ?? [],
           subtasks: result.subtasks ?? [],
-          id: ''
+          id: '',
         };
 
-        this.taskService.createTask(taskToSave)
+        this.taskService
+          .createTask(taskToSave)
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe({
             next: (savedTask) => {
               const savedWithCategory: TaskWithCategory = {
                 ...savedTask,
-                category: this.allTasks.find((task) => task.category?.id === savedTask.categoryId)?.category
+                category: this.allTasks.find((task) => task.category?.id === savedTask.categoryId)
+                  ?.category,
               };
 
               this.allTasks = [...this.allTasks, savedWithCategory];
               this.applyFiters();
             },
-            error: (err) => console.error('Failed to create task', err)
+            error: (err) => console.error('Failed to create task', err),
           });
       });
   }
@@ -222,5 +234,8 @@ export class TaskDashboardComponent implements OnInit {
         },
       });
   }
-}
 
+  onViewChange(): void {
+    localStorage.setItem(this.VIEW_KEY, this.view);
+  }
+}
