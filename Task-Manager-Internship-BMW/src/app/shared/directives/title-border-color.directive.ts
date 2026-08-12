@@ -9,23 +9,23 @@ import {
 } from '@angular/core';
 
 @Directive({
-  selector: '[priorityColor]',
+  selector: '[titleColor]',
   standalone: true,
 })
-export class PriorityColor implements OnChanges {
-  @Input('priorityColor') priority!: string;
+export class TitleColor implements OnChanges {
+  @Input('titleColor') priority!: string;
 
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
 
   ngOnChanges(): void {
     const colors: Record<string, string> = {
-      Low: 'green',
-      Medium: 'orange',
-      High: 'red',
+      'To Do': 'purple',
+      'In Progress': 'orange',
+      Completed: 'green',
     };
 
     const color = colors[this.priority] || 'gray';
-    this.renderer.setStyle(this.el.nativeElement, 'border-top', `6px solid ${color}`);
+    this.renderer.setStyle(this.el.nativeElement, 'border-bottom', `3px solid ${color}`);
   }
 }

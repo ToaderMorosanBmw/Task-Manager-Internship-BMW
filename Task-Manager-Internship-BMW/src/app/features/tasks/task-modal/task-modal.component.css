@@ -9,6 +9,10 @@
   min-width: 320px;
 }
 
+::ng-deep .mat-mdc-dialog-content {
+  padding-top: 5px !important;
+}
+
 mat-form-field {
   width: 100%;
 }
@@ -17,6 +21,19 @@ mat-form-field {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+textarea {
+  resize: none;
+}
+
+::ng-deep input[type='date'].mat-mdc-input-element {
+  line-height: 1.5;
+}
+
+/*(Chrome/Edge/Safari) */
+::ng-deep input[type='date']::-webkit-datetime-edit {
+  line-height: 1.5;
 }
 
 .chip-row {
@@ -29,13 +46,15 @@ mat-form-field {
   flex: 1;
 }
 
-.chip-list, .subtask-list {
+.chip-list,
+.subtask-list {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
 }
 
-.chip, .subtask-item {
+.chip,
+.subtask-item {
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;

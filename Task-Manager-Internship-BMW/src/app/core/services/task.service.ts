@@ -4,29 +4,29 @@ import { Observable } from 'rxjs';
 import { Task } from '../models/task.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TaskService {
-    private apiUrl = 'http://localhost:3000/tasks';
-    private http = inject(HttpClient);
+  private apiUrl = 'http://localhost:3000/tasks';
+  private http = inject(HttpClient);
 
-    getAllTasks(): Observable<Task[]> {
-        return this.http.get<Task[]>(this.apiUrl);
-    }
+  getAllTasks(): Observable<Task[]> {
+    return this.http.get<Task[]>(this.apiUrl);
+  }
 
-    getTaskById(id: string): Observable<Task> {
-        return this.http.get<Task>(`${this.apiUrl}/${id}`);
-    }
+  getTaskById(id: string): Observable<Task> {
+    return this.http.get<Task>(`${this.apiUrl}/${id}`);
+  }
 
-    createTask(task: Task): Observable<Task> {
-        return this.http.post<Task>(`${this.apiUrl}`, task);
-    }
+  createTask(task: Task): Observable<Task> {
+    return this.http.post<Task>(`${this.apiUrl}`, task);
+  }
 
-    updateTask(id: string, task: Task): Observable<Task> {
-        return this.http.put<Task>(`${this.apiUrl}/${id}`, task);
-    }
+  updateTask(id: string, task: Task): Observable<Task> {
+    return this.http.put<Task>(`${this.apiUrl}/${id}`, task);
+  }
 
-    deleteTask(id: string): Observable<void> {
-        return this.http.delete<void>(`${this.apiUrl}/${id}`);
-    }
+  deleteTask(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
 }

@@ -1,37 +1,75 @@
-h1, .column {
-    display: flex;
-    flex-direction: column;
-    background-color: rgb(245, 245, 245);
-    border: 1px solid rgba(0, 0, 0, 0.089);
-    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.2);
-    border-radius: 15px;
-    padding: 1.3rem;
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100%;
+  min-height: 0;
 }
 
-:host {
-    width: 30%;
+h1 {
+  font-size: 1.7rem;
+  padding: 0.8rem;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+}
 
+.dot {
+  display: inline-block;
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  background-color: black;
 }
 
 .column {
-    height: 47vh;
-    overflow-y: auto;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE/Edge legacy */
-}
-
-p{
-    margin: auto;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .column::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera */
+  display: none;
+}
+
+p.loading {
+  margin: auto;
 }
 
 app-task-card {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 app-task-card:last-child {
-    margin: 0;
+  margin: 0;
+}
+
+@media screen and (max-width: 1100px) {
+  h1 {
+    font-size: 1.4rem;
+    padding: 0.2rem;
+  }
+
+  .dot {
+    height: 0.5rem;
+    width: 0.5rem;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  h1 {
+    font-size: 1rem;
+    padding: 0;
+  }
+
+  .dot {
+    height: 0.3rem;
+    width: 0.3rem;
+  }
 }

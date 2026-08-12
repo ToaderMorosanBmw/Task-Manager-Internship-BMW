@@ -8,9 +8,8 @@ describe('TaskDashboardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TaskDashboardComponent]
-    })
-    .compileComponents();
+      imports: [TaskDashboardComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(TaskDashboardComponent);
     component = fixture.componentInstance;

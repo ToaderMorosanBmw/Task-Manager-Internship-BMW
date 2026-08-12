@@ -1,20 +1,67 @@
-<div class="top-bar">
-    <h1>Task dashboard:</h1>
-    <button
-    class="circle-btn"
-    aria-label="Create task"
-    (click)="onCreateTaskClick()"
-    matTooltip="Create a new task"
-    matTooltipPosition="above"
-  >Add Task</button>
+@if (isLoading) {
+  <div class="spinner-container">
+    <mat-spinner diameter="60"></mat-spinner>
+  </div>
+} @else {
+  <div class="top-bar">
+    <div class="brand-logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M11.999 1.5C11.999 1.5 11.455 10.024 3.5 11.999C11.455 13.975 11.999 22.5 11.999 22.5C11.999 22.5 12.544 13.975 20.5 11.999C12.544 10.024 11.999 1.5 11.999 1.5Z"
+          />
+        </svg>
+      </div>
+      <span class="logo-text">TaskFlow</span>
+    </div>
+
+    <div class="top-bar-actions">
+    
+      <button
+        class="circle-btn"
+        aria-label="Create task"
+        (click)="onCreateTaskClick()"
+        matTooltip="Create a new task"
+        matTooltipPosition="above"
+      >Add Task</button>
+    </div>
   </div>
 
-<div class="filters">
-    <app-task-filter-row filterName="Priority" [buttons]="priorities" [selectedValue]="selectedPriority" (selected)="onPrioritySelected($event)"></app-task-filter-row>
-    <app-task-filter-row filterName="Category" [buttons]="categories" [selectedValue]="selectedCategory" (selected)="onCategorySelected($event)"></app-task-filter-row>
-</div>
-<div class="columns">
-    <app-task-column [cardItems]="todoTasks" title="To Do" (deleted)="onTaskDeleted($event)"></app-task-column>
-<app-task-column [cardItems]="inProgressTasks" title="In Progress" (deleted)="onTaskDeleted($event)"></app-task-column>
-<app-task-column [cardItems]="completedTasks" title="Completed" (deleted)="onTaskDeleted($event)"></app-task-column>
-</div>
+  <div class="filters">
+    <app-task-filter-row
+      filterName="Priority"
+      [buttons]="priorities"
+      [selectedValue]="selectedPriority"
+      (selected)="onPrioritySelected($event)"
+    ></app-task-filter-row>
+    <div class="vertical-line"></div>
+    <app-task-filter-row
+      filterName="Category"
+      [buttons]="categories"
+      [selectedValue]="selectedCategory"
+      (selected)="onCategorySelected($event)"
+    ></app-task-filter-row>
+  </div>
+
+  <div cdkDropListGroup class="columns">
+    <app-task-column
+      [cardItems]="todoTasks"
+      title="To Do"
+      (taskStausChanged)="onTaskStatusChange($event)"
+      (deleted)="onTaskDeleted($event)"
+    ></app-task-column>
+    <app-task-column
+      [cardItems]="inProgressTasks"
+      title="In Progress"
+      (taskStausChanged)="onTaskStatusChange($event)"
+      (deleted)="onTaskDeleted($event)"
+    ></app-task-column>
+    <app-task-column
+      [cardItems]="completedTasks"
+      title="Completed"
+      (taskStausChanged)="onTaskStatusChange($event)"
+      (deleted)="onTaskDeleted($event)"
+    ></app-task-column>
+  </div>
+}
+

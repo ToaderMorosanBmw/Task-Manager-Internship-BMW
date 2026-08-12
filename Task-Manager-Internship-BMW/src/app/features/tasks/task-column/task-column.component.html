@@ -1,9 +1,22 @@
-<h1>{{ title }}</h1>
+<h1 [titleColor]="title">
+  <span [dotColor]="title" class="dot"></span>
+  {{ title }}
+</h1>
 
-<div class="column">
-    @for (item of cardItems; track $index) {
-        <app-task-card [task]="item" [priorityColor]="item.priority || ''" (deleted)="onTaskDeleted($event)"></app-task-card>
-    } @empty {
-        <p class="loading">No tasks</p>
-    }
+<div
+  cdkDropList
+  (cdkDropListDropped)="onCardDropped($event)"
+  [cdkDropListData]="title"
+  class="column"
+>
+  @for (item of cardItems; track $index) {
+    <app-task-card
+      cdkDrag
+      [cdkDragData]="item"
+      [task]="item"
+      [priorityColor]="item.priority || ''"
+     (deleted)="onTaskDeleted($event)"></app-task-card>
+  } @empty {
+    <p class="loading">No tasks</p>
+  }
 </div>

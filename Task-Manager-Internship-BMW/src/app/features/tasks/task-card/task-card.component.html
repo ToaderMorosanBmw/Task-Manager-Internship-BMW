@@ -1,26 +1,65 @@
 <a [routerLink]="['/tasks', task.id]" class="card-link">
-    <div class="card-title">
-  <h3
-    [class.show-full-title]="showFullTitle"
-    (mouseenter)="toggleTitlePreview(true)"
-    (mouseleave)="toggleTitlePreview(false)"
-    [matTooltip]="task.title"
-    matTooltipPosition="above"
-    [attr.aria-label]="task.title"
-  >{{ task.title }}</h3>
+  <p class="category" [categoryColor]="task.category?.color || ''">
+    {{ task.category?.title || 'Uncategorized' }}
+  </p>
+  <div class="card-title">
+    <h3
+      [class.show-full-title]="showFullTitle"
+      (mouseenter)="toggleTitlePreview(true)"
+      (mouseleave)="toggleTitlePreview(false)"
+      [matTooltip]="task.title"
+      matTooltipPosition="above"
+      [attr.aria-label]="task.title"
+    >
+      {{ task.title }}
+    </h3>
 
-  <button
-    class="circle-btn"
-    aria-label="Edit task"
-    (click)="onEditClick($event)"
-    matTooltip="Edit this task"
-    matTooltipPosition="above"
-  >✎</button>
-</div>
-<p class="category" [categoryColor]="task.category?.color || ''">{{task.category?.title || 'Uncategorized'}}</p>
-    <p class="description">{{task.description}}</p>
-    <hr>
-    <div class="footer">
-        <p>{{task.assignee}}</p>
-        <p>{{ getDueDateLabel(task.dueDate) }}</p>
-    </div></a>
+    <button
+      class="circle-btn"
+      aria-label="Edit task"
+      (click)="onEditClick($event)"
+      matTooltip="Edit this task"
+      matTooltipPosition="above"
+    >
+      ✎
+    </button>
+  </div>
+  <p class="description">{{ task.description }}</p>
+  @if (totalSubtasks > 0) {
+    <div class="subtask-progress-wrapper">
+      <div class="subtask-text">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
+          />
+        </svg>
+        <span>{{ completedSubtasks }}/{{ totalSubtasks }} subtasks</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" [style.width.%]="progressPercentage"></div>
+      </div>
+    </div>
+  }
+  <hr />
+  <div class="footer">
+    @if (task.assignee) {
+      <div class="assignee-wrapper">
+        <div class="avatar">{{ assigneeInitials }}</div>
+        <span class="assignee-name">{{ task.assignee }}</span>
+      </div>
+    }
+    @if (task.dueDate) {
+      @let dateInfo = getDateStatus(task.dueDate);
+      <div class="due-date-badge" [class]="dateInfo?.status">
+        @if (dateInfo?.status === 'overdue') {
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2L1 21h22L12 2zm0 3.83L19.17 19H4.83L12 5.83zM11 16h2v2h-2zm0-7h2v5h-2z" />
+          </svg>
+        }
+        <span>{{ dateInfo?.text }}</span>
+      </div>
+    }
+  </div></a
+>

@@ -8,7 +8,7 @@ import { Task } from '../../../core/models/task.model';
 import { RouterLink } from '@angular/router';
 import { TaskWithCategory } from '../../../core/models/task-with-category.model';
 import { TaskService } from '../../../core/services/task.service';
-import { CategoryColor } from '../../../shared/directives/category-color';
+import { CategoryColor } from '../../../shared/directives/category-color.directive';
 import { TaskModalComponent } from '../task-modal/task-modal.component';
 
 @Component({
@@ -16,7 +16,7 @@ import { TaskModalComponent } from '../task-modal/task-modal.component';
   standalone: true,
   imports: [CategoryColor, MatButtonModule, MatTooltipModule, MatDialogModule, RouterLink],
   templateUrl: './task-card.component.html',
-  styleUrl: './task-card.component.css'
+  styleUrl: './task-card.component.css',
 })
 export class TaskCardComponent {
   @Input()
@@ -35,7 +35,7 @@ export class TaskCardComponent {
 
     const dialogRef = this.dialog.open(TaskModalComponent, {
       width: '500px',
-      data: { task: this.task }
+      data: { task: this.task },
     });
 
     dialogRef.afterClosed()
@@ -99,7 +99,7 @@ export class TaskCardComponent {
     return normalizedDate.toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',
-      day: 'numeric'
+      day: 'numeric',
     });
   }
 
@@ -110,5 +110,55 @@ export class TaskCardComponent {
 
     const parsedDate = value instanceof Date ? value : new Date(value);
     return Number.isNaN(parsedDate.getTime()) ? undefined : parsedDate;
+  }
+
+  get totalSubtasks(): number {
+    return this.task.subtasks?.length || 0;
+  }
+
+  get completedSubtasks(): number {
+    return this.task.subtasks?.filter((s) => s.completed).length || 0;
+  }
+
+  get progressPercentage(): number {
+    if (this.totalSubtasks === 0) return 0;
+    return (this.completedSubtasks / this.totalSubtasks) * 100;
+  }
+
+  get assigneeInitials(): string {
+    if (!this.task.assignee) return '';
+    const names = this.task.assignee.trim().split(' ');
+    if (names.length === 1) {
+      return names[0].charAt(0).toUpperCase();
+    }
+    return (names[0].charAt(0) + names[names.length - 1].charAt(0)).toUpperCase();
+  }
+
+  getDateStatus(
+    dueDateVal: string | Date | undefined
+  ): { text: string; status: 'overdue' | 'today' | 'normal' } | null {
+    if (!dueDateVal) return null;
+
+    const dueDate = new Date(dueDateVal);
+    const today = new Date();
+
+    dueDate.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+
+    const diffTime = dueDate.getTime() - today.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays < 0) {
+      return { text: 'Overdue', status: 'overdue' };
+    } else if (diffDays === 0) {
+      return { text: 'Today', status: 'today' };
+    } else {
+      const options: Intl.DateTimeFormatOptions = {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+      };
+      return { text: dueDate.toLocaleDateString('en-US', options), status: 'normal' };
+    }
   }
 }
