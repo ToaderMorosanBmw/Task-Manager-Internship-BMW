@@ -180,6 +180,7 @@
 
 ::ng-deep .mat-button-toggle-group-appearance-standard .mat-button-toggle + .mat-button-toggle {
   border-left: 1px solid var(--border-color);
+}
 :host-context(.dark-theme) ::ng-deep mat-button-toggle-group,
 ::ng-deep .dark-theme mat-button-toggle-group {
   border: 1px solid #374151;
