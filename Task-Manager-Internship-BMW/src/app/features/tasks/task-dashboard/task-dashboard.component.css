@@ -71,9 +71,33 @@
   justify-content: space-between;
 }
 
-.middle-bar-actions {
+.stats {
   display: flex;
-  gap: 2rem;
+  flex-direction: row;
+  gap: 1rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.stats div {
+  display: inline-block;
+  border-radius: 12px;
+  padding: 4px 12px;
+}
+
+.total {
+  background-color: #9333ea26;
+  color: #9333ea;
+}
+
+.completed {
+  background-color: #3da83326;
+  color: #3da833;
+}
+
+.overdue {
+  background-color: #ff001541;
+  color: #e20b1d;
 }
 
 .top-bar {

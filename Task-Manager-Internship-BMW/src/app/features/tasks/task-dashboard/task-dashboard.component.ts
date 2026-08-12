@@ -89,6 +89,20 @@ export class TaskDashboardComponent implements OnInit {
     return this.getFilteredTasks('Completed');
   }
 
+  get completedPercentage(): number {
+    if (this.allTasks.length === 0) {
+      return 0;
+    }
+
+    const completedTasks = this.allTasks.filter((task) => task.status === 'Completed');
+
+    return Math.round((completedTasks.length / this.allTasks.length) * 100);
+  }
+
+  get overdueCount(): number {
+    return this.allTasks.filter((task) => new Date(task.dueDate || '') < new Date()).length;
+  }
+
   ngOnInit(): void {
     this.categoryService
       .getAllCategories()
