@@ -23,9 +23,9 @@ import { FormsModule } from '@angular/forms';
     TaskFilterRowComponent,
     CdkDropListGroup,
     MatProgressSpinnerModule,
-    MatDialogModule,
     FormsModule,
-    TaskModalComponent,
+    MatButtonToggleModule,
+    TaskTableComponent,
   ],
   templateUrl: './task-dashboard.component.html',
   styleUrl: './task-dashboard.component.css',
@@ -43,6 +43,8 @@ export class TaskDashboardComponent implements OnInit {
     { title: 'High', color: '#d32f2f' },
   ];
   categories: { title: string; color: string }[] = [];
+  view: 'table' | 'board' = 'board';
+  private readonly VIEW_KEY = 'view-preference';
 
   private taskService = inject(TaskService);
   private categoryService = inject(CategoryService);
@@ -119,6 +121,11 @@ export class TaskDashboardComponent implements OnInit {
           this.isLoading = false;
         },
       });
+
+    const savedView = localStorage.getItem(this.VIEW_KEY);
+    if (savedView === 'table' || savedView === 'board') {
+      this.view = savedView;
+    }
   }
 
   applyFiters(): void {
@@ -254,5 +261,7 @@ export class TaskDashboardComponent implements OnInit {
 
   onSearchChange(): void {
     this.applyFiters();
+  onViewChange(): void {
+    localStorage.setItem(this.VIEW_KEY, this.view);
   }
 }

@@ -31,7 +31,7 @@
 
       <div class="subtasks">
         <p>Subtasks:</p>
-        @for (subtask of task.subtasks || []; track $index) {
+        @for (subtask of task.subtasks || []; track task.id) {
           <mat-checkbox
             [checked]="subtask.completed"
             (change)="updateSubtask(subtask, $event.checked)"

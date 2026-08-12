@@ -1,0 +1,47 @@
+.table-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+::ng-deep .ag-theme-quartz.custom-grid {
+  --ag-font-family: 'DM Sans', sans-serif;
+  --ag-font-size: 14px;
+  --ag-background-color: #ffffff;
+  --ag-foreground-color: #1f2937;
+  --ag-header-background-color: #ffffff;
+  --ag-header-foreground-color: #6b7280;
+  --ag-header-column-separator-display: none;
+  --ag-borders: none;
+  --ag-row-border-color: #e5e7eb;
+  --ag-header-border-color: #e5e7eb;
+  --ag-header-height: 64px;
+  overflow: hidden;
+}
+
+::ng-deep .ag-theme-quartz.custom-grid .ag-header-cell-text {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+::ng-deep .ag-theme-quartz.custom-grid .ag-row:focus {
+  outline: none;
+}
+
+:host-context(.dark-theme) ::ng-deep .ag-theme-quartz.custom-grid,
+::ng-deep .dark-theme .ag-theme-quartz.custom-grid {
+  --ag-background-color: #222222;
+  --ag-foreground-color: #e5e7eb;
+  --ag-header-background-color: #222222;
+  --ag-header-foreground-color: #9ca3af;
+  --ag-row-border-color: #374151;
+  --ag-header-border-color: #374151;
+}
+
+::ng-deep .center-header .ag-header-cell-label {
+  justify-content: center !important;
+}
+
+::ng-deep .ag-theme-quartz.custom-grid .ag-row {
+  cursor: pointer;
+}
