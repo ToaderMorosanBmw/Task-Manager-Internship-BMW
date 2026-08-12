@@ -6,7 +6,15 @@ import { Category } from '../../../core/models/category.model';
 import { CategoryService } from '../../../core/services/category.service';
 import { TaskWithCategory } from '../../../core/models/task-with-category.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { switchMap, map, filter } from 'rxjs';
+import {
+  switchMap,
+  map,
+  filter,
+  Subject,
+  Subscription,
+  debounceTime,
+  distinctUntilChanged,
+} from 'rxjs';
 import { FilterService } from '../../../core/services/filter.service';
 import { TaskFilterRowComponent } from '../task-filter-row/task-filter-row.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -14,6 +22,8 @@ import { TaskModalComponent } from '../task-modal/task-modal.component';
 import { CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormsModule } from '@angular/forms';
+import { TaskTableComponent } from '../task-table/task-table.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @Component({
   selector: 'app-task-dashboard',
@@ -63,6 +73,9 @@ export class TaskDashboardComponent implements OnInit {
         return this.priorityOrder[a.priority as string] - this.priorityOrder[b.priority as string];
       });
   }
+
+  private searchSubject = new Subject<string>();
+  private searchSubscription!: Subscription;
 
   get todoTasks() {
     return this.getFilteredTasks('To Do');
@@ -126,9 +139,16 @@ export class TaskDashboardComponent implements OnInit {
     if (savedView === 'table' || savedView === 'board') {
       this.view = savedView;
     }
+
+    this.searchSubscription = this.searchSubject
+      .pipe(debounceTime(300), distinctUntilChanged())
+      .subscribe((searchValue) => {
+        this.searchText = searchValue;
+        this.applyFilters();
+      });
   }
 
-  applyFiters(): void {
+  applyFilters(): void {
     let filtered = this.allTasks;
 
     if (this.selectedCategory) {
@@ -168,12 +188,12 @@ export class TaskDashboardComponent implements OnInit {
 
   onCategorySelected(category: string): void {
     this.selectedCategory = category;
-    this.applyFiters();
+    this.applyFilters();
   }
 
   onPrioritySelected(priority: string): void {
     this.selectedPriority = priority;
-    this.applyFiters();
+    this.applyFilters();
   }
 
   onCreateTaskClick(): void {
@@ -222,7 +242,7 @@ export class TaskDashboardComponent implements OnInit {
               };
 
               this.allTasks = [...this.allTasks, savedWithCategory];
-              this.applyFiters();
+              this.applyFilters();
             },
             error: (err) => console.error('Failed to create task', err),
           });
@@ -231,7 +251,7 @@ export class TaskDashboardComponent implements OnInit {
 
   onTaskDeleted(id: string): void {
     this.allTasks = this.allTasks.filter((t) => t.id !== id);
-    this.applyFiters();
+    this.applyFilters();
   }
 
   onTaskStatusChange(event: { task: TaskWithCategory; newStatus: string }) {
@@ -243,7 +263,7 @@ export class TaskDashboardComponent implements OnInit {
     const taskIndex = this.allTasks.findIndex((task) => task.id === newTask.id);
     if (taskIndex !== -1) {
       this.allTasks[taskIndex] = newTask;
-      this.applyFiters();
+      this.applyFilters();
     }
 
     this.taskService
@@ -260,8 +280,6 @@ export class TaskDashboardComponent implements OnInit {
   }
 
   onSearchChange(): void {
-    this.applyFiters();
-  onViewChange(): void {
-    localStorage.setItem(this.VIEW_KEY, this.view);
+    this.applyFilters();
   }
 }

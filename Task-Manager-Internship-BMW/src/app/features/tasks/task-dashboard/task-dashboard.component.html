@@ -14,6 +14,10 @@
       </div>
       <span class="logo-text">TaskFlow</span>
     </div>
+    <mat-button-toggle-group [(ngModel)]="view" aria-label="Select view mode">
+      <mat-button-toggle value="board">Board</mat-button-toggle>
+      <mat-button-toggle value="table">Table</mat-button-toggle>
+    </mat-button-toggle-group>
   </div>
   <div class="middle-bar">
     <input
@@ -34,51 +38,6 @@
     </button>
   </div>
 
-  <div class="filters">
-    <app-task-filter-row
-      filterName="Priority"
-      [buttons]="priorities"
-      [selectedValue]="selectedPriority"
-      (selected)="onPrioritySelected($event)"
-    ></app-task-filter-row>
-    <div class="vertical-line"></div>
-    <app-task-filter-row
-      filterName="Category"
-      [buttons]="categories"
-      [selectedValue]="selectedCategory"
-      (selected)="onCategorySelected($event)"
-    ></app-task-filter-row>
-  </div>
-
-  <div cdkDropListGroup class="columns">
-    <app-task-column
-      [cardItems]="todoTasks"
-      title="To Do"
-      (taskStausChanged)="onTaskStatusChange($event)"
-      (deleted)="onTaskDeleted($event)"
-    ></app-task-column>
-    <app-task-column
-      [cardItems]="inProgressTasks"
-      title="In Progress"
-      (taskStausChanged)="onTaskStatusChange($event)"
-      (deleted)="onTaskDeleted($event)"
-    ></app-task-column>
-    <app-task-column
-      [cardItems]="completedTasks"
-      title="Completed"
-      (taskStausChanged)="onTaskStatusChange($event)"
-      (deleted)="onTaskDeleted($event)"
-    ></app-task-column>
-
-    <mat-button-toggle-group
-      [(ngModel)]="view"
-      (change)="onViewChange()"
-      aria-label="Select view mode"
-    >
-      <mat-button-toggle value="board">Board</mat-button-toggle>
-      <mat-button-toggle value="table">Table</mat-button-toggle>
-    </mat-button-toggle-group>
-  </div>
   @if (this.view === 'board') {
     <div class="filters">
       <app-task-filter-row
@@ -95,21 +54,25 @@
         (selected)="onCategorySelected($event)"
       ></app-task-filter-row>
     </div>
+
     <div cdkDropListGroup class="columns">
       <app-task-column
         [cardItems]="todoTasks"
         title="To Do"
         (taskStausChanged)="onTaskStatusChange($event)"
+        (deleted)="onTaskDeleted($event)"
       ></app-task-column>
       <app-task-column
         [cardItems]="inProgressTasks"
         title="In Progress"
         (taskStausChanged)="onTaskStatusChange($event)"
+        (deleted)="onTaskDeleted($event)"
       ></app-task-column>
       <app-task-column
         [cardItems]="completedTasks"
         title="Completed"
         (taskStausChanged)="onTaskStatusChange($event)"
+        (deleted)="onTaskDeleted($event)"
       ></app-task-column>
     </div>
   } @else {
