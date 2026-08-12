@@ -14,8 +14,6 @@ import { TaskModalComponent } from '../task-modal/task-modal.component';
 import { CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormsModule } from '@angular/forms';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { TaskTableComponent } from '../task-table/task-table.component';
 
 @Component({
   selector: 'app-task-dashboard',
@@ -38,6 +36,7 @@ export class TaskDashboardComponent implements OnInit {
   visibleTasks: TaskWithCategory[] = [];
   selectedCategory: string = '';
   selectedPriority: string = '';
+  searchText: string = '';
   priorities: { title: string; color: string }[] = [
     { title: 'Low', color: '#2e7d32' },
     { title: 'Medium', color: '#f57c00' },
@@ -138,6 +137,31 @@ export class TaskDashboardComponent implements OnInit {
     if (this.selectedPriority) {
       filtered = this.filterService.filterByPriority(filtered, this.selectedPriority);
     }
+    if (this.searchText.trim()) {
+      const words = this.searchText.toLowerCase().trim().split(/\s+/);
+
+      const searchTags = words
+        .filter((word) => word.startsWith('#'))
+        .map((word) => word.substring(1));
+
+      const searchWords = words.filter((token) => !token.startsWith('#'));
+
+      filtered = filtered.filter((task) => {
+        const title = task.title.toLowerCase();
+        const desc = (task.description || '').toLowerCase();
+        const taskTags = (task.tags || []).map((tag) => tag.toLowerCase());
+
+        const matchesWords = searchWords.every(
+          (word) => title.includes(word) || desc.includes(word)
+        );
+
+        const matchesTags = searchTags.every((searchTag) =>
+          taskTags.some((taskTag) => taskTag.includes(searchTag))
+        );
+
+        return matchesWords && matchesTags;
+      });
+    }
 
     this.visibleTasks = filtered;
   }
@@ -235,6 +259,8 @@ export class TaskDashboardComponent implements OnInit {
       });
   }
 
+  onSearchChange(): void {
+    this.applyFiters();
   onViewChange(): void {
     localStorage.setItem(this.VIEW_KEY, this.view);
   }

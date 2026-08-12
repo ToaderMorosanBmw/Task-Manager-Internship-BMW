@@ -14,6 +14,61 @@
       </div>
       <span class="logo-text">TaskFlow</span>
     </div>
+  </div>
+  <div class="middle-bar">
+    <input
+      type="text"
+      [(ngModel)]="searchText"
+      (ngModelChange)="onSearchChange()"
+      placeholder="Search for tasks..."
+      class="search-input"
+    />
+    <button
+      class="add-task-btn"
+      aria-label="Create task"
+      (click)="onCreateTaskClick()"
+      matTooltip="Create a new task"
+      matTooltipPosition="above"
+    >
+      Add Task
+    </button>
+  </div>
+
+  <div class="filters">
+    <app-task-filter-row
+      filterName="Priority"
+      [buttons]="priorities"
+      [selectedValue]="selectedPriority"
+      (selected)="onPrioritySelected($event)"
+    ></app-task-filter-row>
+    <div class="vertical-line"></div>
+    <app-task-filter-row
+      filterName="Category"
+      [buttons]="categories"
+      [selectedValue]="selectedCategory"
+      (selected)="onCategorySelected($event)"
+    ></app-task-filter-row>
+  </div>
+
+  <div cdkDropListGroup class="columns">
+    <app-task-column
+      [cardItems]="todoTasks"
+      title="To Do"
+      (taskStausChanged)="onTaskStatusChange($event)"
+      (deleted)="onTaskDeleted($event)"
+    ></app-task-column>
+    <app-task-column
+      [cardItems]="inProgressTasks"
+      title="In Progress"
+      (taskStausChanged)="onTaskStatusChange($event)"
+      (deleted)="onTaskDeleted($event)"
+    ></app-task-column>
+    <app-task-column
+      [cardItems]="completedTasks"
+      title="Completed"
+      (taskStausChanged)="onTaskStatusChange($event)"
+      (deleted)="onTaskDeleted($event)"
+    ></app-task-column>
 
     <mat-button-toggle-group
       [(ngModel)]="view"

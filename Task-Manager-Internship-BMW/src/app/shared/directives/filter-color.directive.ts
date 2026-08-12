@@ -38,7 +38,7 @@ export class FilterColor implements OnChanges {
   }
 
   private applyStyles(): void {
-    this.renderer.setStyle(this.el.nativeElement, 'transition', 'all 0.2s ease-in-out');
+    // this.renderer.setStyle(this.el.nativeElement, 'transition', 'all 0.2s ease-in-out');
 
     if (this.active) {
       this.renderer.setStyle(this.el.nativeElement, 'border', `1px solid ${this.color}90`);
