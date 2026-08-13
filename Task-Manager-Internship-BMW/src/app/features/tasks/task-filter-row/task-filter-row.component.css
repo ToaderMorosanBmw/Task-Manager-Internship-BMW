@@ -14,7 +14,7 @@ p {
 button {
   /* font-weight: bolder; */
   color: var(--text-muted);
-  background-color: var(--bg-button);
+  background-color: var(--bg-dashboard);
   border: 2px solid transparent;
   border-radius: 100px;
   padding: 0.6rem 0.8rem;

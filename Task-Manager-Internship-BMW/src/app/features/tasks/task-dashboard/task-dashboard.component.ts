@@ -24,6 +24,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormsModule } from '@angular/forms';
 import { TaskTableComponent } from '../task-table/task-table.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-task-dashboard',
@@ -36,6 +38,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     FormsModule,
     MatButtonToggleModule,
     TaskTableComponent,
+    MatIconModule,
+    MatTooltipModule,
   ],
   templateUrl: './task-dashboard.component.html',
   styleUrl: './task-dashboard.component.css',
@@ -295,5 +299,95 @@ export class TaskDashboardComponent implements OnInit {
 
   onSearchChange(): void {
     this.applyFilters();
+  }
+
+  exportToCSV(): void {
+    if (!this.allTasks || this.allTasks.length === 0) {
+      console.warn('No tasks for export.');
+      return;
+    }
+
+    const headers = [
+      'ID',
+      'Title',
+      'Description',
+      'Category Title',
+      'Priority',
+      'Due Date',
+      'Estimated Time',
+      'Status',
+      'Tags',
+      'Assignee',
+      'Subtasks - Completed',
+      'Subtasks - In Progress',
+    ];
+
+    const csvRows = [];
+
+    csvRows.push(headers.join(','));
+
+    for (const task of this.allTasks) {
+      const id = task.id;
+      const title = task.title;
+      const description = task.description || '';
+      const categoryTitle = task.category?.title;
+      const priority = task.priority;
+
+      const rawDate = task.dueDate ? new Date(task.dueDate).toLocaleDateString('en-CA') : '';
+      const dueDate = rawDate ? `="${rawDate}"` : '';
+      const estimatedTime = task.estimatedTime;
+      const status = task.status;
+
+      const tags = task.tags && task.tags.length > 0 ? task.tags.join(';') : '';
+      const assignee = task.assignee;
+
+      let completed = '';
+      let inProgress = '';
+      if (task.subtasks && task.subtasks.length > 0) {
+        task.subtasks.forEach((task) => {
+          if (task.completed) {
+            completed += task.title + ', ';
+          } else {
+            inProgress += task.title + ', ';
+          }
+        });
+      }
+
+      const rowValues = [
+        id,
+        title,
+        description,
+        categoryTitle,
+        priority,
+        dueDate,
+        estimatedTime,
+        status,
+        tags,
+        assignee,
+        completed,
+        inProgress,
+      ];
+
+      const formattedRow = rowValues.map((value) => {
+        const stringValue = value !== null && value !== undefined ? String(value) : '';
+        const escapedValue = stringValue.replace(/"/g, '""');
+        return `"${escapedValue}"`;
+      });
+
+      csvRows.push(formattedRow.join(','));
+    }
+
+    const csvString = csvRows.join('\n');
+    const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', 'exported_tasks.csv');
+
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 }

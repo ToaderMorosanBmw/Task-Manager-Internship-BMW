@@ -25,6 +25,7 @@ export class TaskCardComponent {
   @Output() deleted = new EventEmitter<string>();
 
   showFullTitle = false;
+  hoveredEditTaskId: string | null = null;
   private dialog = inject(MatDialog);
   private taskService = inject(TaskService);
   private destroyRef = inject(DestroyRef);
@@ -44,11 +45,12 @@ export class TaskCardComponent {
 
       if ((result as any).deleted) {
         const id = (result as any).id as string;
-        this.taskService.deleteTask(id)
+        this.taskService
+          .deleteTask(id)
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe({
             next: () => this.deleted.emit(id),
-            error: (err) => console.error('Failed to delete task', err)
+            error: (err) => console.error('Failed to delete task', err),
           });
 
         return;
@@ -62,21 +64,23 @@ export class TaskCardComponent {
         categoryId: updatedTask.categoryId ?? this.task.categoryId,
         status: updatedTask.status ?? this.task.status,
         priority: updatedTask.priority ?? this.task.priority,
-        dueDate: this.normalizeDueDate(updatedTask.dueDate ?? this.task.dueDate) as Date | undefined
+        dueDate: this.normalizeDueDate(updatedTask.dueDate ?? this.task.dueDate) as
+          Date | undefined,
       };
 
-      this.taskService.updateTask(this.task.id as string, taskToSave)
+      this.taskService
+        .updateTask(this.task.id as string, taskToSave)
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
           next: (savedTask) => {
             const normalizedTask = {
               ...savedTask,
-              dueDate: this.normalizeDueDate(savedTask.dueDate)
+              dueDate: this.normalizeDueDate(savedTask.dueDate),
             };
 
             this.task = { ...this.task, ...normalizedTask } as TaskWithCategory;
           },
-          error: (err) => console.error('Failed to update task', err)
+          error: (err) => console.error('Failed to update task', err),
         });
     });
   }

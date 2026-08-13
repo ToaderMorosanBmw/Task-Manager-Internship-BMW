@@ -54,6 +54,10 @@ body {
   width: 100%;
 }
 
+button:active {
+  transform: scale(0.97);
+}
+
 body.dark-theme .mat-mdc-select-value-text,
 body.dark-theme .mat-mdc-select-arrow,
 body.dark-theme .mdc-form-field,
