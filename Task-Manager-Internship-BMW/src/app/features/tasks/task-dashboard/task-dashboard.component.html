@@ -27,6 +27,14 @@
       placeholder="Search for tasks..."
       class="search-input"
     />
+    <div class="stats">
+      <div class="total">Total tasks: {{ this.allTasks.length }}</div>
+      <div class="completed">
+        Completed:
+        {{ completedPercentage }}%
+      </div>
+      <div class="overdue">Overdue: {{ overdueCount }}</div>
+    </div>
     <button
       class="add-task-btn"
       aria-label="Create task"
