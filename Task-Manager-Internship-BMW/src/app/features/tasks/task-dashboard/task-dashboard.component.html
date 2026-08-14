@@ -14,10 +14,11 @@
       </div>
       <span class="logo-text">TaskFlow</span>
     </div>
-    <mat-button-toggle-group [(ngModel)]="view" aria-label="Select view mode">
-      <mat-button-toggle value="board">Board</mat-button-toggle>
-      <mat-button-toggle value="table">Table</mat-button-toggle>
-    </mat-button-toggle-group>
+    <div class="view-toggle" [class.is-table]="view === 'table'">
+      <div class="toggle-slider"></div>
+      <button class="toggle-btn" [class.active]="view === 'board'" (click)="view = 'board'">Board</button>
+      <button class="toggle-btn" [class.active]="view === 'table'" (click)="view = 'table'">Table</button>
+    </div>
   </div>
   <div class="middle-bar">
     <input

@@ -2,6 +2,7 @@ import { Component, inject, Input } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef, RowClickedEvent } from 'ag-grid-community';
 import { TaskWithCategory } from '../../../core/models/task-with-category.model';
+import { TaskStatus } from '../../../core/models/task.model';
 import { Router } from '@angular/router';
 
 @Component({
@@ -33,9 +34,9 @@ export class TaskTableComponent {
       sort: 'asc',
       comparator: (valueA: string, valueB: string) => {
         const order: Record<string, number> = {
-          'To Do': 1,
-          'In Progress': 2,
-          Completed: 3,
+          [TaskStatus.TODO]: 1,
+          [TaskStatus.IN_PROGRESS]: 2,
+          [TaskStatus.COMPLETED]: 3,
         };
         return (order[valueA] || 4) - (order[valueB] || 4);
       },
@@ -45,9 +46,9 @@ export class TaskTableComponent {
         if (!params.value) return '';
 
         let textColor = '#808080';
-        if (params.value === 'To Do') textColor = '#a855f7';
-        if (params.value === 'In Progress') textColor = '#eab308';
-        if (params.value === 'Completed') textColor = '#22c55e';
+        if (params.value === TaskStatus.TODO) textColor = '#a855f7';
+        if (params.value === TaskStatus.IN_PROGRESS) textColor = '#eab308';
+        if (params.value === TaskStatus.COMPLETED) textColor = '#22c55e';
 
         const bgColor = `${textColor}26`;
 

@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Subtask } from '../../../core/models/subtask.model';
 import { TaskWithCategory } from '../../../core/models/task-with-category.model';
+import { TaskStatus } from '../../../core/models/task.model';
 
 @Component({
   selector: 'app-task-modal',
@@ -69,7 +70,7 @@ export class TaskModalComponent {
       id: Date.now(),
       title,
       completed: false,
-      status: 'To Do',
+      status: TaskStatus.TODO,
     };
 
     this.task.subtasks = this.task.subtasks ?? [];

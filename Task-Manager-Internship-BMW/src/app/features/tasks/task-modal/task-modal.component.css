@@ -9,9 +9,7 @@
   min-width: 320px;
 }
 
-::ng-deep .mat-mdc-dialog-content {
-  padding-top: 5px !important;
-}
+
 
 mat-form-field {
   width: 100%;
@@ -27,14 +25,7 @@ textarea {
   resize: none;
 }
 
-::ng-deep input[type='date'].mat-mdc-input-element {
-  line-height: 1.5;
-}
 
-/*(Chrome/Edge/Safari) */
-::ng-deep input[type='date']::-webkit-datetime-edit {
-  line-height: 1.5;
-}
 
 .chip-row {
   display: flex;
@@ -73,4 +64,15 @@ textarea {
   border: none;
   background: transparent;
   cursor: pointer;
+}
+
+:host-context(.dark-theme) .chip,
+:host-context(.dark-theme) .subtask-item {
+  background-color: #374151;
+  color: #ffffff;
+}
+
+:host-context(.dark-theme) .subtask-item button,
+:host-context(.dark-theme) .chip {
+  color: #ffffff;
 }

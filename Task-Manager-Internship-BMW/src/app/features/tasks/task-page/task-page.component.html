@@ -3,7 +3,7 @@
     <mat-spinner diameter="60"></mat-spinner>
   </div>
 } @else {
-  <div [priorityColor]="task.priority || ''" class="card">
+  <div [appColor]="task.priority || ''" colorType="border-top" class="card">
     <div class="header">
       <div class="header-top">
         <h3>{{ task.title }}</h3>
