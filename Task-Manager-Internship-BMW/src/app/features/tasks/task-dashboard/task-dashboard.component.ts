@@ -24,7 +24,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormsModule } from '@angular/forms';
 import { TaskTableComponent } from '../task-table/task-table.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-
+import { TaskCalendarComponent } from '../task-calendar/task-calendar.component';
 @Component({
   selector: 'app-task-dashboard',
   standalone: true,
@@ -36,6 +36,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     FormsModule,
     MatButtonToggleModule,
     TaskTableComponent,
+    TaskCalendarComponent,
   ],
   templateUrl: './task-dashboard.component.html',
   styleUrl: './task-dashboard.component.css',
@@ -55,7 +56,6 @@ export class TaskDashboardComponent implements OnInit {
   categories: { title: string; color: string }[] = [];
   view: 'table' | 'board' = 'board';
   private readonly VIEW_KEY = 'view-preference';
-
   private taskService = inject(TaskService);
   private categoryService = inject(CategoryService);
   private destroyRef = inject(DestroyRef);
@@ -73,22 +73,17 @@ export class TaskDashboardComponent implements OnInit {
         return this.priorityOrder[a.priority as string] - this.priorityOrder[b.priority as string];
       });
   }
-
   private searchSubject = new Subject<string>();
   private searchSubscription!: Subscription;
-
   get todoTasks() {
     return this.getFilteredTasks('To Do');
   }
-
   get inProgressTasks() {
     return this.getFilteredTasks('In Progress');
   }
-
   get completedTasks() {
     return this.getFilteredTasks('Completed');
   }
-
   ngOnInit(): void {
     this.categoryService
       .getAllCategories()
@@ -114,32 +109,25 @@ export class TaskDashboardComponent implements OnInit {
         next: (tasksWithCategory: TaskWithCategory[]) => {
           this.allTasks = tasksWithCategory;
           this.visibleTasks = tasksWithCategory;
-
           const categoryColor: Record<string, { title: string; color: string }> = {};
-
           tasksWithCategory.forEach((task) => {
             categoryColor[task.category!.title] = {
               title: task.category!.title,
               color: task.category!.color,
             };
           });
-
           this.categories = Object.values(categoryColor);
-
           this.isLoading = false;
         },
         error: (err) => {
           console.error('Failed to load dashboard data:', err);
-
           this.isLoading = false;
         },
       });
-
     const savedView = localStorage.getItem(this.VIEW_KEY);
     if (savedView === 'table' || savedView === 'board') {
       this.view = savedView;
     }
-
     this.searchSubscription = this.searchSubject
       .pipe(debounceTime(300), distinctUntilChanged())
       .subscribe((searchValue) => {
@@ -147,10 +135,8 @@ export class TaskDashboardComponent implements OnInit {
         this.applyFilters();
       });
   }
-
   applyFilters(): void {
     let filtered = this.allTasks;
-
     if (this.selectedCategory) {
       filtered = this.filterService.filterByCategory(filtered, this.selectedCategory);
     }
@@ -159,46 +145,35 @@ export class TaskDashboardComponent implements OnInit {
     }
     if (this.searchText.trim()) {
       const words = this.searchText.toLowerCase().trim().split(/\s+/);
-
       const searchTags = words
         .filter((word) => word.startsWith('#'))
         .map((word) => word.substring(1));
-
       const searchWords = words.filter((token) => !token.startsWith('#'));
-
       filtered = filtered.filter((task) => {
         const title = task.title.toLowerCase();
         const desc = (task.description || '').toLowerCase();
         const taskTags = (task.tags || []).map((tag) => tag.toLowerCase());
-
         const matchesWords = searchWords.every(
           (word) => title.includes(word) || desc.includes(word)
         );
-
         const matchesTags = searchTags.every((searchTag) =>
           taskTags.some((taskTag) => taskTag.includes(searchTag))
         );
-
         return matchesWords && matchesTags;
       });
     }
-
     this.visibleTasks = filtered;
   }
-
   onCategorySelected(category: string): void {
     this.selectedCategory = category;
     this.applyFilters();
   }
-
   onPrioritySelected(priority: string): void {
     this.selectedPriority = priority;
     this.applyFilters();
   }
-
   onCreateTaskClick(): void {
     const defaultCategoryId = this.allTasks[0]?.category?.id ?? '';
-
     const taskToEdit: TaskWithCategory = {
       id: '',
       title: '',
@@ -209,12 +184,10 @@ export class TaskDashboardComponent implements OnInit {
       tags: [],
       subtasks: [],
     };
-
     const dialogRef = this.dialog.open(TaskModalComponent, {
       width: '520px',
       data: { task: taskToEdit },
     });
-
     dialogRef
       .afterClosed()
       .pipe(filter((result): result is TaskWithCategory => Boolean(result)))
@@ -229,7 +202,6 @@ export class TaskDashboardComponent implements OnInit {
           subtasks: result.subtasks ?? [],
           id: '',
         };
-
         this.taskService
           .createTask(taskToSave)
           .pipe(takeUntilDestroyed(this.destroyRef))
@@ -240,7 +212,6 @@ export class TaskDashboardComponent implements OnInit {
                 category: this.allTasks.find((task) => task.category?.id === savedTask.categoryId)
                   ?.category,
               };
-
               this.allTasks = [...this.allTasks, savedWithCategory];
               this.applyFilters();
             },
@@ -248,24 +219,20 @@ export class TaskDashboardComponent implements OnInit {
           });
       });
   }
-
   onTaskDeleted(id: string): void {
     this.allTasks = this.allTasks.filter((t) => t.id !== id);
     this.applyFilters();
   }
-
   onTaskStatusChange(event: { task: TaskWithCategory; newStatus: string }) {
     const newTask = {
       ...event.task,
       status: event.newStatus as 'To Do' | 'In Progress' | 'Completed',
     };
-
     const taskIndex = this.allTasks.findIndex((task) => task.id === newTask.id);
     if (taskIndex !== -1) {
       this.allTasks[taskIndex] = newTask;
       this.applyFilters();
     }
-
     this.taskService
       .updateTask(newTask.id, newTask)
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -278,7 +245,6 @@ export class TaskDashboardComponent implements OnInit {
         },
       });
   }
-
   onSearchChange(): void {
     this.applyFilters();
   }

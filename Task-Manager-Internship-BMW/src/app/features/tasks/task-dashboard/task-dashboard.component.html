@@ -17,6 +17,7 @@
     <mat-button-toggle-group [(ngModel)]="view" aria-label="Select view mode">
       <mat-button-toggle value="board">Board</mat-button-toggle>
       <mat-button-toggle value="table">Table</mat-button-toggle>
+      <mat-button-toggle value="calendar">Calendar</mat-button-toggle>
     </mat-button-toggle-group>
   </div>
   <div class="middle-bar">
@@ -75,7 +76,9 @@
         (deleted)="onTaskDeleted($event)"
       ></app-task-column>
     </div>
-  } @else {
+  } @else if(this.view === 'table'){
     <app-task-table [allTasks]="allTasks"></app-task-table>
+  } @else if(this.view === 'calendar'){
+    <app-task-calendar></app-task-calendar>
   }
 }

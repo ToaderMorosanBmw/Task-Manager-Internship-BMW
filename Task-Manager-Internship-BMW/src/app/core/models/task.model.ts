@@ -7,6 +7,8 @@ export interface Task {
   categoryId: string;
   priority?: 'Low' | 'Medium' | 'High';
   dueDate?: Date;
+  scheduledStart?: string;
+  scheduledEnd?: string;
   estimatedTime?: number;
   status: 'To Do' | 'In Progress' | 'Completed';
   tags: string[];
