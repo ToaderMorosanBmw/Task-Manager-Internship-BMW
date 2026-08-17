@@ -215,7 +215,7 @@ mat-icon {
   border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 4px;
-  width: 180px;
+  width: 240px;
 }
 
 :host-context(.dark-theme) .view-toggle {
@@ -228,7 +228,7 @@ mat-icon {
   top: 4px;
   bottom: 4px;
   left: 4px;
-  width: calc(50% - 4px);
+  width: calc(33% - 4px);
   background-color: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
   border-radius: 6px;
@@ -243,6 +243,12 @@ mat-icon {
 .view-toggle.is-table .toggle-slider {
   transform: translateX(100%);
 }
+
+.view-toggle.is-calendar .toggle-slider {
+  transform: translateX(200%);
+}
+
+
 
 .toggle-btn {
   position: relative;
