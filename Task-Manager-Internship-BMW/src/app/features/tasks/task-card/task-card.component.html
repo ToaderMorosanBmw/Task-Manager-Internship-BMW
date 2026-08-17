@@ -1,4 +1,10 @@
-<a [routerLink]="['/tasks', task.id]" class="card-link">
+<a
+  [routerLink]="['/tasks', task.id]"
+  matTooltip="View full task"
+  matTooltipPosition="above"
+  [matTooltipDisabled]="hoveredEditTaskId === task.id"
+  class="card-link"
+>
   <p class="category" [categoryColor]="task.category?.color || ''">
     {{ task.category?.title || 'Uncategorized' }}
   </p>
@@ -7,8 +13,6 @@
       [class.show-full-title]="showFullTitle"
       (mouseenter)="toggleTitlePreview(true)"
       (mouseleave)="toggleTitlePreview(false)"
-      [matTooltip]="task.title"
-      matTooltipPosition="above"
       [attr.aria-label]="task.title"
     >
       {{ task.title }}
@@ -20,6 +24,8 @@
       (click)="onEditClick($event)"
       matTooltip="Edit this task"
       matTooltipPosition="above"
+      (mouseenter)="hoveredEditTaskId = task.id"
+      (mouseleave)="hoveredEditTaskId = null"
     >
       ✎
     </button>

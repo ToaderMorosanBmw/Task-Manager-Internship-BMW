@@ -215,7 +215,7 @@
       "priority": "High",
       "dueDate": "2026-08-02T00:00:00.000Z",
       "estimatedTime": 2,
-      "status": "In Progress",
+      "status": "To Do",
       "tags": [
         "code",
         "review"
@@ -235,7 +235,12 @@
           "status": "Completed",
           "completed": true
         }
-      ]
+      ],
+      "category": {
+        "id": "1",
+        "title": "Work",
+        "color": "#4f46e5"
+      }
     },
     {
       "id": "8",
