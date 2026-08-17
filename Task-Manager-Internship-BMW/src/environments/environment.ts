@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://backend-bmw-task-manager.onrender.com'
+  apiUrl: 'https://task-manager-internship-bmw-1.onrender.com'
 };
