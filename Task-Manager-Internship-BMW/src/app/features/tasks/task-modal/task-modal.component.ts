@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { Component, Inject, AfterViewInit, OnInit, ViewChild, ViewContainerRef, TemplateRef } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -13,7 +12,6 @@ import { TaskWithCategory } from '../../../core/models/task-with-category.model'
   selector: 'app-task-modal',
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     MatDialogModule,
     MatFormFieldModule,
@@ -24,7 +22,7 @@ import { TaskWithCategory } from '../../../core/models/task-with-category.model'
   templateUrl: './task-modal.component.html',
   styleUrl: './task-modal.component.css',
 })
-export class TaskModalComponent implements OnInit, AfterViewInit {
+export class TaskModalComponent implements OnInit {
   task: TaskWithCategory;
   taskForm!: FormGroup;
   newTag = '';
@@ -88,14 +86,12 @@ export class TaskModalComponent implements OnInit, AfterViewInit {
     this.task.subtasks = this.task.subtasks ?? [];
     this.task.subtasks.push(subtask);
     this.newSubtaskTitle = '';
-    this.renderSubtasks();
   }
 
   removeSubtask(subtask: Subtask): void {
     this.task.subtasks = (this.task.subtasks ?? []).filter(
       (item: Subtask) => item.id !== subtask.id
     );
-    this.renderSubtasks();
   }
 
   save(): void {
@@ -112,32 +108,6 @@ export class TaskModalComponent implements OnInit, AfterViewInit {
     };
 
     this.dialogRef.close(this.task);
-  }
-
-  trackByValue(_index: number, value: string): string {
-    return value;
-  }
-
-  @ViewChild('subtaskContainer', { read: ViewContainerRef })
-  private subtaskContainer!: ViewContainerRef;
-
-  @ViewChild('subtaskTpl')
-  private subtaskTpl!: TemplateRef<any>;
-
-  ngAfterViewInit(): void {
-    this.renderSubtasks();
-  }
-
-  private renderSubtasks(): void {
-    if (!this.subtaskContainer || !this.subtaskTpl) {
-      return;
-    }
-
-    this.subtaskContainer.clear();
-    const items = this.task.subtasks ?? [];
-    for (const subtask of items) {
-      this.subtaskContainer.createEmbeddedView(this.subtaskTpl, { subtask });
-    }
   }
 
   private normalizeDueDate(value: Date | string | undefined): Date | undefined {

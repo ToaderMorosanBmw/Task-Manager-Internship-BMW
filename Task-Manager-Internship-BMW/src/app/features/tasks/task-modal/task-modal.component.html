@@ -40,7 +40,9 @@
     <mat-form-field appearance="outline">
       <mat-label>Priority</mat-label>
       <mat-select formControlName="priority">
-        <mat-option *ngFor="let p of priorities; trackBy: trackByValue" [value]="p">{{ p }}</mat-option>
+        @for (p of priorities; track p) {
+          <mat-option [value]="p">{{ p }}</mat-option>
+        }
       </mat-select>
       @if (taskForm.get('priority')?.hasError('required')) {
         <mat-error>
@@ -52,7 +54,9 @@
     <mat-form-field appearance="outline">
       <mat-label>Status</mat-label>
       <mat-select formControlName="status">
-        <mat-option *ngFor="let s of statuses; trackBy: trackByValue" [value]="s">{{ s }}</mat-option>
+        @for (s of statuses; track s) {
+          <mat-option [value]="s">{{ s }}</mat-option>
+        }
       </mat-select>
       @if (taskForm.get('status')?.hasError('required')) {
         <mat-error>
@@ -96,16 +100,14 @@
         </mat-form-field>
         <button mat-stroked-button type="button" (click)="addSubtask()">Add</button>
       </div>
-      <ng-container #subtaskContainer></ng-container>
-
-      <ng-template #subtaskTpl let-subtask>
-        <div class="subtask-list">
+      <div class="subtask-list">
+        @for (subtask of task.subtasks; track subtask.id) {
           <div class="subtask-item">
             <span>{{ subtask.title }}</span>
             <button mat-icon-button type="button" (click)="removeSubtask(subtask)">×</button>
           </div>
-        </div>
-      </ng-template>
+        }
+      </div>
     </div>
   </mat-dialog-content>
 

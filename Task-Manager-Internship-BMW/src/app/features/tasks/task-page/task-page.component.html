@@ -27,9 +27,9 @@
                 <mat-option [value]="option">{{ option }}</mat-option>
             }
         </mat-select>
-        <mat-error *ngIf="taskForm.get('status')?.hasError('required') && taskForm.get('status')?.touched">
-          Status is required.
-        </mat-error>
+        @if (taskForm.get('status')?.hasError('required') && taskForm.get('status')?.touched) {
+          <mat-error>Status is required.</mat-error>
+        }
     </mat-form-field>
 
       <div class="subtasks">
