@@ -25,20 +25,7 @@ import { Task } from '../../../core/models/task.model';
 import { Category } from '../../../core/models/category.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { switchMap, map } from 'rxjs';
-const colors: Record<string, any> = {
-  High: {
-    primary: '#ef4444',
-    secondary: '#fee2e2',
-  },
-  Medium: {
-    primary: '#f59e0b',
-    secondary: '#fef3c7',
-  },
-  Low: {
-    primary: '#2e7d32',
-    secondary: '#e8f5e9',
-  },
-};
+import {Priority_Colors} from './task-calendar.constants';
 @Component({
   selector: 'app-task-calendar',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -92,7 +79,7 @@ export class TaskCalendarComponent implements OnInit {
                   start,
                   end,
                   allDay,
-                  color: colors[task.priority ?? 'Low'] ?? colors['Low'],
+                  color: Priority_Colors[task.priority ?? 'Low'] ?? Priority_Colors['Low'],
                   draggable: false,
                   resizable: { beforeStart: false, afterEnd: false },
                   meta: { task, category },
