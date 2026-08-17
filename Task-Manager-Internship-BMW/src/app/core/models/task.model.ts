@@ -19,6 +19,8 @@ export interface Task {
   categoryId: string;
   priority?: TaskPriority;
   dueDate?: Date;
+  scheduledStart?: string;
+  scheduledEnd?: string;
   estimatedTime?: number;
   status: TaskStatus;
   tags: string[];

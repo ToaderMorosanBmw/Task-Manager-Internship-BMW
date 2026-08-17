@@ -14,10 +14,13 @@
       </div>
       <span class="logo-text">TaskFlow</span>
     </div>
-    <div class="view-toggle" [class.is-table]="view === 'table'">
+    <div class="view-toggle" [class.is-table]="view === 'table'"
+                            [class.is-board]="view === 'board'"
+                            [class.is-calendar]="view === 'calendar'">
       <div class="toggle-slider"></div>
       <button class="toggle-btn" [class.active]="view === 'board'" (click)="view = 'board'">Board</button>
       <button class="toggle-btn" [class.active]="view === 'table'" (click)="view = 'table'">Table</button>
+      <button class="toggle-btn" [class.active]="view === 'calendar'" (click)="view = 'calendar'">Calendar</button>
     </div>
   </div>
   <div class="middle-bar">
@@ -83,7 +86,9 @@
         (deleted)="onTaskDeleted($event)"
       ></app-task-column>
     </div>
-  } @else {
+  } @else if(this.view === 'table'){
     <app-task-table [allTasks]="allTasks"></app-task-table>
+  } @else if(this.view === 'calendar'){
+    <app-task-calendar></app-task-calendar>
   }
 }
