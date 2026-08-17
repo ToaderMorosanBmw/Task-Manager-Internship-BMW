@@ -4,6 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:backend": "node server.js",
+    "start:backend": "node server.js",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
@@ -23,6 +25,7 @@
     "@angular/router": "^18.2.0",
     "ag-grid-angular": "^32.3.9",
     "ag-grid-community": "^32.3.9",
+    "cors": "^2.8.6",
     "json-server": "^1.0.0-beta.15",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
