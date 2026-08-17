@@ -5,7 +5,7 @@ import { CategoryService } from '../../../core/services/category.service';
 import { TaskStatus } from '../../../core/models/task.model';
 import { TaskService } from '../../../core/services/task.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { finalize, map, switchMap } from 'rxjs';
+import { map, switchMap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { CategoryColor } from '../../../shared/directives/category-color.directive';
 import { AppColorDirective } from '../../../shared/directives/app-color.directive';
@@ -77,14 +77,18 @@ export class TaskPageComponent implements OnInit {
               }))
             )
         ),
-        finalize(() => {
-          this.isLoading = false;
-        })
       )
-      .subscribe((taskWithCategory: TaskWithCategory) => {
-        this.task = taskWithCategory;
-        this.isCompleted = this.task.status === 'Completed';
-        this.taskForm.patchValue({ status: this.task.status });
+      .subscribe({
+        next: (taskWithCategory: TaskWithCategory) => {
+          this.task = taskWithCategory;
+          this.isCompleted = this.task.status === TaskStatus.COMPLETED;
+          this.taskForm.patchValue({ status: this.task.status });
+          this.isLoading = false;
+        },
+        error: (err) => {
+          console.error('Failed to load task', err);
+          this.isLoading = false;
+        }
       })
     }
 

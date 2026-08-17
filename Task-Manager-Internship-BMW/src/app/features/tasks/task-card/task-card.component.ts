@@ -41,7 +41,6 @@ export class TaskCardComponent {
       width: '500px',
       data: { task: this.task },
     });
-<<<<<<< HEAD
 
     dialogRef.afterClosed()
       .pipe(
@@ -53,25 +52,6 @@ export class TaskCardComponent {
               map(() => ({ type: 'delete' as const, id }))
             );
           }
-=======
-    dialogRef
-      .afterClosed()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((result) => {
-      if (!result) {
-        return;
-      }
-
-      if ((result as any).deleted) {
-        const id = (result as any).id as string;
-        this.taskService
-          .deleteTask(id)
-          .pipe(takeUntilDestroyed(this.destroyRef))
-          .subscribe({
-            next: () => this.deleted.emit(id),
-            error: (err) => console.error('Failed to delete task', err),
-          });
->>>>>>> main
 
           const updatedTask = result as TaskWithCategory;
           const taskToSave: Task = {
@@ -96,7 +76,6 @@ export class TaskCardComponent {
             return;
           }
 
-<<<<<<< HEAD
           const normalizedTask = {
             ...result.savedTask,
             dueDate: this.normalizeDueDate(result.savedTask.dueDate)
@@ -108,33 +87,6 @@ export class TaskCardComponent {
           console.error('Failed to process task modal result', err);
         }
       });
-=======
-      const taskToSave: Task = {
-        ...this.task,
-        ...updatedTask,
-        categoryId: updatedTask.categoryId ?? this.task.categoryId,
-        status: updatedTask.status ?? this.task.status,
-        priority: updatedTask.priority ?? this.task.priority,
-        dueDate: this.normalizeDueDate(updatedTask.dueDate ?? this.task.dueDate) as
-          Date | undefined,
-      };
-
-      this.taskService
-        .updateTask(this.task.id as string, taskToSave)
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe({
-          next: (savedTask) => {
-            const normalizedTask = {
-              ...savedTask,
-              dueDate: this.normalizeDueDate(savedTask.dueDate),
-            };
-
-            this.task = { ...this.task, ...normalizedTask } as TaskWithCategory;
-          },
-          error: (err) => console.error('Failed to update task', err),
-        });
-    });
->>>>>>> main
   }
 
   toggleTitlePreview(show: boolean): void {

@@ -19,7 +19,7 @@
         </p>
       </div>
     </div>
-    <div class="content">
+    <div class="content" [formGroup]="taskForm">
       @if (task.estimatedTime) {
         <p class="estimated-time">Estimated time: {{ task.estimatedTime }}h</p>
       }

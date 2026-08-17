@@ -221,8 +221,8 @@ export class TaskDashboardComponent implements OnInit {
             ...result,
             title: result.title.trim() || 'New task',
             categoryId: result.categoryId || defaultCategoryId,
-            status: result.status || 'To Do',
-            priority: result.priority || 'Low',
+            status: result.status || TaskStatus.TODO,
+            priority: result.priority || TaskPriority.LOW,
             tags: result.tags ?? [],
             subtasks: result.subtasks ?? [],
             id: ''
@@ -241,7 +241,7 @@ export class TaskDashboardComponent implements OnInit {
           };
 
           this.allTasks = [...this.allTasks, savedWithCategory];
-          this.applyFiters();
+          this.applyFilters();
         },
         error: (err) => console.error('Failed to create task', err)
       });
