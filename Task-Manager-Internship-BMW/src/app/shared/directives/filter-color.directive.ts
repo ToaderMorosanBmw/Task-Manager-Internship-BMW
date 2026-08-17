@@ -41,14 +41,17 @@ export class FilterColor implements OnChanges {
     // this.renderer.setStyle(this.el.nativeElement, 'transition', 'all 0.2s ease-in-out');
 
     if (this.active) {
-      this.renderer.setStyle(this.el.nativeElement, 'border', `1px solid ${this.color}90`);
+      this.renderer.setStyle(this.el.nativeElement, 'border', `2px solid ${this.color}90`);
       this.renderer.setStyle(this.el.nativeElement, 'background-color', `${this.color}20`);
+      this.renderer.setStyle(this.el.nativeElement, 'color', `${this.color}90`);
     } else if (this.isHovered) {
-      this.renderer.setStyle(this.el.nativeElement, 'border', `1px solid ${this.color}60`);
+      this.renderer.setStyle(this.el.nativeElement, 'border', `2px solid ${this.color}60`);
       this.renderer.setStyle(this.el.nativeElement, 'background-color', `${this.color}30`);
+      this.renderer.setStyle(this.el.nativeElement, 'color', `${this.color}90`);
     } else {
       this.renderer.removeStyle(this.el.nativeElement, 'border');
       this.renderer.removeStyle(this.el.nativeElement, 'background-color');
+      this.renderer.removeStyle(this.el.nativeElement, 'color');
     }
   }
 }

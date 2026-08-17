@@ -1,4 +1,10 @@
-<a [routerLink]="['/tasks', task.id]" class="card-link">
+<a
+  [routerLink]="['/tasks', task.id]"
+  matTooltip="View full task"
+  matTooltipPosition="above"
+  [matTooltipDisabled]="hoveredEditTaskId === task.id"
+  class="card-link"
+>
   <p class="category" [categoryColor]="task.category?.color || ''">
     {{ task.category?.title || 'Uncategorized' }}
   </p>
@@ -7,8 +13,6 @@
       [class.show-full-title]="showFullTitle"
       (mouseenter)="toggleTitlePreview(true)"
       (mouseleave)="toggleTitlePreview(false)"
-      [matTooltip]="task.title"
-      matTooltipPosition="above"
       [attr.aria-label]="task.title"
     >
       {{ task.title }}
@@ -20,12 +24,15 @@
       (click)="onEditClick($event)"
       matTooltip="Edit this task"
       matTooltipPosition="above"
+      (mouseenter)="hoveredEditTaskId = task.id"
+      (mouseleave)="hoveredEditTaskId = null"
     >
       ✎
     </button>
   </div>
   <p class="description">{{ task.description }}</p>
-  @if (totalSubtasks > 0) {
+  @if (task.subtasks?.length) {
+    @let progress = task.subtasks | taskProgress;
     <div class="subtask-progress-wrapper">
       <div class="subtask-text">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -35,10 +42,10 @@
             d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
           />
         </svg>
-        <span>{{ completedSubtasks }}/{{ totalSubtasks }} subtasks</span>
+        <span>{{ progress.completed }}/{{ progress.total }} subtasks</span>
       </div>
       <div class="progress-track">
-        <div class="progress-fill" [style.width.%]="progressPercentage"></div>
+        <div class="progress-fill" [style.width.%]="progress.percentage"></div>
       </div>
     </div>
   }
@@ -46,12 +53,12 @@
   <div class="footer">
     @if (task.assignee) {
       <div class="assignee-wrapper">
-        <div class="avatar">{{ assigneeInitials }}</div>
+        <div class="avatar">{{ task.assignee | assigneeInitials }}</div>
         <span class="assignee-name">{{ task.assignee }}</span>
       </div>
     }
     @if (task.dueDate) {
-      @let dateInfo = getDateStatus(task.dueDate);
+      @let dateInfo = task.dueDate | dueDateStatus;
       <div class="due-date-badge" [class]="dateInfo?.status">
         @if (dateInfo?.status === 'overdue') {
           <svg viewBox="0 0 24 24" fill="currentColor">

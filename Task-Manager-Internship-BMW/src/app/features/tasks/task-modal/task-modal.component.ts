@@ -6,8 +6,10 @@ import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/materia
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subtask } from '../../../core/models/subtask.model';
 import { TaskWithCategory } from '../../../core/models/task-with-category.model';
+import { TaskStatus } from '../../../core/models/task.model';
 
 @Component({
   selector: 'app-task-modal',
@@ -33,7 +35,8 @@ export class TaskModalComponent {
 
   constructor(
     public dialogRef: MatDialogRef<TaskModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { task: TaskWithCategory }
+    @Inject(MAT_DIALOG_DATA) public data: { task: TaskWithCategory },
+    private snackBar: MatSnackBar
   ) {
     this.task = { ...data.task };
     this.task.tags = this.task.tags ?? [];
@@ -50,6 +53,13 @@ export class TaskModalComponent {
 
     if (!this.task.tags.includes(tag)) {
       this.task.tags.push(tag);
+    } else {
+      this.snackBar.open('Tag already exists!', 'Close', {
+        duration: 3000,
+        horizontalPosition: 'right',
+        verticalPosition: 'bottom',
+        panelClass: ['error-snackbar'],
+      });
     }
 
     this.newTag = '';
@@ -69,7 +79,7 @@ export class TaskModalComponent {
       id: Date.now(),
       title,
       completed: false,
-      status: 'To Do',
+      status: TaskStatus.TODO,
     };
 
     this.task.subtasks = this.task.subtasks ?? [];
@@ -94,6 +104,13 @@ export class TaskModalComponent {
     } else {
       this.task.dueDate = undefined;
     }
+
+    this.snackBar.open('Task saved successfully!', 'Close', {
+      duration: 3000,
+      horizontalPosition: 'right',
+      verticalPosition: 'bottom',
+      panelClass: ['success-snackbar'],
+    });
 
     this.dialogRef.close(this.task);
   }
@@ -121,6 +138,13 @@ export class TaskModalComponent {
       this.dialogRef.close();
       return;
     }
+
+    this.snackBar.open('Task deleted successfully!', 'Close', {
+      duration: 3000,
+      horizontalPosition: 'right',
+      verticalPosition: 'bottom',
+      panelClass: ['success-snackbar'],
+    });
 
     this.dialogRef.close({ deleted: true, id: this.task.id });
   }

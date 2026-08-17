@@ -1,5 +1,5 @@
-<h1 [titleColor]="title">
-  <span [dotColor]="title" class="dot"></span>
+<h1 [appColor]="title" colorType="border-bottom">
+  <span [appColor]="title" colorType="dot" class="dot"></span>
   {{ title }}
 </h1>
 
@@ -14,7 +14,8 @@
       cdkDrag
       [cdkDragData]="item"
       [task]="item"
-      [priorityColor]="item.priority || ''"
+      [appColor]="item.priority || ''"
+      colorType="border-top"
      (deleted)="onTaskDeleted($event)"></app-task-card>
   } @empty {
     <p class="loading">No tasks</p>

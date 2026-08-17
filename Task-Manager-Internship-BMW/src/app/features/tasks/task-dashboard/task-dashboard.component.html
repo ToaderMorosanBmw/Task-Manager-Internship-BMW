@@ -14,11 +14,12 @@
       </div>
       <span class="logo-text">TaskFlow</span>
     </div>
-    <mat-button-toggle-group [(ngModel)]="view" aria-label="Select view mode">
-      <mat-button-toggle value="board">Board</mat-button-toggle>
-      <mat-button-toggle value="table">Table</mat-button-toggle>
-      <mat-button-toggle value="calendar">Calendar</mat-button-toggle>
-    </mat-button-toggle-group>
+    <div class="view-toggle" [class.is-table]="view === 'table'">
+      <div class="toggle-slider"></div>
+      <button class="toggle-btn" [class.active]="view === 'board'" (click)="view = 'board'">Board</button>
+      <button class="toggle-btn" [class.active]="view === 'table'" (click)="view = 'table'">Table</button>
+      <button class="toggle-btn" [class.active]="view === 'calendar'" (click)="view = 'calendar'">Calendar</button>
+    </div>
   </div>
   <div class="middle-bar">
     <input
@@ -28,15 +29,22 @@
       placeholder="Search for tasks..."
       class="search-input"
     />
-    <button
-      class="add-task-btn"
-      aria-label="Create task"
-      (click)="onCreateTaskClick()"
-      matTooltip="Create a new task"
-      matTooltipPosition="above"
-    >
-      Add Task
-    </button>
+    <div class="stats">
+      <div class="total">Total tasks: {{ this.allTasks.length }}</div>
+      <div class="completed">
+        Completed:
+        {{ completedPercentage }}%
+      </div>
+      <div class="overdue">Overdue: {{ overdueCount }}</div>
+    </div>
+    <div class="left-buttons">
+      <button class="add-task-btn" aria-label="Create task" (click)="onCreateTaskClick()">
+        Add Task
+      </button>
+      <button class="csv-btn" (click)="exportToCSV()" matTooltip="Export to CSV">
+        <mat-icon fontSet="material-symbols-outlined">download</mat-icon>
+      </button>
+    </div>
   </div>
 
   @if (this.view === 'board') {
