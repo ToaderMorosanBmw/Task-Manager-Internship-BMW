@@ -3,7 +3,7 @@
     <mat-spinner diameter="60"></mat-spinner>
   </div>
 } @else {
-  <div [priorityColor]="task.priority || ''" class="card">
+  <div [appColor]="task.priority || ''" colorType="border-top" class="card">
     <div class="header">
       <div class="header-top">
         <h3>{{ task.title }}</h3>
@@ -11,15 +11,21 @@
       </div>
       <hr />
       <div class="header-bottom">
-        <p class="asignee">Asignee: {{ task.assignee || '' }}</p>
+        @if (task.assignee) {
+          <p class="asignee">Asignee: {{ task.assignee }}</p>
+        }
         <p [categoryColor]="task.category?.color || ''" class="category">
           {{ task.category?.title || 'Uncategorized' }}
         </p>
       </div>
     </div>
     <div class="content">
-      <p class="estimated-time">Estimated time: {{ task.estimatedTime }}h</p>
-      <p class="description">{{ task.description || '' }}</p>
+      @if (task.estimatedTime) {
+        <p class="estimated-time">Estimated time: {{ task.estimatedTime }}h</p>
+      }
+      @if (task.description) {
+        <p class="description">{{ task.description }}</p>
+      }
       <mat-form-field subscriptSizing="dynamic" appearance="outline">
         <mat-label>Status</mat-label>
         <mat-select formControlName="status" (selectionChange)="updateStatus()">
@@ -33,14 +39,16 @@
     </mat-form-field>
 
       <div class="subtasks">
-        <p>Subtasks:</p>
-        @for (subtask of task.subtasks || []; track task.id) {
-          <mat-checkbox
-            [checked]="subtask.completed"
-            (change)="updateSubtask(subtask, $event.checked)"
-          >
-            {{ subtask.title }}
-          </mat-checkbox>
+        @if (task.subtasks && task.subtasks.length > 0) {
+          <p>Subtasks:</p>
+          @for (subtask of task.subtasks; track subtask.id) {
+            <mat-checkbox
+              [checked]="subtask.completed"
+              (change)="updateSubtask(subtask, $event.checked)"
+            >
+              {{ subtask.title }}
+            </mat-checkbox>
+          }
         }
       </div>
     </div>

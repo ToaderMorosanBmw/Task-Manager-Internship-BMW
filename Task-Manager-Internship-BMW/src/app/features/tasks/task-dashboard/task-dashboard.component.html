@@ -14,54 +14,81 @@
       </div>
       <span class="logo-text">TaskFlow</span>
     </div>
-
-    <div class="top-bar-actions">
-    
-      <button
-        class="circle-btn"
-        aria-label="Create task"
-        (click)="onCreateTaskClick()"
-        matTooltip="Create a new task"
-        matTooltipPosition="above"
-      >Add Task</button>
+    <div class="view-toggle" [class.is-table]="view === 'table'"
+                            [class.is-board]="view === 'board'"
+                            [class.is-calendar]="view === 'calendar'">
+      <div class="toggle-slider"></div>
+      <button class="toggle-btn" [class.active]="view === 'board'" (click)="view = 'board'">Board</button>
+      <button class="toggle-btn" [class.active]="view === 'table'" (click)="view = 'table'">Table</button>
+      <button class="toggle-btn" [class.active]="view === 'calendar'" (click)="view = 'calendar'">Calendar</button>
+    </div>
+  </div>
+  <div class="middle-bar">
+    <input
+      type="text"
+      [(ngModel)]="searchText"
+      (ngModelChange)="onSearchChange()"
+      placeholder="Search for tasks..."
+      class="search-input"
+    />
+    <div class="stats">
+      <div class="total">Total tasks: {{ this.allTasks.length }}</div>
+      <div class="completed">
+        Completed:
+        {{ completedPercentage }}%
+      </div>
+      <div class="overdue">Overdue: {{ overdueCount }}</div>
+    </div>
+    <div class="left-buttons">
+      <button class="add-task-btn" aria-label="Create task" (click)="onCreateTaskClick()">
+        Add Task
+      </button>
+      <button class="csv-btn" (click)="exportToCSV()" matTooltip="Export to CSV">
+        <mat-icon fontSet="material-symbols-outlined">download</mat-icon>
+      </button>
     </div>
   </div>
 
-  <div class="filters">
-    <app-task-filter-row
-      filterName="Priority"
-      [buttons]="priorities"
-      [selectedValue]="selectedPriority"
-      (selected)="onPrioritySelected($event)"
-    ></app-task-filter-row>
-    <div class="vertical-line"></div>
-    <app-task-filter-row
-      filterName="Category"
-      [buttons]="categories"
-      [selectedValue]="selectedCategory"
-      (selected)="onCategorySelected($event)"
-    ></app-task-filter-row>
-  </div>
+  @if (this.view === 'board') {
+    <div class="filters">
+      <app-task-filter-row
+        filterName="Priority"
+        [buttons]="priorities"
+        [selectedValue]="selectedPriority"
+        (selected)="onPrioritySelected($event)"
+      ></app-task-filter-row>
+      <div class="vertical-line"></div>
+      <app-task-filter-row
+        filterName="Category"
+        [buttons]="categories"
+        [selectedValue]="selectedCategory"
+        (selected)="onCategorySelected($event)"
+      ></app-task-filter-row>
+    </div>
 
-  <div cdkDropListGroup class="columns">
-    <app-task-column
-      [cardItems]="todoTasks"
-      title="To Do"
-      (taskStausChanged)="onTaskStatusChange($event)"
-      (deleted)="onTaskDeleted($event)"
-    ></app-task-column>
-    <app-task-column
-      [cardItems]="inProgressTasks"
-      title="In Progress"
-      (taskStausChanged)="onTaskStatusChange($event)"
-      (deleted)="onTaskDeleted($event)"
-    ></app-task-column>
-    <app-task-column
-      [cardItems]="completedTasks"
-      title="Completed"
-      (taskStausChanged)="onTaskStatusChange($event)"
-      (deleted)="onTaskDeleted($event)"
-    ></app-task-column>
-  </div>
+    <div cdkDropListGroup class="columns">
+      <app-task-column
+        [cardItems]="todoTasks"
+        title="To Do"
+        (taskStausChanged)="onTaskStatusChange($event)"
+        (deleted)="onTaskDeleted($event)"
+      ></app-task-column>
+      <app-task-column
+        [cardItems]="inProgressTasks"
+        title="In Progress"
+        (taskStausChanged)="onTaskStatusChange($event)"
+        (deleted)="onTaskDeleted($event)"
+      ></app-task-column>
+      <app-task-column
+        [cardItems]="completedTasks"
+        title="Completed"
+        (taskStausChanged)="onTaskStatusChange($event)"
+        (deleted)="onTaskDeleted($event)"
+      ></app-task-column>
+    </div>
+  } @else if(this.view === 'table'){
+    <app-task-table [allTasks]="allTasks"></app-task-table>
+  } @else if(this.view === 'calendar'){
+    <app-task-calendar></app-task-calendar>
+  }
 }
-

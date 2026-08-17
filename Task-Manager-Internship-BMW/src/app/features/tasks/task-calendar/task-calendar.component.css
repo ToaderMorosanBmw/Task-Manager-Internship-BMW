@@ -1,0 +1,97 @@
+.calendar-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 2.5rem;
+  gap: 1.25rem;
+  font-family: 'DM Sans', sans-serif;
+}
+/* ── Header ─────────────────────────────────────────── */
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.nav-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.current-date {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  min-width: 160px;
+  text-align: center;
+}
+.nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--bg-card);
+  color: var(--text-main);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.nav-btn:hover {
+  background: var(--bg-button);
+}
+.nav-btn svg {
+  width: 16px;
+  height: 16px;
+}
+.today-btn {
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--bg-card);
+  color: var(--text-main);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.today-btn:hover {
+  background: var(--bg-button);
+}
+.view-toggle {
+  display: flex;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.view-btn {
+  padding: 0.4rem 1rem;
+  border: none;
+  background: var(--bg-card);
+  color: var(--text-muted);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.view-btn + .view-btn {
+  border-left: 1px solid var(--border-color);
+}
+.view-btn.active {
+  background: #a855f7;
+  color: #ffffff;
+}
+.view-btn:not(.active):hover {
+  background: var(--bg-button);
+  color: var(--text-main);
+}
+/* ── Calendar body overrides ─────────────────────────── */
+.calendar-body {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  overflow: hidden;
+}

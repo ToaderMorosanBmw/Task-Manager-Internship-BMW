@@ -1,7 +1,9 @@
+import { TaskStatus } from './task.model';
+
 export interface Subtask {
   id: number;
   title: string;
   description?: string;
-  status: 'To Do' | 'Completed';
+  status: TaskStatus.TODO | TaskStatus.COMPLETED;
   completed: boolean;
 }

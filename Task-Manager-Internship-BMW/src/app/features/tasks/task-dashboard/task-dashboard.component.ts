@@ -5,14 +5,30 @@ import { TaskService } from '../../../core/services/task.service';
 import { Category } from '../../../core/models/category.model';
 import { CategoryService } from '../../../core/services/category.service';
 import { TaskWithCategory } from '../../../core/models/task-with-category.model';
+import { TaskStatus, TaskPriority } from '../../../core/models/task.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { switchMap, map, filter } from 'rxjs';
+import {
+  switchMap,
+  map,
+  filter,
+  Subject,
+  Subscription,
+  debounceTime,
+  distinctUntilChanged,
+} from 'rxjs';
 import { FilterService } from '../../../core/services/filter.service';
-import { TaskFilterRowComponent } from "../task-filter-row/task-filter-row.component";
-import { MatDialog, MatDialogModule } from "@angular/material/dialog";
+import { TaskFilterRowComponent } from '../task-filter-row/task-filter-row.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TaskModalComponent } from '../task-modal/task-modal.component';
 import { CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { FormsModule } from '@angular/forms';
+import { TaskTableComponent } from '../task-table/task-table.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { TaskCalendarComponent } from '../task-calendar/task-calendar.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-task-dashboard',
@@ -22,8 +38,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     TaskFilterRowComponent,
     CdkDropListGroup,
     MatProgressSpinnerModule,
-    MatDialogModule,
-    TaskModalComponent
+    FormsModule,
+    MatButtonToggleModule,
+    TaskTableComponent,
+    TaskCalendarComponent,
+    MatIconModule,
+    MatTooltipModule,
+
   ],
   templateUrl: './task-dashboard.component.html',
   styleUrl: './task-dashboard.component.css',
@@ -34,13 +55,15 @@ export class TaskDashboardComponent implements OnInit {
   visibleTasks: TaskWithCategory[] = [];
   selectedCategory: string = '';
   selectedPriority: string = '';
+  searchText: string = '';
   priorities: { title: string; color: string }[] = [
     { title: 'Low', color: '#2e7d32' },
     { title: 'Medium', color: '#f57c00' },
     { title: 'High', color: '#d32f2f' },
   ];
   categories: { title: string; color: string }[] = [];
-
+  view: 'table' | 'board' | 'calendar' = 'board';
+  private readonly VIEW_KEY = 'view-preference';
   private taskService = inject(TaskService);
   private categoryService = inject(CategoryService);
   private destroyRef = inject(DestroyRef);
@@ -58,19 +81,32 @@ export class TaskDashboardComponent implements OnInit {
         return this.priorityOrder[a.priority as string] - this.priorityOrder[b.priority as string];
       });
   }
+  private searchSubject = new Subject<string>();
+  private snackBar = inject(MatSnackBar);
 
   get todoTasks() {
-    return this.getFilteredTasks('To Do');
+    return this.getFilteredTasks(TaskStatus.TODO);
   }
-
   get inProgressTasks() {
-    return this.getFilteredTasks('In Progress');
+    return this.getFilteredTasks(TaskStatus.IN_PROGRESS);
   }
-
   get completedTasks() {
-    return this.getFilteredTasks('Completed');
+    return this.getFilteredTasks(TaskStatus.COMPLETED);
   }
 
+  get completedPercentage(): number {
+    if (this.allTasks.length === 0) {
+      return 0;
+    }
+
+    const completedTasks = this.allTasks.filter((task) => task.status === TaskStatus.COMPLETED);
+
+    return Math.round((completedTasks.length / this.allTasks.length) * 100);
+  }
+
+  get overdueCount(): number {
+    return this.allTasks.filter((task) => new Date(task.dueDate || '') < new Date()).length;
+  }
   ngOnInit(): void {
     this.categoryService
       .getAllCategories()
@@ -96,71 +132,88 @@ export class TaskDashboardComponent implements OnInit {
         next: (tasksWithCategory: TaskWithCategory[]) => {
           this.allTasks = tasksWithCategory;
           this.visibleTasks = tasksWithCategory;
-
           const categoryColor: Record<string, { title: string; color: string }> = {};
-
           tasksWithCategory.forEach((task) => {
             categoryColor[task.category!.title] = {
               title: task.category!.title,
               color: task.category!.color,
             };
           });
-
           this.categories = Object.values(categoryColor);
-
           this.isLoading = false;
         },
         error: (err) => {
           console.error('Failed to load dashboard data:', err);
-
           this.isLoading = false;
         },
       });
+    const savedView = localStorage.getItem(this.VIEW_KEY);
+    if (savedView === 'table' || savedView === 'board' || savedView === 'calendar') {
+      this.view = savedView;
+    }
+
+    this.searchSubject
+      .pipe(debounceTime(300), distinctUntilChanged(), takeUntilDestroyed(this.destroyRef))
+      .subscribe((searchValue) => {
+        this.searchText = searchValue;
+        this.applyFilters();
+      });
   }
-
-  applyFiters(): void {
+  applyFilters(): void {
     let filtered = this.allTasks;
-
     if (this.selectedCategory) {
       filtered = this.filterService.filterByCategory(filtered, this.selectedCategory);
     }
     if (this.selectedPriority) {
       filtered = this.filterService.filterByPriority(filtered, this.selectedPriority);
     }
-
+    if (this.searchText.trim()) {
+      const words = this.searchText.toLowerCase().trim().split(/\s+/);
+      const searchTags = words
+        .filter((word) => word.startsWith('#'))
+        .map((word) => word.substring(1));
+      const searchWords = words.filter((token) => !token.startsWith('#'));
+      filtered = filtered.filter((task) => {
+        const title = task.title.toLowerCase();
+        const desc = (task.description || '').toLowerCase();
+        const taskTags = (task.tags || []).map((tag) => tag.toLowerCase());
+        const matchesWords = searchWords.every(
+          (word) => title.includes(word) || desc.includes(word)
+        );
+        const matchesTags = searchTags.every((searchTag) =>
+          taskTags.some((taskTag) => taskTag.includes(searchTag))
+        );
+        return matchesWords && matchesTags;
+      });
+    }
     this.visibleTasks = filtered;
   }
-
   onCategorySelected(category: string): void {
     this.selectedCategory = category;
-    this.applyFiters();
+    this.applyFilters();
   }
-
   onPrioritySelected(priority: string): void {
     this.selectedPriority = priority;
-    this.applyFiters();
+    this.applyFilters();
   }
-
   onCreateTaskClick(): void {
     const defaultCategoryId = this.allTasks[0]?.category?.id ?? '';
-
     const taskToEdit: TaskWithCategory = {
       id: '',
       title: '',
       description: '',
       categoryId: defaultCategoryId,
-      status: 'To Do',
-      priority: 'Low',
+      status: TaskStatus.TODO,
+      priority: TaskPriority.LOW,
       tags: [],
-      subtasks: []
+      subtasks: [],
     };
-
     const dialogRef = this.dialog.open(TaskModalComponent, {
       width: '520px',
-      data: { task: taskToEdit }
+      data: { task: taskToEdit },
     });
-
-    dialogRef.afterClosed()
+    dialogRef
+      .afterClosed()
       .pipe(
         filter((result): result is TaskWithCategory => Boolean(result)),
         map((result) => {
@@ -193,24 +246,20 @@ export class TaskDashboardComponent implements OnInit {
         error: (err) => console.error('Failed to create task', err)
       });
   }
-
   onTaskDeleted(id: string): void {
     this.allTasks = this.allTasks.filter((t) => t.id !== id);
-    this.applyFiters();
+    this.applyFilters();
   }
-
   onTaskStatusChange(event: { task: TaskWithCategory; newStatus: string }) {
     const newTask = {
       ...event.task,
-      status: event.newStatus as 'To Do' | 'In Progress' | 'Completed',
+      status: event.newStatus as TaskStatus,
     };
-
     const taskIndex = this.allTasks.findIndex((task) => task.id === newTask.id);
     if (taskIndex !== -1) {
       this.allTasks[taskIndex] = newTask;
-      this.applyFiters();
+      this.applyFilters();
     }
-
     this.taskService
       .updateTask(newTask.id, newTask)
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -223,5 +272,109 @@ export class TaskDashboardComponent implements OnInit {
         },
       });
   }
-}
+  onSearchChange(): void {
+    this.applyFilters();
+  }
 
+  exportToCSV(): void {
+    if (!this.allTasks || this.allTasks.length === 0) {
+      this.snackBar.open('No tasks for export.', 'Close', {
+        duration: 3000,
+        horizontalPosition: 'right',
+        verticalPosition: 'bottom',
+        panelClass: ['error-snackbar'],
+      });
+      return;
+    }
+
+    const headers = [
+      'ID',
+      'Title',
+      'Description',
+      'Category Title',
+      'Priority',
+      'Due Date',
+      'Estimated Time',
+      'Status',
+      'Tags',
+      'Assignee',
+      'Subtasks - Completed',
+      'Subtasks - In Progress',
+    ];
+
+    const csvRows = [];
+
+    csvRows.push(headers.join(','));
+
+    for (const task of this.allTasks) {
+      const id = task.id;
+      const title = task.title;
+      const description = task.description || '';
+      const categoryTitle = task.category?.title;
+      const priority = task.priority;
+
+      const rawDate = task.dueDate ? new Date(task.dueDate).toLocaleDateString('en-CA') : '';
+      const dueDate = rawDate ? `="${rawDate}"` : '';
+      const estimatedTime = task.estimatedTime;
+      const status = task.status;
+
+      const tags = task.tags && task.tags.length > 0 ? task.tags.join(';') : '';
+      const assignee = task.assignee;
+
+      let completed = '';
+      let inProgress = '';
+      if (task.subtasks && task.subtasks.length > 0) {
+        task.subtasks.forEach((task) => {
+          if (task.completed) {
+            completed += task.title + ', ';
+          } else {
+            inProgress += task.title + ', ';
+          }
+        });
+      }
+
+      const rowValues = [
+        id,
+        title,
+        description,
+        categoryTitle,
+        priority,
+        dueDate,
+        estimatedTime,
+        status,
+        tags,
+        assignee,
+        completed,
+        inProgress,
+      ];
+
+      const formattedRow = rowValues.map((value) => {
+        const stringValue = value !== null && value !== undefined ? String(value) : '';
+        const escapedValue = stringValue.replace(/"/g, '""');
+        return `"${escapedValue}"`;
+      });
+
+      csvRows.push(formattedRow.join(','));
+    }
+
+    const csvString = csvRows.join('\n');
+    const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', 'exported_tasks.csv');
+
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    this.snackBar.open('CSV sucessfuly generated!', 'Close', {
+      duration: 3000,
+      horizontalPosition: 'right',
+      verticalPosition: 'bottom',
+      panelClass: ['success-snackbar'],
+    });
+  }
+}

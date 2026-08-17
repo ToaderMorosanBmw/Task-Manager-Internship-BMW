@@ -2,12 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { TaskWithCategory } from '../../../core/models/task-with-category.model';
 import { CategoryService } from '../../../core/services/category.service';
+import { TaskStatus } from '../../../core/models/task.model';
 import { TaskService } from '../../../core/services/task.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { finalize, map, switchMap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { CategoryColor } from '../../../shared/directives/category-color.directive';
-import { PriorityColor } from '../../../shared/directives/priority-color.directive';
+import { AppColorDirective } from '../../../shared/directives/app-color.directive';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -22,7 +23,7 @@ import { DatePipe } from '@angular/common';
     ReactiveFormsModule,
     CommonModule,
     CategoryColor,
-    PriorityColor,
+    AppColorDirective,
     MatFormFieldModule,
     MatSelectModule,
     FormsModule,
@@ -34,7 +35,7 @@ import { DatePipe } from '@angular/common';
   styleUrl: './task-page.component.css',
 })
 export class TaskPageComponent implements OnInit {
-  statusOptions = ['To Do', 'In Progress', 'Completed'];
+  statusOptions = Object.values(TaskStatus);
   isCompleted = false;
   taskForm!: FormGroup;
   isLoading = true;
@@ -43,7 +44,7 @@ export class TaskPageComponent implements OnInit {
     id: '',
     title: '',
     categoryId: '',
-    status: 'To Do',
+    status: TaskStatus.TODO,
     tags: [],
     subtasks: [],
   };
@@ -98,7 +99,7 @@ export class TaskPageComponent implements OnInit {
     }
 
     this.task.status = newStatus;
-    this.isCompleted = newStatus === 'Completed';
+    this.isCompleted = newStatus === TaskStatus.COMPLETED;
 
     this.taskService
       .updateTask(this.task.id, this.task)
@@ -120,7 +121,7 @@ export class TaskPageComponent implements OnInit {
     }
 
     targetSubtask.completed = completed;
-    targetSubtask.status = completed ? 'Completed' : 'To Do';
+    targetSubtask.status = completed ? TaskStatus.COMPLETED : TaskStatus.TODO;
 
     this.taskService
       .updateTask(this.task.id, this.task)

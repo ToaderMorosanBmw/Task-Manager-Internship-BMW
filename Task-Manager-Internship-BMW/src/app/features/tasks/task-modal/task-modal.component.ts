@@ -5,8 +5,10 @@ import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/materia
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Subtask } from '../../../core/models/subtask.model';
 import { TaskWithCategory } from '../../../core/models/task-with-category.model';
+import { TaskStatus } from '../../../core/models/task.model';
 
 @Component({
   selector: 'app-task-modal',
@@ -18,6 +20,7 @@ import { TaskWithCategory } from '../../../core/models/task-with-category.model'
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
+    MatSnackBarModule,
   ],
   templateUrl: './task-modal.component.html',
   styleUrl: './task-modal.component.css',
@@ -34,7 +37,8 @@ export class TaskModalComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<TaskModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { task: TaskWithCategory },
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private snackBar: MatSnackBar
   ) {
     this.task = { ...data.task };
     this.task.tags = this.task.tags ?? [];
@@ -61,6 +65,13 @@ export class TaskModalComponent implements OnInit {
 
     if (!this.task.tags.includes(tag)) {
       this.task.tags.push(tag);
+    } else {
+      this.snackBar.open('Tag already exists!', 'Close', {
+        duration: 3000,
+        horizontalPosition: 'right',
+        verticalPosition: 'bottom',
+        panelClass: ['error-snackbar'],
+      });
     }
 
     this.newTag = '';
@@ -80,7 +91,7 @@ export class TaskModalComponent implements OnInit {
       id: Date.now(),
       title,
       completed: false,
-      status: 'To Do',
+      status: TaskStatus.TODO,
     };
 
     this.task.subtasks = this.task.subtasks ?? [];
@@ -106,6 +117,13 @@ export class TaskModalComponent implements OnInit {
       ...formValue,
       dueDate: this.normalizeDueDate(formValue.dueDate)
     };
+
+    this.snackBar.open('Task saved successfully!', 'Close', {
+      duration: 3000,
+      horizontalPosition: 'right',
+      verticalPosition: 'bottom',
+      panelClass: ['success-snackbar'],
+    });
 
     this.dialogRef.close(this.task);
   }
@@ -133,6 +151,13 @@ export class TaskModalComponent implements OnInit {
       this.dialogRef.close();
       return;
     }
+
+    this.snackBar.open('Task deleted successfully!', 'Close', {
+      duration: 3000,
+      horizontalPosition: 'right',
+      verticalPosition: 'bottom',
+      panelClass: ['success-snackbar'],
+    });
 
     this.dialogRef.close({ deleted: true, id: this.task.id });
   }

@@ -70,7 +70,7 @@ h3 {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  transition: white-space 0.2s ease;
+  /* transition: white-space 0.2s ease; */
 }
 
 .card-title h3.show-full-title {
@@ -92,9 +92,9 @@ h3 {
   justify-content: center;
   cursor: pointer;
   padding: 0;
-  transition:
+  /* transition:
     background-color 0.2s ease,
-    transform 0.2s ease;
+    transform 0.2s ease; */
 }
 
 .circle-btn:hover {
