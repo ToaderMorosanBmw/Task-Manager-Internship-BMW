@@ -26,6 +26,7 @@ import { TaskTableComponent } from '../task-table/task-table.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-task-dashboard',
@@ -80,6 +81,7 @@ export class TaskDashboardComponent implements OnInit {
 
   private searchSubject = new Subject<string>();
   private searchSubscription!: Subscription;
+  private snackBar = inject(MatSnackBar);
 
   get todoTasks() {
     return this.getFilteredTasks('To Do');
@@ -303,7 +305,12 @@ export class TaskDashboardComponent implements OnInit {
 
   exportToCSV(): void {
     if (!this.allTasks || this.allTasks.length === 0) {
-      console.warn('No tasks for export.');
+      this.snackBar.open('No tasks for export.', 'Close', {
+        duration: 3000,
+        horizontalPosition: 'right',
+        verticalPosition: 'bottom',
+        panelClass: ['error-snackbar'],
+      });
       return;
     }
 
@@ -389,5 +396,12 @@ export class TaskDashboardComponent implements OnInit {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+
+    this.snackBar.open('CSV sucessfuly generated!', 'Close', {
+      duration: 3000,
+      horizontalPosition: 'right',
+      verticalPosition: 'bottom',
+      panelClass: ['success-snackbar'],
+    });
   }
 }

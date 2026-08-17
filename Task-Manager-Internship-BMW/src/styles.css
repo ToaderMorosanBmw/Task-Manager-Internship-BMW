@@ -215,3 +215,47 @@ mat-checkbox,
 ::-webkit-scrollbar-thumb:hover {
   background: #777777;
 }
+
+.success-snackbar {
+  --mdc-snackbar-container-color: #10b981;
+  --mdc-snackbar-supporting-text-color: #ffffff;
+  --mat-snack-bar-button-color: #ffffff;
+}
+
+.success-snackbar .mdc-snackbar__surface {
+  background-color: #10b981 !important;
+  border-radius: 8px !important;
+}
+
+.success-snackbar .mdc-snackbar__label {
+  color: #ffffff !important;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.success-snackbar .mat-mdc-snack-bar-action,
+.success-snackbar .mat-mdc-button {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+.error-snackbar {
+  --mdc-snackbar-container-color: #ef4444; /* Roșu pentru eroare */
+  --mdc-snackbar-supporting-text-color: #ffffff;
+  --mat-snack-bar-button-color: #ffffff;
+}
+
+.error-snackbar .mdc-snackbar__surface {
+  background-color: #ef4444 !important;
+  border-radius: 8px !important;
+}
+
+.error-snackbar .mdc-snackbar__label {
+  color: #ffffff !important;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.error-snackbar .mat-mdc-snack-bar-action,
+.error-snackbar .mat-mdc-button {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
