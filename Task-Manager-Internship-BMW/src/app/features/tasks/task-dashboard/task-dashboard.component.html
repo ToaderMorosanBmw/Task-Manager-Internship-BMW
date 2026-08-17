@@ -36,15 +36,14 @@
       </div>
       <div class="overdue">Overdue: {{ overdueCount }}</div>
     </div>
-    <button
-      class="add-task-btn"
-      aria-label="Create task"
-      (click)="onCreateTaskClick()"
-      matTooltip="Create a new task"
-      matTooltipPosition="above"
-    >
-      Add Task
-    </button>
+    <div class="left-buttons">
+      <button class="add-task-btn" aria-label="Create task" (click)="onCreateTaskClick()">
+        Add Task
+      </button>
+      <button class="csv-btn" (click)="exportToCSV()" matTooltip="Export to CSV">
+        <mat-icon fontSet="material-symbols-outlined">download</mat-icon>
+      </button>
+    </div>
   </div>
 
   @if (this.view === 'board') {

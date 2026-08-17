@@ -162,6 +162,13 @@
   border-color: #a855f7;
 }
 
+.left-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
 .add-task-btn {
   padding: 0.6rem 1.2rem;
   background-color: #a855f7;
@@ -177,12 +184,28 @@
     transform 0.1s ease; */
 }
 
-.add-task-btn:hover {
-  background-color: #9333ea;
+.csv-btn {
+  background-color: var(--bg-dashboard);
+  color: var(--text-main);
+  border: none;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.4rem;
+  padding: 0 0.8rem;
+  cursor: pointer;
 }
 
-.add-task-btn:active {
-  transform: scale(0.97);
+mat-icon {
+  height: 20px;
+  width: 20px;
+  line-height: 20px;
+  font-size: 20px;
+}
+
+.add-task-btn:hover {
+  background-color: #9333ea;
 }
 
 .view-toggle {
