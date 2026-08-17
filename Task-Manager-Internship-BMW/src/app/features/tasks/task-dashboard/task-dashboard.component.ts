@@ -5,6 +5,7 @@ import { TaskService } from '../../../core/services/task.service';
 import { Category } from '../../../core/models/category.model';
 import { CategoryService } from '../../../core/services/category.service';
 import { TaskWithCategory } from '../../../core/models/task-with-category.model';
+import { TaskStatus, TaskPriority } from '../../../core/models/task.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   switchMap,
@@ -80,19 +81,18 @@ export class TaskDashboardComponent implements OnInit {
   }
 
   private searchSubject = new Subject<string>();
-  private searchSubscription!: Subscription;
   private snackBar = inject(MatSnackBar);
 
   get todoTasks() {
-    return this.getFilteredTasks('To Do');
+    return this.getFilteredTasks(TaskStatus.TODO);
   }
 
   get inProgressTasks() {
-    return this.getFilteredTasks('In Progress');
+    return this.getFilteredTasks(TaskStatus.IN_PROGRESS);
   }
 
   get completedTasks() {
-    return this.getFilteredTasks('Completed');
+    return this.getFilteredTasks(TaskStatus.COMPLETED);
   }
 
   get completedPercentage(): number {
@@ -100,7 +100,7 @@ export class TaskDashboardComponent implements OnInit {
       return 0;
     }
 
-    const completedTasks = this.allTasks.filter((task) => task.status === 'Completed');
+    const completedTasks = this.allTasks.filter((task) => task.status === TaskStatus.COMPLETED);
 
     return Math.round((completedTasks.length / this.allTasks.length) * 100);
   }
@@ -160,8 +160,8 @@ export class TaskDashboardComponent implements OnInit {
       this.view = savedView;
     }
 
-    this.searchSubscription = this.searchSubject
-      .pipe(debounceTime(300), distinctUntilChanged())
+    this.searchSubject
+      .pipe(debounceTime(300), distinctUntilChanged(), takeUntilDestroyed(this.destroyRef))
       .subscribe((searchValue) => {
         this.searchText = searchValue;
         this.applyFilters();
@@ -224,8 +224,8 @@ export class TaskDashboardComponent implements OnInit {
       title: '',
       description: '',
       categoryId: defaultCategoryId,
-      status: 'To Do',
-      priority: 'Low',
+      status: TaskStatus.TODO,
+      priority: TaskPriority.LOW,
       tags: [],
       subtasks: [],
     };
@@ -237,14 +237,17 @@ export class TaskDashboardComponent implements OnInit {
 
     dialogRef
       .afterClosed()
-      .pipe(filter((result): result is TaskWithCategory => Boolean(result)))
+      .pipe(
+        filter((result): result is TaskWithCategory => Boolean(result)),
+        takeUntilDestroyed(this.destroyRef)
+      )
       .subscribe((result) => {
         const taskToSave: Task = {
           ...result,
           title: result.title.trim() || 'New task',
           categoryId: result.categoryId || defaultCategoryId,
-          status: result.status || 'To Do',
-          priority: result.priority || 'Low',
+          status: result.status || TaskStatus.TODO,
+          priority: result.priority || TaskPriority.LOW,
           tags: result.tags ?? [],
           subtasks: result.subtasks ?? [],
           id: '',
@@ -277,7 +280,7 @@ export class TaskDashboardComponent implements OnInit {
   onTaskStatusChange(event: { task: TaskWithCategory; newStatus: string }) {
     const newTask = {
       ...event.task,
-      status: event.newStatus as 'To Do' | 'In Progress' | 'Completed',
+      status: event.newStatus as TaskStatus,
     };
 
     const taskIndex = this.allTasks.findIndex((task) => task.id === newTask.id);

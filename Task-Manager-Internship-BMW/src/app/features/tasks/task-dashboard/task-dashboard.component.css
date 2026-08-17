@@ -208,56 +208,68 @@ mat-icon {
   background-color: #9333ea;
 }
 
-::ng-deep mat-button-toggle-group {
+.view-toggle {
+  position: relative;
+  display: inline-flex;
   background-color: var(--bg-dashboard);
   border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 4px;
+  width: 180px;
 }
 
-::ng-deep .mat-button-toggle-button {
-  color: var(--text-muted) !important;
-}
-
-::ng-deep .mat-button-toggle-checked {
-  background-color: var(--border-button) !important;
-}
-
-::ng-deep .mat-button-toggle-checked .mat-button-toggle-button {
-  color: var(--text-main) !important;
-}
-
-::ng-deep .mat-button-toggle-group-appearance-standard .mat-button-toggle + .mat-button-toggle {
-  border-left: 1px solid var(--border-color);
-}
-:host-context(.dark-theme) ::ng-deep mat-button-toggle-group,
-::ng-deep .dark-theme mat-button-toggle-group {
-  border: 1px solid #374151;
+:host-context(.dark-theme) .view-toggle {
+  border-color: #374151;
   background-color: #222222;
 }
 
-:host-context(.dark-theme) ::ng-deep .mat-button-toggle-button,
-::ng-deep .dark-theme .mat-button-toggle-button {
-  color: #9ca3af !important;
+.toggle-slider {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc(50% - 4px);
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  border-radius: 6px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-:host-context(.dark-theme) ::ng-deep .mat-button-toggle-checked,
-::ng-deep .dark-theme .mat-button-toggle-checked {
-  background-color: #374151 !important;
+:host-context(.dark-theme) .toggle-slider {
+  background-color: #4b5563;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-:host-context(.dark-theme) ::ng-deep .mat-button-toggle-checked .mat-button-toggle-button,
-::ng-deep .dark-theme .mat-button-toggle-checked .mat-button-toggle-button {
-  color: #ffffff !important;
+.view-toggle.is-table .toggle-slider {
+  transform: translateX(100%);
 }
 
-:host-context(.dark-theme)
-  ::ng-deep
-  .mat-button-toggle-group-appearance-standard
-  .mat-button-toggle
-  + .mat-button-toggle,
-::ng-deep
-  .dark-theme
-  .mat-button-toggle-group-appearance-standard
-  .mat-button-toggle
-  + .mat-button-toggle {
-  border-left: 1px solid #374151;
+.toggle-btn {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  padding: 6px 16px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  text-align: center;
 }
+
+:host-context(.dark-theme) .toggle-btn {
+  color: #9ca3af;
+}
+
+.toggle-btn.active {
+  color: var(--text-main);
+}
+
+:host-context(.dark-theme) .toggle-btn.active {
+  color: #ffffff;
+}
+
+

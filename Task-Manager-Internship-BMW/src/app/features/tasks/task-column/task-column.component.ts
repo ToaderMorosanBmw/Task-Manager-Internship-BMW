@@ -1,15 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TaskCardComponent } from '../task-card/task-card.component';
 import { TaskWithCategory } from '../../../core/models/task-with-category.model';
-import { PriorityColor } from '../../../shared/directives/priority-color.directive';
 import { CdkDropList, CdkDrag, CdkDragDrop } from '@angular/cdk/drag-drop';
-import { TitleColor } from '../../../shared/directives/title-border-color.directive';
-import { DotColor } from '../../../shared/directives/dot-color.directive';
+import { AppColorDirective } from '../../../shared/directives/app-color.directive';
 
 @Component({
   selector: 'app-task-column',
   standalone: true,
-  imports: [TaskCardComponent, PriorityColor, CdkDropList, CdkDrag, TitleColor, DotColor],
+  imports: [TaskCardComponent, CdkDropList, CdkDrag, AppColorDirective],
   templateUrl: './task-column.component.html',
   styleUrl: './task-column.component.css',
 })
