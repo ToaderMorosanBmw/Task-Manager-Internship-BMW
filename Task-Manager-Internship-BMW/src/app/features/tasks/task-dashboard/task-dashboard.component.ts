@@ -15,6 +15,7 @@ import {
   Subscription,
   debounceTime,
   distinctUntilChanged,
+  forkJoin,
 } from 'rxjs';
 import { FilterService } from '../../../core/services/filter.service';
 import { TaskFilterRowComponent } from '../task-filter-row/task-filter-row.component';
@@ -53,6 +54,8 @@ export class TaskDashboardComponent implements OnInit {
   selectedCategory: string = '';
   selectedPriority: string = '';
   searchText: string = '';
+  selectionMode = false;
+  selectedTaskIds = new Set<string>();
   priorities: { title: string; color: string }[] = [
     { title: 'Low', color: '#2e7d32' },
     { title: 'Medium', color: '#f57c00' },
@@ -406,5 +409,57 @@ export class TaskDashboardComponent implements OnInit {
       verticalPosition: 'bottom',
       panelClass: ['success-snackbar'],
     });
+  }
+
+  toggleSelectionMode(): void {
+    this.selectionMode = !this.selectionMode;
+    if (!this.selectionMode) {
+      this.selectedTaskIds.clear();
+    }
+  }
+
+  onTaskSelected(event: { id: string; selected: boolean }): void {
+    if (event.selected) {
+      this.selectedTaskIds.add(event.id);
+    } else {
+      this.selectedTaskIds.delete(event.id);
+    }
+  }
+
+  bulkDelete(): void {
+    if (this.selectedTaskIds.size === 0) {
+      return;
+    }
+
+    const count = this.selectedTaskIds.size;
+    const deleteRequests = Array.from(this.selectedTaskIds).map((id) =>
+      this.taskService.deleteTask(id)
+    );
+
+    forkJoin(deleteRequests)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.allTasks = this.allTasks.filter((t) => !this.selectedTaskIds.has(t.id));
+          this.selectedTaskIds.clear();
+          this.selectionMode = false;
+          this.applyFilters();
+          this.snackBar.open(`${count} task(s) deleted.`, 'Close', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'bottom',
+            panelClass: ['success-snackbar'],
+          });
+        },
+        error: (err) => {
+          console.error('Bulk delete failed', err);
+          this.snackBar.open('Failed to delete tasks.', 'Close', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'bottom',
+            panelClass: ['error-snackbar'],
+          });
+        },
+      });
   }
 }

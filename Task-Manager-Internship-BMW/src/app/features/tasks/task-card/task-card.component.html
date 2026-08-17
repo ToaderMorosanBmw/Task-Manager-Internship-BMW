@@ -1,13 +1,29 @@
 <a
-  [routerLink]="['/tasks', task.id]"
+  [routerLink]="selectionMode ? null : ['/tasks', task.id]"
   matTooltip="View full task"
   matTooltipPosition="above"
-  [matTooltipDisabled]="hoveredEditTaskId === task.id"
+  [matTooltipDisabled]="hoveredEditTaskId === task.id || selectionMode"
   class="card-link"
+  [class.selected]="isSelected"
+  (click)="selectionMode ? onCheckboxChange($event) : null"
 >
-  <p class="category" [categoryColor]="task.category?.color || ''">
-    {{ task.category?.title || 'Uncategorized' }}
-  </p>
+  <div class="priority-bar" [appColor]="task.priority || ''" colorType="dot"></div>
+  <div class="category-row">
+    <p class="category" [categoryColor]="task.category?.color || ''">
+      {{ task.category?.title || 'Uncategorized' }}
+    </p>
+    @if (selectionMode) {
+      <div class="select-checkbox" (click)="onCheckboxChange($event)">
+        <div class="checkbox-box" [class.checked]="isSelected">
+          @if (isSelected) {
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+          }
+        </div>
+      </div>
+    }
+  </div>
   <div class="card-title">
     <h3
       [class.show-full-title]="showFullTitle"

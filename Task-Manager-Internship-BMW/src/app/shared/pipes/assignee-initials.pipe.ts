@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'assigneeInitials',
-  standalone: true
+  standalone: true,
 })
 export class AssigneeInitialsPipe implements PipeTransform {
   transform(assignee: string | undefined | null): string {

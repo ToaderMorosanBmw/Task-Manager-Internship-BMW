@@ -13,13 +13,19 @@ import { AppColorDirective } from '../../../shared/directives/app-color.directiv
 })
 export class TaskColumnComponent {
   @Input()
-  title!: string;
+  columnTitle!: string;
 
   @Input()
   cardItems!: TaskWithCategory[];
 
+  @Input() selectionMode = false;
+  @Input() selectedTaskIds = new Set<string>();
+
   @Output()
   taskStausChanged = new EventEmitter<{ task: TaskWithCategory; newStatus: string }>();
+
+  @Output() deleted = new EventEmitter<string>();
+  @Output() selected = new EventEmitter<{ id: string; selected: boolean }>();
 
   onCardDropped(event: CdkDragDrop<string>) {
     if (event.previousContainer !== event.container) {
@@ -33,9 +39,11 @@ export class TaskColumnComponent {
     }
   }
 
-  @Output() deleted = new EventEmitter<string>();
-
   onTaskDeleted(id: string): void {
     this.deleted.emit(id);
+  }
+
+  onTaskSelected(event: { id: string; selected: boolean }): void {
+    this.selected.emit(event);
   }
 }
