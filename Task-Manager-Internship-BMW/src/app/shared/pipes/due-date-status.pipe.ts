@@ -2,10 +2,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'dueDateStatus',
-  standalone: true
+  standalone: true,
 })
 export class DueDateStatusPipe implements PipeTransform {
-  transform(dueDateVal: string | Date | undefined | null): { text: string; status: 'overdue' | 'today' | 'normal' } | null {
+  transform(
+    dueDateVal: string | Date | undefined | null
+  ): { text: string; status: 'overdue' | 'today' | 'normal' } | null {
     if (!dueDateVal) return null;
 
     const dueDate = new Date(dueDateVal);

@@ -27,7 +27,7 @@
       "title": "Prepare sprint review",
       "description": "Summarize completed work, blockers, and next steps for the team. Ensure that all team members have provided their updates before the meeting. The summary should be concise but comprehensive enough to present to the stakeholders during the afternoon session.",
       "priority": "High",
-      "dueDate": "2026-08-01T00:00:00.000Z",
+      "dueDate": "2026-09-19T00:00:00.000Z",
       "estimatedTime": 4,
       "status": "To Do",
       "tags": [
@@ -50,7 +50,12 @@
           "status": "To Do",
           "completed": false
         }
-      ]
+      ],
+      "category": {
+        "id": "1",
+        "title": "Work",
+        "color": "#4f46e5"
+      }
     },
     {
       "id": "2",
@@ -152,7 +157,7 @@
       "priority": "Low",
       "dueDate": "2026-08-10T00:00:00.000Z",
       "estimatedTime": 2,
-      "status": "In Progress",
+      "status": "To Do",
       "tags": [
         "travel",
         "personal"
@@ -278,7 +283,7 @@
       "priority": "Medium",
       "dueDate": "2026-08-04T00:00:00.000Z",
       "estimatedTime": 1,
-      "status": "In Progress",
+      "status": "To Do",
       "tags": [
         "email",
         "client"
@@ -298,7 +303,12 @@
           "status": "Completed",
           "completed": true
         }
-      ]
+      ],
+      "category": {
+        "id": "3",
+        "title": "Meeting",
+        "color": "#f59e0b"
+      }
     },
     {
       "id": "10",

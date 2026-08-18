@@ -3,11 +3,13 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { Category } from '../models/category.model';
 
+import { environment } from '../../../environments/environment';
+
 @Injectable({
   providedIn: 'root',
 })
 export class CategoryService {
-  private apiUrl = 'http://localhost:3000/categories';
+  private apiUrl = `${environment.apiUrl}/categories`;
   private http = inject(HttpClient);
 
   getAllCategories(): Observable<Category[]> {

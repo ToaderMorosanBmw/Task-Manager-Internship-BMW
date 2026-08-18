@@ -1,8 +1,10 @@
 :host {
+  display: block;
   background-color: var(--bg-card);
-  border: 1px solid var(--border-color);
+  border: 2px solid var(--border-color);
   border-radius: 15px;
-  border: 1px solid black;
+  position: relative;
+  overflow: hidden;
 }
 
 :host:hover {
@@ -13,9 +15,16 @@ a {
   text-decoration: none;
   color: var(--text-main);
   padding: 15px;
+  padding-top: 0;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+
+.priority-bar {
+  height: 5px;
+  margin: 0 -15px;
+  border-radius: 13px 13px 0 0;
 }
 
 .footer {
@@ -255,4 +264,47 @@ body.dark-theme .due-date-badge.today {
 
 body.dark-theme .due-date-badge.overdue {
   color: #ef5350;
+}
+
+.card-link.selected {
+  border-radius: 15px;
+}
+
+:host.selected-card {
+  border-color: #a855f7;
+}
+
+.category-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 24px;
+}
+
+.select-checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-box {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--text-muted);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.checkbox-box.checked {
+  background-color: #a855f7;
+  border-color: #a855f7;
+}
+
+.checkbox-box svg {
+  width: 14px;
+  height: 14px;
+  color: #ffffff;
 }

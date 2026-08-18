@@ -3,56 +3,63 @@
     <mat-spinner diameter="60"></mat-spinner>
   </div>
 } @else {
-  <div [appColor]="task.priority || ''" colorType="border-top" class="card">
-    <div class="header">
-      <div class="header-top">
-        <h3>{{ task.title }}</h3>
-        <p class="due-date">{{ task.dueDate | date: 'MMM d, y' }}</p>
-      </div>
-      <hr />
-      <div class="header-bottom">
-        @if (task.assignee) {
-          <p class="asignee">Asignee: {{ task.assignee }}</p>
-        }
-        <p [categoryColor]="task.category?.color || ''" class="category">
-          {{ task.category?.title || 'Uncategorized' }}
-        </p>
-      </div>
-    </div>
-    <div class="content">
-      @if (task.estimatedTime) {
-        <p class="estimated-time">Estimated time: {{ task.estimatedTime }}h</p>
-      }
-      @if (task.description) {
-        <p class="description">{{ task.description }}</p>
-      }
-      <mat-form-field subscriptSizing="dynamic" appearance="outline">
-        <mat-label>Status</mat-label>
-        <mat-select [(ngModel)]="task.status" (selectionChange)="updateStatus()">
-          @for (option of statusOptions; track option) {
-            <mat-option [value]="option">{{ option }}</mat-option>
+  <div class="page-container">
+    <a routerLink="/tasks" class="back-link">
+      <mat-icon fontSet="material-symbols-outlined">arrow_back</mat-icon>
+      Back to Dashboard
+    </a>
+    <div class="card">
+      <div class="priority-bar" [appColor]="task.priority || ''" colorType="dot"></div>
+      <div class="header">
+        <div class="header-top">
+          <h3>{{ task.title }}</h3>
+          <p class="due-date">{{ task.dueDate | date: 'MMM d, y' }}</p>
+        </div>
+        <hr />
+        <div class="header-bottom">
+          @if (task.assignee) {
+            <p class="asignee">Asignee: {{ task.assignee }}</p>
           }
-        </mat-select>
-      </mat-form-field>
+          <p [categoryColor]="task.category?.color || ''" class="category">
+            {{ task.category?.title || 'Uncategorized' }}
+          </p>
+        </div>
+      </div>
+      <div class="content">
+        @if (task.estimatedTime) {
+          <p class="estimated-time">Estimated time: {{ task.estimatedTime }}h</p>
+        }
+        @if (task.description) {
+          <p class="description">{{ task.description }}</p>
+        }
+        <mat-form-field subscriptSizing="dynamic" appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select [(ngModel)]="task.status" (selectionChange)="updateStatus()">
+            @for (option of statusOptions; track option) {
+              <mat-option [value]="option">{{ option }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
 
-      <div class="subtasks">
-        @if (task.subtasks && task.subtasks.length > 0) {
-          <p>Subtasks:</p>
-          @for (subtask of task.subtasks; track task.id) {
-            <mat-checkbox
-              [checked]="subtask.completed"
-              (change)="updateSubtask(subtask, $event.checked)"
-            >
-              {{ subtask.title }}
-            </mat-checkbox>
+        <div class="subtasks">
+          @if (task.subtasks && task.subtasks.length > 0) {
+            <p>Subtasks:</p>
+            @for (subtask of task.subtasks; track task.id) {
+              <mat-checkbox
+                [checked]="subtask.completed"
+                (change)="updateSubtask(subtask, $event.checked)"
+              >
+                {{ subtask.title }}
+              </mat-checkbox>
+            }
           }
+        </div>
+      </div>
+      <div class="tags">
+        @for (tag of task.tags || []; track $index) {
+          <p>#{{ tag }}</p>
         }
       </div>
-    </div>
-    <div class="tags">
-      @for (tag of task.tags || []; track $index) {
-        <p>#{{ tag }}</p>
-      }
     </div>
   </div>
 }

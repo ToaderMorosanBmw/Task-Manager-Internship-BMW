@@ -97,6 +97,11 @@ body.dark-theme
   .mdc-list-item__primary-text {
   color: #bb86fc !important;
 }
+
+body.dark-theme .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) {
+  background-color: rgba(187, 134, 252, 0.15) !important;
+}
+
 body.dark-theme .mdc-dialog__surface,
 body.dark-theme .mat-mdc-dialog-surface,
 body.dark-theme .mat-mdc-dialog-container {
@@ -191,7 +196,6 @@ mat-checkbox,
   background: #777777;
 }
 
-
 .ag-theme-quartz.custom-grid {
   --ag-font-family: 'DM Sans', sans-serif;
   --ag-font-size: 14px;
@@ -283,7 +287,10 @@ body.dark-theme .mat-button-toggle-checked .mat-button-toggle-button {
   color: #ffffff !important;
 }
 
-body.dark-theme .mat-button-toggle-group-appearance-standard .mat-button-toggle + .mat-button-toggle {
+body.dark-theme
+  .mat-button-toggle-group-appearance-standard
+  .mat-button-toggle
+  + .mat-button-toggle {
   border-left: 1px solid #374151;
 }
 .success-snackbar {
@@ -328,7 +335,6 @@ body.dark-theme .mat-button-toggle-group-appearance-standard .mat-button-toggle 
 .error-snackbar .mat-mdc-button {
   color: #ffffff !important;
   font-weight: 700 !important;
-
 }
 
 /* Cell & grid lines */
