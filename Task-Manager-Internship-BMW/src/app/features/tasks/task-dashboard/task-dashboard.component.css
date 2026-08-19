@@ -67,7 +67,16 @@
   border-bottom: 2px solid var(--border-color);
 }
 
+.top-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
 .middle-bar {
+  position: sticky;
+  top: 4.5rem;
+  z-index: 99;
   justify-content: space-between;
 }
 

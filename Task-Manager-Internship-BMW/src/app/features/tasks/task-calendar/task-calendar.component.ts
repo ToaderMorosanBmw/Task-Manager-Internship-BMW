@@ -19,6 +19,7 @@ import {
   CalendarModule,
 } from 'angular-calendar';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { TaskService } from '../../../core/services/task.service';
 import { CategoryService } from '../../../core/services/category.service';
 import { Task } from '../../../core/models/task.model';
@@ -47,8 +48,16 @@ export class TaskCalendarComponent implements OnInit {
   private taskService = inject(TaskService);
   private categoryService = inject(CategoryService);
   private destroyRef = inject(DestroyRef);
+  private router = inject(Router);
   ngOnInit(): void {
     this.loadTasksAsEvents();
+  }
+
+  eventClicked(event: CalendarEvent): void {
+    const taskId = event.meta?.task?.id;
+    if (taskId) {
+      this.router.navigate(['/tasks', taskId]);
+    }
   }
   private loadTasksAsEvents(): void {
     this.categoryService
@@ -92,6 +101,7 @@ export class TaskCalendarComponent implements OnInit {
       .subscribe({
         next: (events: CalendarEvent[]) => {
           this.events = events;
+          this.refresh.next();
         },
         error: (err) => {
           console.error('Failed to load calendar events:', err);
