@@ -18,9 +18,9 @@
                             [class.is-board]="view === 'board'"
                             [class.is-calendar]="view === 'calendar'">
       <div class="toggle-slider"></div>
-      <button class="toggle-btn" [class.active]="view === 'board'" (click)="view = 'board'">Board</button>
-      <button class="toggle-btn" [class.active]="view === 'table'" (click)="view = 'table'">Table</button>
-      <button class="toggle-btn" [class.active]="view === 'calendar'" (click)="view = 'calendar'">Calendar</button>
+      <button class="toggle-btn" [class.active]="view === 'board'" (click)="setView('board')">Board</button>
+      <button class="toggle-btn" [class.active]="view === 'table'" (click)="setView('table')">Table</button>
+      <button class="toggle-btn" [class.active]="view === 'calendar'" (click)="setView('calendar')">Calendar</button>
     </div>
   </div>
   <div class="middle-bar">

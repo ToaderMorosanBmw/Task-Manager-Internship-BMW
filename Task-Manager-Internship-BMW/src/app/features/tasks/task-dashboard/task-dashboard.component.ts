@@ -84,6 +84,12 @@ export class TaskDashboardComponent implements OnInit {
         return this.priorityOrder[a.priority as string] - this.priorityOrder[b.priority as string];
       });
   }
+
+  setView(newView: 'table' | 'board' | 'calendar'): void {
+    this.view = newView;
+    localStorage.setItem(this.VIEW_KEY, newView);
+  }
+
   private searchSubject = new Subject<string>();
   private snackBar = inject(MatSnackBar);
 
