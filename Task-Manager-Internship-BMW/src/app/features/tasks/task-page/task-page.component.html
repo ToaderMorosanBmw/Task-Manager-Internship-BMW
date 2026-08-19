@@ -4,7 +4,7 @@
   </div>
 } @else {
   <div class="page-container">
-    <a routerLink="/tasks" class="back-link">
+    <a routerLink="/" class="back-link">
       <mat-icon fontSet="material-symbols-outlined">arrow_back</mat-icon>
       Back to Dashboard
     </a>
@@ -25,7 +25,7 @@
           </p>
         </div>
       </div>
-      <div class="content">
+      <div class="content" [formGroup]="taskForm">
         @if (task.estimatedTime) {
           <p class="estimated-time">Estimated time: {{ task.estimatedTime }}h</p>
         }
@@ -34,17 +34,20 @@
         }
         <mat-form-field subscriptSizing="dynamic" appearance="outline">
           <mat-label>Status</mat-label>
-          <mat-select [(ngModel)]="task.status" (selectionChange)="updateStatus()">
+          <mat-select formControlName="status" (selectionChange)="updateStatus()">
             @for (option of statusOptions; track option) {
               <mat-option [value]="option">{{ option }}</mat-option>
             }
           </mat-select>
+          @if (taskForm.get('status')?.hasError('required') && taskForm.get('status')?.touched) {
+            <mat-error>Status is required.</mat-error>
+          }
         </mat-form-field>
 
         <div class="subtasks">
           @if (task.subtasks && task.subtasks.length > 0) {
             <p>Subtasks:</p>
-            @for (subtask of task.subtasks; track task.id) {
+            @for (subtask of task.subtasks; track subtask.id) {
               <mat-checkbox
                 [checked]="subtask.completed"
                 (change)="updateSubtask(subtask, $event.checked)"

@@ -1,87 +1,121 @@
 <h2 mat-dialog-title>Edit task</h2>
 
-<mat-dialog-content class="dialog-content">
-  <mat-form-field appearance="outline">
-    <mat-label>Title</mat-label>
-    <input matInput [(ngModel)]="task.title" name="title" required />
-  </mat-form-field>
+<form [formGroup]="taskForm" class="task-form">
+  <mat-dialog-content class="dialog-content">
+    <mat-form-field appearance="outline">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" required />
+      @if (taskForm.get('title')?.hasError('required')) {
+        <mat-error>
+          Title is required.
+        </mat-error>
+      }
+    </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Description</mat-label>
-    <textarea matInput [(ngModel)]="task.description" name="description" rows="3"></textarea>
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" rows="3"></textarea>
+    </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Assignee</mat-label>
-    <input matInput [(ngModel)]="task.assignee" name="assignee" />
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Assignee</mat-label>
+      <input matInput formControlName="assignee" />
+    </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Due date</mat-label>
-    <input
-      matInput
-      type="date"
-      [ngModel]="dueDateInput"
-      (ngModelChange)="dueDateInput = $event"
-      name="dueDate"
-    />
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Due date</mat-label>
+      <input matInput type="date" formControlName="dueDate" />
+      @if (taskForm.get('dueDate')?.hasError('pastDate')) {
+        <mat-error>
+          Due date cannot be in the past.
+        </mat-error>
+      }
+      @if (taskForm.get('dueDate')?.hasError('invalidDate')) {
+        <mat-error>
+          Invalid date.
+        </mat-error>
+      }
+    </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Priority</mat-label>
-    <mat-select [(ngModel)]="task.priority" name="priority">
-      <mat-option value="Low">Low</mat-option>
-      <mat-option value="Medium">Medium</mat-option>
-      <mat-option value="High">High</mat-option>
-    </mat-select>
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Priority</mat-label>
+      <mat-select formControlName="priority">
+        @for (p of priorities; track p) {
+          <mat-option [value]="p">{{ p }}</mat-option>
+        }
+      </mat-select>
+      @if (taskForm.get('priority')?.hasError('required')) {
+        <mat-error>
+          Priority is required.
+        </mat-error>
+      }
+    </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Status</mat-label>
-    <mat-select [(ngModel)]="task.status" name="status">
-      <mat-option value="To Do">To Do</mat-option>
-      <mat-option value="In Progress">In Progress</mat-option>
-      <mat-option value="Completed">Completed</mat-option>
-    </mat-select>
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status">
+        @for (s of statuses; track s) {
+          <mat-option [value]="s">{{ s }}</mat-option>
+        }
+      </mat-select>
+      @if (taskForm.get('status')?.hasError('required')) {
+        <mat-error>
+          Status is required.
+        </mat-error>
+      }
+    </mat-form-field>
 
-  <div class="section-block">
-    <mat-label>Tags</mat-label>
-    <div class="chip-row">
-      <mat-form-field appearance="outline" class="inline-field">
-        <input matInput [(ngModel)]="newTag" name="newTag" placeholder="Add tag" />
-      </mat-form-field>
-      <button mat-stroked-button type="button" (click)="addTag()">Add</button>
-    </div>
-    <div class="chip-list">
-      <span class="chip" *ngFor="let tag of task.tags" (click)="removeTag(tag)">#{{ tag }} ×</span>
-    </div>
-  </div>
-
-  <div class="section-block">
-    <mat-label>Subtasks</mat-label>
-    <div class="chip-row">
-      <mat-form-field appearance="outline" class="inline-field">
-        <input
-          matInput
-          [(ngModel)]="newSubtaskTitle"
-          name="newSubtaskTitle"
-          placeholder="New subtask"
-        />
-      </mat-form-field>
-      <button mat-stroked-button type="button" (click)="addSubtask()">Add</button>
-    </div>
-    <div class="subtask-list" *ngFor="let subtask of task.subtasks">
-      <div class="subtask-item">
-        <span>{{ subtask.title }}</span>
-        <button mat-icon-button type="button" (click)="removeSubtask(subtask)">×</button>
+    <div class="section-block">
+      <mat-label>Tags</mat-label>
+      <div class="chip-row">
+        <mat-form-field appearance="outline" class="inline-field">
+          <input
+            matInput
+            #tagInput
+            [value]="newTag"
+            (input)="newTag = tagInput.value"
+            placeholder="Add tag"
+          />
+        </mat-form-field>
+        <button mat-stroked-button type="button" (click)="addTag()">Add</button>
+      </div>
+      <div class="chip-list">
+        @for (tag of task.tags; track tag) {
+          <span class="chip" (click)="removeTag(tag)">#{{ tag }} ×</span>
+        }
       </div>
     </div>
-  </div>
-</mat-dialog-content>
 
-<mat-dialog-actions align="end">
-  <button mat-button color="warn" *ngIf="task.id" (click)="delete()">Delete</button>
-  <button mat-button (click)="close()">Cancel</button>
-  <button mat-raised-button color="primary" (click)="save()">Save</button>
-</mat-dialog-actions>
+    <div class="section-block">
+      <mat-label>Subtasks</mat-label>
+      <div class="chip-row">
+        <mat-form-field appearance="outline" class="inline-field">
+          <input
+            matInput
+            #subtaskInput
+            [value]="newSubtaskTitle"
+            (input)="newSubtaskTitle = subtaskInput.value"
+            placeholder="New subtask"
+          />
+        </mat-form-field>
+        <button mat-stroked-button type="button" (click)="addSubtask()">Add</button>
+      </div>
+      <div class="subtask-list">
+        @for (subtask of task.subtasks; track subtask.id) {
+          <div class="subtask-item">
+            <span>{{ subtask.title }}</span>
+            <button mat-icon-button type="button" (click)="removeSubtask(subtask)">×</button>
+          </div>
+        }
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    @if (task.id) {
+      <button mat-button color="warn" (click)="delete()">Delete</button>
+    }
+    <button mat-button (click)="close()">Cancel</button>
+    <button mat-raised-button color="primary" type="button" (click)="save()">Save</button>
+  </mat-dialog-actions>
+</form>

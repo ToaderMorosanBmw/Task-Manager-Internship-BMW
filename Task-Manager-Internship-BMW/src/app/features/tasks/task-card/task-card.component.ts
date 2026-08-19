@@ -72,53 +72,50 @@ export class TaskCardComponent {
       width: '500px',
       data: { task: this.task },
     });
-    dialogRef
-      .afterClosed()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((result) => {
-        if (!result) {
-          return;
+    dialogRef.afterClosed()
+      .pipe(
+        filter((result): result is TaskWithCategory | { deleted: boolean; id: string } => Boolean(result)),
+        switchMap((result) => {
+          if ((result as { deleted?: boolean }).deleted) {
+            const id = (result as { id: string }).id;
+            return this.taskService.deleteTask(id).pipe(
+              map(() => ({ type: 'delete' as const, id }))
+            );
+          }
+
+          const updatedTask = result as TaskWithCategory;
+          const taskToSave: Task = {
+            ...this.task,
+            ...updatedTask,
+            categoryId: updatedTask.categoryId ?? this.task.categoryId,
+            status: updatedTask.status ?? this.task.status,
+            priority: updatedTask.priority ?? this.task.priority,
+            dueDate: this.normalizeDueDate(updatedTask.dueDate ?? this.task.dueDate) as Date | undefined
+          };
+
+          return this.taskService.updateTask(this.task.id as string, taskToSave).pipe(
+            map((savedTask) => ({ type: 'update' as const, savedTask }))
+          );
+        }),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe({
+        next: (result) => {
+          if (result.type === 'delete') {
+            this.deleted.emit(result.id);
+            return;
+          }
+
+          const normalizedTask = {
+            ...result.savedTask,
+            dueDate: this.normalizeDueDate(result.savedTask.dueDate)
+          };
+
+          this.task = { ...this.task, ...normalizedTask } as TaskWithCategory;
+        },
+        error: (err) => {
+          console.error('Failed to process task modal result', err);
         }
-
-        if ((result as any).deleted) {
-          const id = (result as any).id as string;
-          this.taskService
-            .deleteTask(id)
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe({
-              next: () => this.deleted.emit(id),
-              error: (err) => console.error('Failed to delete task', err),
-            });
-
-          return;
-        }
-
-        const updatedTask = result as TaskWithCategory;
-
-        const taskToSave: Task = {
-          ...this.task,
-          ...updatedTask,
-          categoryId: updatedTask.categoryId ?? this.task.categoryId,
-          status: updatedTask.status ?? this.task.status,
-          priority: updatedTask.priority ?? this.task.priority,
-          dueDate: this.normalizeDueDate(updatedTask.dueDate ?? this.task.dueDate) as
-            Date | undefined,
-        };
-
-        this.taskService
-          .updateTask(this.task.id as string, taskToSave)
-          .pipe(takeUntilDestroyed(this.destroyRef))
-          .subscribe({
-            next: (savedTask) => {
-              const normalizedTask = {
-                ...savedTask,
-                dueDate: this.normalizeDueDate(savedTask.dueDate),
-              };
-
-              this.task = { ...this.task, ...normalizedTask } as TaskWithCategory;
-            },
-            error: (err) => console.error('Failed to update task', err),
-          });
       });
   }
 

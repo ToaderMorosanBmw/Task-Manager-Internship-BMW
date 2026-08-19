@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { TaskWithCategory } from '../../../core/models/task-with-category.model';
 import { CategoryService } from '../../../core/services/category.service';
@@ -10,7 +11,7 @@ import { CategoryColor } from '../../../shared/directives/category-color.directi
 import { AppColorDirective } from '../../../shared/directives/app-color.directive';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DatePipe } from '@angular/common';
@@ -21,6 +22,8 @@ import { MatIconModule } from '@angular/material/icon';
   selector: 'app-task-page',
   standalone: true,
   imports: [
+    ReactiveFormsModule,
+    CommonModule,
     CategoryColor,
     AppColorDirective,
     MatFormFieldModule,
@@ -38,6 +41,7 @@ import { MatIconModule } from '@angular/material/icon';
 export class TaskPageComponent implements OnInit {
   statusOptions = Object.values(TaskStatus);
   isCompleted = false;
+  taskForm!: FormGroup;
   isLoading = true;
 
   task: TaskWithCategory = {
@@ -49,17 +53,61 @@ export class TaskPageComponent implements OnInit {
     subtasks: [],
   };
 
-  private taskService = inject(TaskService);
-  private categoryService = inject(CategoryService);
-  private route = inject(ActivatedRoute);
-  private destroyRef = inject(DestroyRef);
+  private taskService = inject(TaskService)
+  private categoryService = inject(CategoryService)
+  private route = inject(ActivatedRoute)
+  private destroyRef = inject(DestroyRef)
+  private fb = inject(FormBuilder)
+
+  constructor() {}
+
+  ngOnInit(): void {
+
+    this.taskForm = this.fb.group({
+      status: ['To Do', Validators.required]
+    });
+
+    this.route.paramMap
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        map(params => params.get('id')),
+        switchMap(id => this.taskService.getTaskById(id || '')),
+        switchMap(task =>
+          this.categoryService.getCategoryById(task.categoryId)
+            .pipe(
+              map(category => ({
+                ...task,
+                category
+              }))
+            )
+        ),
+      )
+      .subscribe({
+        next: (taskWithCategory: TaskWithCategory) => {
+          this.task = taskWithCategory;
+          this.isCompleted = this.task.status === TaskStatus.COMPLETED;
+          this.taskForm.patchValue({ status: this.task.status });
+          this.isLoading = false;
+        },
+        error: (err) => {
+          console.error('Failed to load task', err);
+          this.isLoading = false;
+        }
+      })
+    }
 
   updateStatus(): void {
-    if (!this.task.id) {
+    if (!this.task.id || this.taskForm.invalid) {
       return;
     }
 
-    this.task.status = this.isCompleted ? TaskStatus.COMPLETED : TaskStatus.TODO;
+    const newStatus = this.taskForm.get('status')?.value as TaskWithCategory['status'];
+    if (!newStatus) {
+      return;
+    }
+
+    this.task.status = newStatus;
+    this.isCompleted = newStatus === TaskStatus.COMPLETED;
 
     this.taskService
       .updateTask(this.task.id, this.task)
@@ -88,35 +136,6 @@ export class TaskPageComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         error: (err) => console.error('Failed to update subtask', err),
-      });
-  }
-
-  ngOnInit(): void {
-    this.route.paramMap
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        map((params) => params.get('id')),
-        switchMap((id) => this.taskService.getTaskById(id || '')),
-        switchMap((task) =>
-          this.categoryService.getCategoryById(task.categoryId).pipe(
-            map((category) => ({
-              ...task,
-              category,
-            }))
-          )
-        )
-      )
-      .subscribe({
-        next: (taskWithCategory: TaskWithCategory) => {
-          this.task = taskWithCategory;
-          this.isCompleted = this.task.status === TaskStatus.COMPLETED;
-
-          this.isLoading = false;
-        },
-        error: (err) => {
-          console.error('Error loading task', err);
-          this.isLoading = false;
-        },
       });
   }
 }

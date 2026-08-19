@@ -219,34 +219,34 @@ export class TaskDashboardComponent implements OnInit {
       .afterClosed()
       .pipe(
         filter((result): result is TaskWithCategory => Boolean(result)),
+        map((result) => {
+          const taskToSave: Task = {
+            ...result,
+            title: result.title.trim() || 'New task',
+            categoryId: result.categoryId || defaultCategoryId,
+            status: result.status || TaskStatus.TODO,
+            priority: result.priority || TaskPriority.LOW,
+            tags: result.tags ?? [],
+            subtasks: result.subtasks ?? [],
+            id: ''
+          };
+
+          return taskToSave;
+        }),
+        switchMap((taskToSave) => this.taskService.createTask(taskToSave)),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe((result) => {
-        const taskToSave: Task = {
-          ...result,
-          title: result.title.trim() || 'New task',
-          categoryId: result.categoryId || defaultCategoryId,
-          status: result.status || TaskStatus.TODO,
-          priority: result.priority || TaskPriority.LOW,
-          tags: result.tags ?? [],
-          subtasks: result.subtasks ?? [],
-          id: '',
-        };
-        this.taskService
-          .createTask(taskToSave)
-          .pipe(takeUntilDestroyed(this.destroyRef))
-          .subscribe({
-            next: (savedTask) => {
-              const savedWithCategory: TaskWithCategory = {
-                ...savedTask,
-                category: this.allTasks.find((task) => task.category?.id === savedTask.categoryId)
-                  ?.category,
-              };
-              this.allTasks = [...this.allTasks, savedWithCategory];
-              this.applyFilters();
-            },
-            error: (err) => console.error('Failed to create task', err),
-          });
+      .subscribe({
+        next: (savedTask) => {
+          const savedWithCategory: TaskWithCategory = {
+            ...savedTask,
+            category: this.allTasks.find((task) => task.category?.id === savedTask.categoryId)?.category
+          };
+
+          this.allTasks = [...this.allTasks, savedWithCategory];
+          this.applyFilters();
+        },
+        error: (err) => console.error('Failed to create task', err)
       });
   }
   onTaskDeleted(id: string): void {

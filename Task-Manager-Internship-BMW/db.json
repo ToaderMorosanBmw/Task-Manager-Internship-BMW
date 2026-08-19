@@ -346,9 +346,16 @@
       "categoryId": "1",
       "status": "To Do",
       "priority": "Low",
-      "tags": ["#rezist"],
+      "tags": [
+        "#rezist"
+      ],
       "subtasks": [
-        { "id": 1785836586091, "title": "idk", "completed": false, "status": "To Do" }
+        {
+          "id": 1785836586091,
+          "title": "idk",
+          "completed": false,
+          "status": "To Do"
+        }
       ],
       "assignee": "Mirk",
       "dueDate": "2026-12-05T00:00:00.000Z"
@@ -363,7 +370,10 @@
       "scheduledEnd": "2026-08-13T09:30:00.000Z",
       "estimatedTime": 1,
       "status": "To Do",
-      "tags": ["meeting", "team"],
+      "tags": [
+        "meeting",
+        "team"
+      ],
       "assignee": "Alex",
       "categoryId": "3",
       "subtasks": []
@@ -378,7 +388,10 @@
       "scheduledEnd": "2026-08-13T11:30:00.000Z",
       "estimatedTime": 2,
       "status": "To Do",
-      "tags": ["code", "review"],
+      "tags": [
+        "code",
+        "review"
+      ],
       "assignee": "Mara",
       "categoryId": "1",
       "subtasks": []
@@ -393,7 +406,10 @@
       "scheduledEnd": "2026-08-13T13:00:00.000Z",
       "estimatedTime": 1,
       "status": "To Do",
-      "tags": ["personal", "health"],
+      "tags": [
+        "personal",
+        "health"
+      ],
       "assignee": "Ioana",
       "categoryId": "2",
       "subtasks": []
@@ -408,7 +424,10 @@
       "scheduledEnd": "2026-08-13T14:00:00.000Z",
       "estimatedTime": 1,
       "status": "In Progress",
-      "tags": ["client", "demo"],
+      "tags": [
+        "client",
+        "demo"
+      ],
       "assignee": "Sarah",
       "categoryId": "3",
       "subtasks": []
@@ -423,7 +442,10 @@
       "scheduledEnd": "2026-08-13T15:00:00.000Z",
       "estimatedTime": 1,
       "status": "To Do",
-      "tags": ["client", "call"],
+      "tags": [
+        "client",
+        "call"
+      ],
       "assignee": "Sarah",
       "categoryId": "3",
       "subtasks": []
@@ -438,7 +460,10 @@
       "scheduledEnd": "2026-08-13T16:30:00.000Z",
       "estimatedTime": 1,
       "status": "To Do",
-      "tags": ["bug", "frontend"],
+      "tags": [
+        "bug",
+        "frontend"
+      ],
       "assignee": "Diana",
       "categoryId": "4",
       "subtasks": []
@@ -453,10 +478,104 @@
       "scheduledEnd": "2026-08-13T17:00:00.000Z",
       "estimatedTime": 1,
       "status": "To Do",
-      "tags": ["planning", "team"],
+      "tags": [
+        "planning",
+        "team"
+      ],
       "assignee": "Andrei",
       "categoryId": "1",
       "subtasks": []
+    },
+    {
+      "id": "cal-8",
+      "title": "Morning standup",
+      "description": "Daily sync with the team — blockers, progress updates.",
+      "priority": "Medium",
+      "dueDate": "2026-08-20T00:00:00.000Z",
+      "scheduledStart": "2026-08-20T09:00:00.000Z",
+      "scheduledEnd": "2026-08-20T09:30:00.000Z",
+      "estimatedTime": 1,
+      "status": "To Do",
+      "tags": [
+        "meeting",
+        "team"
+      ],
+      "assignee": "Alex",
+      "categoryId": "3",
+      "subtasks": []
+    },
+    {
+      "id": "cal-9",
+      "title": "Fix login redirect bug",
+      "description": "Users are not being redirected correctly after OAuth login. Investigate and patch.",
+      "priority": "High",
+      "dueDate": "2026-08-20T00:00:00.000Z",
+      "scheduledStart": "2026-08-20T10:00:00.000Z",
+      "scheduledEnd": "2026-08-20T12:00:00.000Z",
+      "estimatedTime": 2,
+      "status": "To Do",
+      "tags": [
+        "bug",
+        "auth"
+      ],
+      "assignee": "Diana",
+      "categoryId": "4",
+      "subtasks": []
+    },
+    {
+      "id": "cal-10",
+      "title": "Update project documentation",
+      "description": "Add missing API endpoints and update the onboarding guide for new developers.",
+      "priority": "Low",
+      "dueDate": "2026-08-20T00:00:00.000Z",
+      "scheduledStart": "2026-08-20T13:00:00.000Z",
+      "scheduledEnd": "2026-08-20T14:00:00.000Z",
+      "estimatedTime": 1,
+      "status": "To Do",
+      "tags": [
+        "docs"
+      ],
+      "assignee": "Mara",
+      "categoryId": "1",
+      "subtasks": []
+    },
+    {
+      "id": "cal-11",
+      "title": "Sprint planning session",
+      "description": "Define scope and goals for the upcoming sprint with the full team.",
+      "priority": "High",
+      "dueDate": "2026-08-20T00:00:00.000Z",
+      "scheduledStart": "2026-08-20T15:00:00.000Z",
+      "scheduledEnd": "2026-08-20T16:30:00.000Z",
+      "estimatedTime": 2,
+      "status": "To Do",
+      "tags": [
+        "planning",
+        "sprint"
+      ],
+      "assignee": "Andrei",
+      "categoryId": "3",
+      "subtasks": []
+    },
+    {
+      "id": "cal-12",
+      "title": "Angular Project Presentation",
+      "description": "",
+      "priority": "High",
+      "dueDate": "2026-08-20T00:00:00.000Z",
+      "scheduledStart": "2026-08-20T07:00:00.000Z",
+      "scheduledEnd": "2026-08-20T07:07:00.000Z",
+      "estimatedTime": 0.12,
+      "status": "To Do",
+      "tags": [],
+      "assignee": "",
+      "categoryId": "1",
+      "subtasks": [],
+      "category": {
+        "id": "1",
+        "title": "Work",
+        "color": "#4f46e5"
+      }
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
