@@ -3,13 +3,13 @@ import { Subtask } from './subtask.model';
 export enum TaskStatus {
   TODO = 'To Do',
   IN_PROGRESS = 'In Progress',
-  COMPLETED = 'Completed'
+  COMPLETED = 'Completed',
 }
 
 export enum TaskPriority {
   LOW = 'Low',
   MEDIUM = 'Medium',
-  HIGH = 'High'
+  HIGH = 'High',
 }
 
 export interface Task {

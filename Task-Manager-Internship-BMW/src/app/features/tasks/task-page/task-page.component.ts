@@ -15,6 +15,8 @@ import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators} f
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DatePipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-task-page',
@@ -30,6 +32,8 @@ import { DatePipe } from '@angular/common';
     MatCheckboxModule,
     MatProgressSpinnerModule,
     DatePipe,
+    RouterLink,
+    MatIconModule,
   ],
   templateUrl: './task-page.component.html',
   styleUrl: './task-page.component.css',

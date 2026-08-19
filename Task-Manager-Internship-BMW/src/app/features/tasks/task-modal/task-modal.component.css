@@ -9,8 +9,6 @@
   min-width: 320px;
 }
 
-
-
 mat-form-field {
   width: 100%;
 }
@@ -24,8 +22,6 @@ mat-form-field {
 textarea {
   resize: none;
 }
-
-
 
 .chip-row {
   display: flex;

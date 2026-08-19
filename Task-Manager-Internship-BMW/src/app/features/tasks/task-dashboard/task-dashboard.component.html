@@ -43,6 +43,14 @@
       <button class="add-task-btn" aria-label="Create task" (click)="onCreateTaskClick()">
         Add Task
       </button>
+      <button
+        class="select-btn"
+        [class.active]="selectionMode"
+        (click)="toggleSelectionMode()"
+        matTooltip="Select tasks to delete"
+      >
+        <mat-icon fontSet="material-symbols-outlined">checklist</mat-icon>
+      </button>
       <button class="csv-btn" (click)="exportToCSV()" matTooltip="Export to CSV">
         <mat-icon fontSet="material-symbols-outlined">download</mat-icon>
       </button>
@@ -69,26 +77,45 @@
     <div cdkDropListGroup class="columns">
       <app-task-column
         [cardItems]="todoTasks"
-        title="To Do"
+        columnTitle="To Do"
+        [selectionMode]="selectionMode"
+        [selectedTaskIds]="selectedTaskIds"
         (taskStausChanged)="onTaskStatusChange($event)"
         (deleted)="onTaskDeleted($event)"
+        (selected)="onTaskSelected($event)"
       ></app-task-column>
       <app-task-column
         [cardItems]="inProgressTasks"
-        title="In Progress"
+        columnTitle="In Progress"
+        [selectionMode]="selectionMode"
+        [selectedTaskIds]="selectedTaskIds"
         (taskStausChanged)="onTaskStatusChange($event)"
         (deleted)="onTaskDeleted($event)"
+        (selected)="onTaskSelected($event)"
       ></app-task-column>
       <app-task-column
         [cardItems]="completedTasks"
-        title="Completed"
+        columnTitle="Completed"
+        [selectionMode]="selectionMode"
+        [selectedTaskIds]="selectedTaskIds"
         (taskStausChanged)="onTaskStatusChange($event)"
         (deleted)="onTaskDeleted($event)"
+        (selected)="onTaskSelected($event)"
       ></app-task-column>
     </div>
   } @else if(this.view === 'table'){
     <app-task-table [allTasks]="allTasks"></app-task-table>
   } @else if(this.view === 'calendar'){
     <app-task-calendar></app-task-calendar>
+  }
+
+  @if (selectionMode && selectedTaskIds.size > 0) {
+    <div class="bulk-action-bar">
+      <span>{{ selectedTaskIds.size }} task(s) selected</span>
+      <button class="bulk-delete-btn" (click)="bulkDelete()">
+        <mat-icon fontSet="material-symbols-outlined">delete</mat-icon>
+        Delete Selected
+      </button>
+    </div>
   }
 }

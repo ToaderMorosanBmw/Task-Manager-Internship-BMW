@@ -1,11 +1,4 @@
-import {
-  Directive,
-  ElementRef,
-  OnChanges,
-  inject,
-  Input,
-  Renderer2,
-} from '@angular/core';
+import { Directive, ElementRef, OnChanges, inject, Input, Renderer2 } from '@angular/core';
 import { TaskStatus, TaskPriority } from '../../core/models/task.model';
 
 @Directive({

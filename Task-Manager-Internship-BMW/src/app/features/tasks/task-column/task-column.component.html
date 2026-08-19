@@ -1,22 +1,25 @@
-<h1 [appColor]="title" colorType="border-bottom">
-  <span [appColor]="title" colorType="dot" class="dot"></span>
-  {{ title }}
+<h1 [appColor]="columnTitle" colorType="border-bottom">
+  <span [appColor]="columnTitle" colorType="dot" class="dot"></span>
+  {{ columnTitle }}
 </h1>
 
 <div
   cdkDropList
   (cdkDropListDropped)="onCardDropped($event)"
-  [cdkDropListData]="title"
+  [cdkDropListData]="columnTitle"
   class="column"
 >
   @for (item of cardItems; track $index) {
     <app-task-card
       cdkDrag
       [cdkDragData]="item"
+      [cdkDragDisabled]="selectionMode"
       [task]="item"
-      [appColor]="item.priority || ''"
-      colorType="border-top"
-     (deleted)="onTaskDeleted($event)"></app-task-card>
+      [selectionMode]="selectionMode"
+      [isSelected]="selectedTaskIds.has(item.id)"
+      (deleted)="onTaskDeleted($event)"
+      (selected)="onTaskSelected($event)"
+    ></app-task-card>
   } @empty {
     <p class="loading">No tasks</p>
   }
